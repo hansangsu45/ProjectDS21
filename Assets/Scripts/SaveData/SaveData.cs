@@ -11,12 +11,26 @@ public class SaveData
 [Serializable]
 public class UserInfo
 {
-    public bool isFirstStart = true;
-    public long gold = 0;
+    public bool isFirstStart = true;  //이 게임을 처음 시작했는지
+
+    public short leadership = 21; //통솔력 (한 번에 전투에 참여시킬 수 있는 최대 병사 수)
+
+    public int hp;  //현재 자신 성의 체력
+    public int maxHp;  //최대 체력
+
+    public long gold = 0;  //금화
+   
+    public long cropSilver;  //분당 쌓이는 은화
+    public long currentSilver;  //현재 가지고 있는 은화의 양
+    public long maxSilver;  //최대로 가질 수 있는 은화 양
+
+    public string quitDate;  //게임 종료 날짜
 
     public List<StageCastle> stageCastles = new List<StageCastle>(); //처음 시작할 때 전부 들어옴
 
+
     public StageCastle GetStage(short id) => stageCastles.Find(x => x.id == id);
+
     public StageCastle CreateCastleInfo(StageCastle sc)
     {
         stageCastles.Add(new StageCastle(sc));
@@ -40,7 +54,16 @@ public class StageCastle
     public bool isOpen;
     public bool isClear = false;
 
-    public short level = 1;  //강화 수치
+    public StageCastle() { }
+    public StageCastle(StageCastle sc)
+    {
+        id = sc.id;
+        isOpen = sc.isOpen;
+        isClear = sc.isClear;
+    }
+
+    #region 주석
+    /*public short level = 1;  //강화 수치
     public short maxLevel;
 
     //needTimeForCrop초에 한 번씩 crop만큼 gold들어옴. maxCrop에 도달하면 수확하기 전까지 더 안 쌓임
@@ -69,5 +92,6 @@ public class StageCastle
         this.needTimeForCrop = sc.needTimeForCrop;
         this.crop = sc.crop;
         this.maxCrop = sc.maxCrop; 
-    }
+    }*/
+    #endregion
 }

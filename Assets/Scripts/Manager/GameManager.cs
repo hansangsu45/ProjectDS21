@@ -33,7 +33,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SaveData()
     {
-        saveData.userInfo.stageCastles.ForEach(x => x.quitDate = DateTime.Now.ToString());
+        //saveData.userInfo.stageCastles.ForEach(x => x.quitDate = DateTime.Now.ToString());
+        saveData.userInfo.quitDate = DateTime.Now.ToString();
     }
 
     public void Save()

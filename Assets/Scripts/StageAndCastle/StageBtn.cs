@@ -16,7 +16,14 @@ public class StageBtn : MonoBehaviour
         {
             if (!stageCastle.isClear)
             {
+                if (stageCastle.isOpen)
+                {
 
+                }
+                else
+                {
+
+                }
             }
             else
             {
