@@ -15,14 +15,14 @@ public class UserInfo
 
     public short leadership = 21; //통솔력 (한 번에 전투에 참여시킬 수 있는 최대 병사 수)
 
-    public int hp;  //현재 자신 성의 체력
-    public int maxHp;  //최대 체력
+    public int hp;  //현재 자신 성의 체력 
+    public int maxHp;  //최대 체력 
 
-    public long gold = 0;  //금화
+    public long gold = 0;  //금화 
    
-    public long cropSilver;  //분당 쌓이는 은화
-    public long currentSilver;  //현재 가지고 있는 은화의 양
-    public long maxSilver;  //최대로 가질 수 있는 은화 양
+    public long cropSilver;  //분당 쌓이는 은화 
+    public long currentSilver;  //현재 가지고 있는 은화의 양 
+    public long maxSilver;  //최대로 가질 수 있는 은화 양 
 
     public string quitDate;  //게임 종료 날짜
 

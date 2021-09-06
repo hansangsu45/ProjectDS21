@@ -14,6 +14,8 @@ public class GameManager : MonoSingleton<GameManager>
     private string savedJson, filePath;
     private readonly string saveFileName_1 = "SaveFile01";
 
+    public int screenWidth = 2960, screenHeight = 1440;
+
     public List<StageBtn> stageBtns = new List<StageBtn>();
     public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
 
@@ -24,6 +26,21 @@ public class GameManager : MonoSingleton<GameManager>
         filePath = GetFilePath(saveFileName_1);
         saveData = new SaveData();
         Load();
+        InitData();
+        CreatePool();
+    }
+
+    private void InitData()
+    {
+        Screen.SetResolution(screenWidth, screenHeight, true);
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+
+    }
+
+    void CreatePool()
+    {
+
     }
 
     private void Start()
@@ -67,6 +84,10 @@ public class GameManager : MonoSingleton<GameManager>
             stageBtns[i].stageCastle = saveData.userInfo.GetStage(stageBtns[i].stageCastle.id) ?? saveData.userInfo.CreateCastleInfo(stageBtns[i].stageCastle);
             idToCastle.Add(stageBtns[i].stageCastle.id, stageBtns[i].stageCastle);
         }
+
+        TimeSpan ts = new TimeSpan();
+        ts = DateTime.Now - Convert.ToDateTime(saveData.userInfo.quitDate);
+        saveData.userInfo.currentSilver += (long)ts.TotalMinutes * saveData.userInfo.cropSilver;
     }
 
     private void Update()
@@ -76,6 +97,7 @@ public class GameManager : MonoSingleton<GameManager>
 
 
 
+    #region OnApplication
     private void OnApplicationQuit()
     {
         Save();
@@ -96,4 +118,5 @@ public class GameManager : MonoSingleton<GameManager>
             Save();
         }
     }
+    #endregion
 }

@@ -8,8 +8,6 @@ public class CastleManager : MonoSingleton<CastleManager>
     private WaitForSeconds ws = new WaitForSeconds(60);
     private GameManager gameMng;
 
-    //[HideInInspector] public List<StageBtn> clearStages = new List<StageBtn>();
-
     private void Awake()
     {
         CastleCrop = CastleCo();
@@ -18,6 +16,7 @@ public class CastleManager : MonoSingleton<CastleManager>
     private void Start()
     {
         gameMng = GameManager.Instance;
+        LimitSilver();
         StartCoroutine(CastleCrop);
     }
 
@@ -30,12 +29,16 @@ public class CastleManager : MonoSingleton<CastleManager>
             if (gameMng.savedData.userInfo.currentSilver < gameMng.savedData.userInfo.maxSilver)
             {
                 gameMng.savedData.userInfo.currentSilver += gameMng.savedData.userInfo.cropSilver;
-                
-                if(gameMng.savedData.userInfo.currentSilver > gameMng.savedData.userInfo.maxSilver)
-                {
-                    gameMng.savedData.userInfo.currentSilver = gameMng.savedData.userInfo.maxSilver;
-                }
+                LimitSilver();
             }
+        }
+    }
+
+    private void LimitSilver()
+    {
+        if (gameMng.savedData.userInfo.currentSilver > gameMng.savedData.userInfo.maxSilver)
+        {
+            gameMng.savedData.userInfo.currentSilver = gameMng.savedData.userInfo.maxSilver;
         }
     }
 }
