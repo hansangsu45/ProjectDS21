@@ -14,6 +14,7 @@ public class UserInfo
     public bool isFirstStart = true;  //이 게임을 처음 시작했는지
 
     public short leadership = 21; //통솔력 (한 번에 전투에 참여시킬 수 있는 최대 병사 수)
+    public short clearId; //클리어한 단계중 가장 높은 단계
 
     public int hp;  //현재 자신 성의 체력 
     public int maxHp;  //최대 체력 

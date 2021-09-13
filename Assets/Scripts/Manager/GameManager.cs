@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using System.Text;
@@ -15,9 +16,11 @@ public class GameManager : MonoSingleton<GameManager>
     private readonly string saveFileName_1 = "SaveFile01";
 
     public int screenWidth = 2960, screenHeight = 1440;
+    public bool isReady = false;
 
     public List<StageBtn> stageBtns = new List<StageBtn>();
     public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
+    [SerializeField] private short maxViewStage=4; //이제 깨야할 스테이지 '포함'해서 그 스테이지부터 몇 단계(개)까지 보여줄지
 
     public string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
@@ -28,6 +31,7 @@ public class GameManager : MonoSingleton<GameManager>
         Load();
         InitData();
         CreatePool();
+        isReady = true;
     }
 
     private void InitData()
@@ -38,9 +42,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
-    void CreatePool()
+    private void CreatePool()
     {
-
+        //풀링할 옵젝들 소환
     }
 
     private void Start()
@@ -83,11 +87,25 @@ public class GameManager : MonoSingleton<GameManager>
         {
             stageBtns[i].stageCastle = saveData.userInfo.GetStage(stageBtns[i].stageCastle.id) ?? saveData.userInfo.CreateCastleInfo(stageBtns[i].stageCastle);
             idToCastle.Add(stageBtns[i].stageCastle.id, stageBtns[i].stageCastle);
+
+            if((stageBtns[i].stageCastle.isClear && stageBtns[i].stageCastle.id != saveData.userInfo.clearId)
+                || stageBtns[i].stageCastle.id > saveData.userInfo.clearId+maxViewStage)
+            {
+                stageBtns[i].gameObject.SetActive(false);
+            }
         }
 
         TimeSpan ts = new TimeSpan();
-        ts = DateTime.Now - Convert.ToDateTime(saveData.userInfo.quitDate);
-        saveData.userInfo.currentSilver += (long)ts.TotalMinutes * saveData.userInfo.cropSilver;
+
+        try
+        {
+            ts = DateTime.Now - Convert.ToDateTime(saveData.userInfo.quitDate);
+            saveData.userInfo.currentSilver += (long)ts.TotalMinutes * saveData.userInfo.cropSilver;
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e);
+        }
     }
 
     private void Update()
@@ -95,7 +113,16 @@ public class GameManager : MonoSingleton<GameManager>
         
     }
 
+    public void ChangeScene(string sceneName)
+    {
+        //페이드 아웃
 
+        Save();
+
+        //씬 넘어갈 때의 각종 처리(풀 삭제 등)
+
+        SceneManager.LoadScene(sceneName);
+    }
 
     #region OnApplication
     private void OnApplicationQuit()

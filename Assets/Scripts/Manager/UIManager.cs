@@ -1,25 +1,30 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    public CanvasGroup loadingPanel;  //로딩창
+    private WaitForSeconds lWs = new WaitForSeconds(.3f);
 
-    private void Awake()
-    {
-        
-    }
+    public CanvasGroup loadingPanel;  //로딩창(걍 페이드 인/아웃에 쓰일 검은 화면)
+    public Ease[] eases;
 
-    private void Start()
+    private IEnumerator Start()
     {
-        
+        while (!GameManager.Instance.isReady) yield return lWs;    //yield return null;
+        FadeInOut(true);
     }
 
     private void Update()
     {
         _Input();
+    }
+
+    public void FadeInOut(bool fadeIn)
+    {
+        loadingPanel.DOFade(fadeIn ? 0 : 1, 1).SetEase(eases[0]);
     }
 
     void _Input()
