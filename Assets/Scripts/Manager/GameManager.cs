@@ -8,6 +8,12 @@ using System.Text;
 using System.IO;
 using DG.Tweening;
 
+public enum SceneType
+{
+    LOBBY,
+    MAIN
+}
+
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private SaveData saveData;
@@ -21,6 +27,8 @@ public class GameManager : MonoSingleton<GameManager>
     public List<StageBtn> stageBtns = new List<StageBtn>();
     public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
     [SerializeField] private short maxViewStage=4; //이제 깨야할 스테이지 '포함'해서 그 스테이지부터 몇 단계(개)까지 보여줄지
+
+    public SceneType scType;
 
     public string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
@@ -83,28 +91,31 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SetData()
     {
-        for(int i=0; i<stageBtns.Count; i++)
+        if (scType == SceneType.LOBBY)
         {
-            stageBtns[i].stageCastle = saveData.userInfo.GetStage(stageBtns[i].stageCastle.id) ?? saveData.userInfo.CreateCastleInfo(stageBtns[i].stageCastle);
-            idToCastle.Add(stageBtns[i].stageCastle.id, stageBtns[i].stageCastle);
-
-            if((stageBtns[i].stageCastle.isClear && stageBtns[i].stageCastle.id != saveData.userInfo.clearId)
-                || stageBtns[i].stageCastle.id > saveData.userInfo.clearId+maxViewStage)
+            for (int i = 0; i < stageBtns.Count; i++)
             {
-                stageBtns[i].gameObject.SetActive(false);
+                stageBtns[i].stageCastle = saveData.userInfo.GetStage(stageBtns[i].stageCastle.id) ?? saveData.userInfo.CreateCastleInfo(stageBtns[i].stageCastle);
+                idToCastle.Add(stageBtns[i].stageCastle.id, stageBtns[i].stageCastle);
+
+                if ((stageBtns[i].stageCastle.isClear && stageBtns[i].stageCastle.id != saveData.userInfo.clearId)
+                    || stageBtns[i].stageCastle.id > saveData.userInfo.clearId + maxViewStage)
+                {
+                    stageBtns[i].gameObject.SetActive(false);
+                }
             }
-        }
 
-        TimeSpan ts = new TimeSpan();
+            TimeSpan ts = new TimeSpan();
 
-        try
-        {
-            ts = DateTime.Now - Convert.ToDateTime(saveData.userInfo.quitDate);
-            saveData.userInfo.currentSilver += (long)ts.TotalMinutes * saveData.userInfo.cropSilver;
-        }
-        catch(Exception e)
-        {
-            Debug.Log(e);
+            try
+            {
+                ts = DateTime.Now - Convert.ToDateTime(saveData.userInfo.quitDate);
+                saveData.userInfo.currentSilver += (long)ts.TotalMinutes * saveData.userInfo.cropSilver;
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
         }
     }
 

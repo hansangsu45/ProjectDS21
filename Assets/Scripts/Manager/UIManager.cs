@@ -14,6 +14,12 @@ public class UIManager : MonoSingleton<UIManager>
     private IEnumerator Start()
     {
         while (!GameManager.Instance.isReady) yield return lWs;    //yield return null;
+
+        if (GameManager.Instance.scType == SceneType.MAIN)
+        {
+            while (!RuleManager.Instance.isReady) yield return lWs;
+        }
+
         FadeInOut(true);
     }
 

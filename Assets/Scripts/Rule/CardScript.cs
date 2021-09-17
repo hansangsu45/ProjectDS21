@@ -1,39 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CardScript : MonoBehaviour
 {
-    private int value = 0;
-    public int GetValueOfCard()
+    [SerializeField] private int value;
+    public int Value { get { return value; } set { this.value = value; } }
+    public JQK jqk = JQK.NONE;
+
+    public SpriteRenderer spriteRenderer;
+    private Sprite firstSpr;
+
+    private Vector3 rot1;
+
+    public PRS orgPrs;
+
+    private void Awake()
     {
-       return value;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        firstSpr = spriteRenderer.sprite;
+        orgPrs = new PRS(transform.localPosition, transform.localRotation, transform.localScale);
+
+        rot1 = new Vector3(0, -90, 0);
     }
 
-    public void SetValue(int newValue)
+    public void SetSprite(bool back=true)
     {
-        value = newValue;
+        if (!back) spriteRenderer.sprite = firstSpr;
+        else spriteRenderer.sprite = RuleManager.Instance.ruleData.backSprite;
     }
 
-    public string GetSpriteName()
+    public void RotateCard()
     {
-        return GetComponent<SpriteRenderer>().sprite.name;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOLocalRotate(rot1, 0.12f));
+        seq.AppendCallback(() =>
+        {
+            SetSprite(false);
+            transform.DOLocalRotate(Vector3.zero, 0.12f);
+        });
     }
-
-    public void SetSprite(Sprite newSprite)
-    {
-        gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
-    }
-
-    // 카드를 원래대로 되돌림
-    public void ResetCard()
-    {
-        Sprite back = GameObject.Find("Deck").GetComponent<DeckScript>().GetCardBack();
-        gameObject.GetComponent<SpriteRenderer>().sprite = back;
-        value = 0;
-        GameObject.Find("Deck").GetComponent<DeckScript>().currentIndex = 0;
-    }
-
-
-
 }
