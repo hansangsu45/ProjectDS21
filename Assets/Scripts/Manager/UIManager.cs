@@ -30,6 +30,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void FadeInOut(bool fadeIn)
     {
+        loadingPanel.gameObject.SetActive(true);
         loadingPanel.DOFade(fadeIn ? 0 : 1, 1).SetEase(eases[0]);
     }
 

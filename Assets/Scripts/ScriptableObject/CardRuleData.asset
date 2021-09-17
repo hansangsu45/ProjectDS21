@@ -19,3 +19,7 @@ MonoBehaviour:
   mixY: 8.5
   cardScale: {x: 0.1, y: 0.1, z: 1}
   trashCardScale: {x: 0.08, y: 0.08, z: 1}
+  jqkSpr:
+  - {fileID: 21300000, guid: c3dfdfa68ad815248b41951aa2e5e026, type: 3}
+  - {fileID: 21300000, guid: 73e22b30850eadb44a85c0c7d4689784, type: 3}
+  - {fileID: 21300000, guid: e1905559947a30645a2cdcebe8148915, type: 3}

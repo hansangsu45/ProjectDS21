@@ -22,6 +22,10 @@ public class RuleManager : MonoSingleton<RuleManager>
     [SerializeField] private List<CardScript> trashCardList = new List<CardScript>();
     [SerializeField] private List<CardScript> deckCardList = new List<CardScript>();
 
+    public CanvasGroup jqkDecidePanel;
+    [SerializeField] private Image[] jqkImgs;
+    [SerializeField] private Text[] jqkTexts;
+
     public CardRuleData ruleData;
     private float zPos = 0f;
     private bool isGameStart;
@@ -29,13 +33,19 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     private WaitForSeconds ws1 = new WaitForSeconds(0.8f);
     private WaitForSeconds ws2 = new WaitForSeconds(0.3f);
+    
+    public PRS orgCardPRS;
 
     private void Awake()
     {
+        Transform t = transform.GetChild(0);
+        orgCardPRS = new PRS(t.localPosition, t.localRotation, t.localScale);
         allCardList = new List<CardScript>(transform.GetComponentsInChildren<CardScript>());
+
+        for (int i = 0; i < jqkImgs.Length; i++) jqkImgs[i].sprite = ruleData.backSprite;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         allCardList.ForEach(x=>
         {
@@ -45,15 +55,45 @@ public class RuleManager : MonoSingleton<RuleManager>
 
         isReady = true;
 
+        yield return DecideJQK();
+
         ResetGame();
     }
 
-    private void MixDeck()
+    private IEnumerator DecideJQK()
     {
-        
+        yield return new WaitForSeconds(1.5f);
+        UIManager.Instance.loadingPanel.gameObject.SetActive(false);
+        jqkDecidePanel.DOFade(1, 0.4f);
+
+        for(int i=0; i<jqkImgs.Length; i++)
+        {
+            yield return ws2;
+            int ran = Random.Range(40, 61);
+            int num = 1;
+
+            for(int j=0; j<ran; j++)
+            {
+                yield return new WaitForSeconds(0.1f);  //나중에 점점 텍스트 변화하는 속도 줄여나갈거임. 일단은 고정치로
+                num = ++num % 10 + 1;
+                jqkTexts[i].text = num.ToString();
+            }
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append( jqkImgs[i].transform.DORotate(new Vector3(0, -90, 0), 0.12f));
+            seq.AppendCallback(() =>
+            {
+                jqkImgs[i].sprite = ruleData.jqkSpr[i];
+                jqkImgs[i].transform.DORotate(Vector3.zero, 0.12f);
+            });
+            allCardList.FindAll(x => (int)x.jqk == i + 1).ForEach(y => y.Value = num);
+            yield return ws1;
+        }
+
+        jqkDecidePanel.DOFade(0, 0.4f);
     }
 
-    private void DrawCard()
+    private void DrawCard(bool isPlayer)
     {
 
     }
@@ -87,12 +127,13 @@ public class RuleManager : MonoSingleton<RuleManager>
     private IEnumerator StartGame()
     {
         yield return new WaitForSeconds(1.5f);
+        jqkDecidePanel.gameObject.SetActive(false);
 
         Sequence seq = DOTween.Sequence();
 
         for(int i=0; i<allCardList.Count; i++)
         {
-            seq.Append(allCardList[i].transform.DOLocalMove(allCardList[i].orgPrs.position, 0.06f));
+            seq.Append(allCardList[i].transform.DOLocalMove(orgCardPRS.position, 0.06f));
         }
         seq.Play();
 
@@ -103,8 +144,10 @@ public class RuleManager : MonoSingleton<RuleManager>
         for (int i = 0; i < trashTrs.Length; i++)
         {
             trashCardList.Add(deckCardList[0]);
-            deckCardList[0].transform.DOLocalMove(trashTrs[i].localPosition,0.5f);
-            deckCardList[0].transform.DOScale(ruleData.trashCardScale,0.5f);
+            Transform t = deckCardList[0].transform;
+            t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
+            t.DOLocalMove(trashTrs[i].localPosition,0.5f);
+            t.DOScale(ruleData.trashCardScale,0.5f);
             
             yield return ws1;
             deckCardList[0].RotateCard();

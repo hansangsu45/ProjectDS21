@@ -7,7 +7,6 @@ public class PlayerScript
 {
     public List<CardScript> cardList = new List<CardScript>();
     public Transform[] cardTrs;
-    public Vector3[] cardVecArr;
 }
 
 [Serializable]

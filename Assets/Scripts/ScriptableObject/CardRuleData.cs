@@ -8,4 +8,5 @@ public class CardRuleData : ScriptableObject
     public float[] mixX;
     public float mixY;
     public Vector3 cardScale, trashCardScale;
+    public Sprite[] jqkSpr;
 }

@@ -11,14 +11,12 @@ public class CardScript : MonoBehaviour
     private Sprite firstSpr;
 
     private Vector3 rot1;
-
-    public PRS orgPrs;
+    
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         firstSpr = spriteRenderer.sprite;
-        orgPrs = new PRS(transform.localPosition, transform.localRotation, transform.localScale);
 
         rot1 = new Vector3(0, -90, 0);
     }
