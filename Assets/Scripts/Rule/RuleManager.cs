@@ -92,7 +92,7 @@ public class RuleManager : MonoBehaviour
         {
             dealerScript.GetCard();
             dealerScoreText.text = "DEALER CARD " + dealerScript.handValue.ToString();
-            if (playerScript.handValue > 20) RoundOver();
+            // if (playerScript.handValue > 20) RoundOver();
         }
     }
     // 플레이어나, 딜러가 버스트일때 라운드 오버가됩니다.
@@ -111,7 +111,7 @@ public class RuleManager : MonoBehaviour
             mainText.text = "모두 버스트입니다. 재배팅하세요.";
             roundOver = true;
         }
-        else if(playerBust || (playerBust && dealerScript.handValue < playerScript.handValue))
+        else if(playerBust && playerScript.handValue > dealerScript.handValue)
         {
             mainText.text = "딜러가 승리했습니다.";
         }
