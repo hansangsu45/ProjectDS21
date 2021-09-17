@@ -23,6 +23,10 @@ public class RuleManager : MonoBehaviour
     //public Text cashText;
     public Text standBtnText;
 
+    public bool playerWin;
+    public bool dealerWin;
+    public bool noWin;
+
     public GameObject hideCard;
 
     //int pot = 0;
@@ -113,10 +117,12 @@ public class RuleManager : MonoBehaviour
         }
         else if(playerBust && playerScript.handValue > dealerScript.handValue)
         {
+            dealerWin = true;
             mainText.text = "딜러가 승리했습니다.";
         }
         else if(dealerBust && playerScript.handValue < dealerScript.handValue)
         {
+            playerWin = true;
             mainText.text = "당신이 승리했습니다.";
         }
         else if(playerScript.handValue == dealerScript.handValue)
@@ -125,13 +131,16 @@ public class RuleManager : MonoBehaviour
             playerScript.ResetHand();
             dealerScript.ResetHand();
             roundOver = true;
+            noWin = true;
         }
         else if (!playerBust && !dealerBust && playerScript.handValue < dealerScript.handValue)
         {
             mainText.text = "딜러가 승리했습니다.";
+            dealerWin = true;
         }
         else if (!playerBust && !dealerBust && playerScript.handValue > playerScript.handValue)
         {
+            playerWin = true;
             mainText.text = "플레이어가 승리했습니다.";
         }
         else
