@@ -7,7 +7,7 @@ public class DeckScript : MonoBehaviour
     // 카드 스프라이트를 받아온다.
     public Sprite[] cardSprites;
     int[] cardValues = new int[53];
-    int currentIndex = 0;
+    public int currentIndex = 0;
 
     void Start()
     {
@@ -18,10 +18,15 @@ public class DeckScript : MonoBehaviour
    void GetCardValues()
     {
         int num = 0;
-        for(int i = 0; i < cardSprites.Length; i++)
+        for (int i = 0; i < cardSprites.Length; i++)
         {
             num = i;
-            num %= 13;  
+            num %= 13;
+            if (num == 11 && num == 12 && num == 0)
+            {
+                num = 10;
+            }
+            
             if(num > 10 || num == 0)
             {
                 num = 10;

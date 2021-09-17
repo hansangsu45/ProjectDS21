@@ -17,11 +17,12 @@ public class PlayerScript : MonoBehaviour
     List<CardScript> aceList = new List<CardScript>();
     
 
-    // 시작할때 카드 2장 들고 시작
+    // 시작할때 카드 1장 들고 시작
     public void StartHand()
     {
         GetCard();
-       // GetCard();
+        //GetCard();
+        
     }
 
 

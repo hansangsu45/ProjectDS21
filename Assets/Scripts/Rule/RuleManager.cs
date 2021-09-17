@@ -9,7 +9,7 @@ public class RuleManager : MonoBehaviour
     public Button dealBtn;
     public Button hitBtn;
     public Button standBtn;
-    public Button betBtn;
+   // public Button betBtn;
 
     private int standClicks = 0;
 
@@ -20,7 +20,7 @@ public class RuleManager : MonoBehaviour
     public Text scoreText;
     public Text dealerScoreText;
     public Text betsText;
-    public Text cashText;
+    //public Text cashText;
     public Text standBtnText;
 
     public GameObject hideCard;
@@ -30,16 +30,22 @@ public class RuleManager : MonoBehaviour
 
     void Start()
     {
+        hitBtn.gameObject.SetActive(false);
+        standBtn.gameObject.SetActive(false);
         dealBtn.onClick.AddListener(() => DealClicked());
         hitBtn.onClick.AddListener(() => HitClicked());
         standBtn.onClick.AddListener(() => StandClicked());
         // 베팅기능 이용시.
         //betBtn.onClick.AddListener(() => BetClicked());
+
+
     }
 
     //시작을 클릭했을 경우이다. 딜러2장, 플레이어에게 1장을 나눠준 후에 계산된 Value값을 텍스트로 표시해줌.
     private void DealClicked()
     {
+        hitBtn.gameObject.SetActive(true);
+        standBtn.gameObject.SetActive(true);
         playerScript.ResetHand();
         dealerScript.ResetHand();
         mainText.gameObject.SetActive(false);
@@ -64,12 +70,12 @@ public class RuleManager : MonoBehaviour
     // 플레이어가 HIT를 한다. 카드를 한장 가져옴.
     private void HitClicked()
     {
-        if(playerScript.GetCard() <= 10)
-        {
+        //if(playerScript.GetCard() <= 10)
+        //{
             playerScript.GetCard();
             if (playerScript.handValue > 20) RoundOver();
             scoreText.text = "CARD : " + playerScript.handValue.ToString();
-        }
+        //}
     }
     // 라운드를 끝낸다. 이때, 상대의 패를 공개하고, 확정키를 누르면 대결 시작
     private void StandClicked()
@@ -105,14 +111,13 @@ public class RuleManager : MonoBehaviour
             mainText.text = "모두 버스트입니다. 재배팅하세요.";
             roundOver = true;
         }
-        else if(playerBust || (playerBust || dealerScript.handValue > playerScript.handValue))
+        else if(playerBust || (playerBust && dealerScript.handValue < playerScript.handValue))
         {
             mainText.text = "딜러가 승리했습니다.";
         }
-        else if(dealerBust || playerScript.handValue > dealerScript.handValue)
+        else if(dealerBust && playerScript.handValue < dealerScript.handValue)
         {
             mainText.text = "당신이 승리했습니다.";
-            //playerScript.AdjustMoney(pot);
         }
         else if(playerScript.handValue == dealerScript.handValue)
         {
@@ -120,7 +125,14 @@ public class RuleManager : MonoBehaviour
             playerScript.ResetHand();
             dealerScript.ResetHand();
             roundOver = true;
-            //playerScript.AdjustMoney(pot / 2);
+        }
+        else if (!playerBust && !dealerBust && playerScript.handValue < dealerScript.handValue)
+        {
+            mainText.text = "딜러가 승리했습니다.";
+        }
+        else if (!playerBust && !dealerBust && playerScript.handValue > playerScript.handValue)
+        {
+            mainText.text = "플레이어가 승리했습니다.";
         }
         else
         {
@@ -136,7 +148,7 @@ public class RuleManager : MonoBehaviour
             mainText.gameObject.SetActive(true);
             dealerScoreText.gameObject.SetActive(true);
             hideCard.GetComponent<Renderer>().enabled = false;
-            cashText.text = "$" + playerScript.GetMoney().ToString();
+            //cashText.text = "$" + playerScript.GetMoney().ToString();
             standClicks = 0;
         }
     }

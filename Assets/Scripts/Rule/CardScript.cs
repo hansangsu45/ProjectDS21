@@ -5,7 +5,6 @@ using UnityEngine;
 public class CardScript : MonoBehaviour
 {
     private int value = 0;
-
     public int GetValueOfCard()
     {
        return value;
@@ -32,6 +31,7 @@ public class CardScript : MonoBehaviour
         Sprite back = GameObject.Find("Deck").GetComponent<DeckScript>().GetCardBack();
         gameObject.GetComponent<SpriteRenderer>().sprite = back;
         value = 0;
+        GameObject.Find("Deck").GetComponent<DeckScript>().currentIndex = 0;
     }
 
 
