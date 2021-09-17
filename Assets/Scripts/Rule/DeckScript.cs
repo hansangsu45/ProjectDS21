@@ -22,10 +22,11 @@ public class DeckScript : MonoBehaviour
         {
             num = i;
             num %= 13;
-            if (num == 11 && num == 12 && num == 0)
-            {
-                num = 10;
-            }
+            if (num == 13) continue;
+           // if (num == 11 && num == 12 && num == 0)
+           // {
+           //     num = 10;
+           // }
             
             if(num > 10 || num == 0)
             {
