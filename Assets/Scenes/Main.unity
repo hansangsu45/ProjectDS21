@@ -2485,6 +2485,7 @@ MonoBehaviour:
   stageBtns: []
   maxViewStage: 4
   scType: 1
+  touchEffectPrefab: {fileID: 1017202135463684722, guid: 21755f888a196e6459ecf2d62b5a3caf, type: 3}
 --- !u!1 &765096712
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,7 +2520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1099.5, y: 297}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &765096714
@@ -5936,7 +5937,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25.589966, y: -19.099976}
+  m_AnchoredPosition: {x: -25.589844, y: -19.099854}
   m_SizeDelta: {x: 596.2, y: 136}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1589665506
@@ -7265,7 +7266,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121.15, y: 0}
+  m_AnchoredPosition: {x: 121.149994, y: 0}
   m_SizeDelta: {x: 500, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1904661281
@@ -7978,6 +7979,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997988768}
   m_CullTransparentMesh: 1
+--- !u!1 &2048041118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2048041119}
+  - component: {fileID: 2048041120}
+  m_Layer: 0
+  m_Name: EffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2048041119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048041118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2130526973}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2048041120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048041118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956d71eb4514fdb41a4acd608d3502aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  count: 3
+  zPos: 0
+  onTouchEffect: 1
+  minPos: {x: -10.5, y: 5}
+  maxPos: {x: 10.5, y: -5}
+  targetColor: {r: 1, g: 1, b: 1, a: 0}
+  cardSprites: []
 --- !u!1 &2117697815
 GameObject:
   m_ObjectHideFlags: 0
@@ -8107,6 +8158,7 @@ Transform:
   - {fileID: 762331760}
   - {fileID: 1347765833}
   - {fileID: 1137613084}
+  - {fileID: 2048041119}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

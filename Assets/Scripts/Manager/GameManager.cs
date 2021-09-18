@@ -31,6 +31,7 @@ public class GameManager : MonoSingleton<GameManager>
     public static string mainInfo;
 
     public SceneType scType;
+    public GameObject touchEffectPrefab;
 
     public string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
@@ -54,7 +55,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void CreatePool()
     {
-        //풀링할 옵젝들 소환
+        PoolManager.CreatePool<TouchEffect>(touchEffectPrefab, transform, 40);
     }
 
     private void Start()
@@ -132,7 +133,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         Save();
 
-        //씬 넘어갈 때의 각종 처리(풀 삭제 등)
+        PoolManager.ClearItem<TouchEffect>();
 
         SceneManager.LoadScene(sceneName);
     }
