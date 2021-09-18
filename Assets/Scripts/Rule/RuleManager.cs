@@ -24,6 +24,8 @@ public class RuleManager : MonoSingleton<RuleManager>
     [SerializeField] private CastleInfo enemyCastle;
     [SerializeField] private MainInfo myCastle;
 
+    private RaycastHit2D hit;
+
     public GameObject clickPrevObj;
     public CanvasGroup jqkDecidePanel;
     [SerializeField] private Image[] jqkImgs;
@@ -33,6 +35,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     private float zPos = 0f;
     private bool isGameStart;  //reset후에 true
     private bool isMovable;
+    private bool isThrowing = false;
     private bool isMyTurn=true;
     public Transform[] trashTrs;
     private Vector3 rot1 = new Vector3(0, -90, 0);
@@ -46,6 +49,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     [SerializeField] private Text PTotalTxt, ETotalTxt;
     [SerializeField] private Button drawBtn;
     [SerializeField] private Text moneyTxt;
+    [SerializeField] private Image cardImg;
 
     private void Awake()
     {
@@ -93,7 +97,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             for(int j=0; j<ran; j++)
             {
                 yield return new WaitForSeconds(0.1f);  //나중에 점점 텍스트 변화하는 속도 줄여나갈거임. 일단은 고정치로
-                num = ++num % 10 + 1;
+                num = num % 10 + 1;
                 jqkTexts[i].text = num.ToString();
             }
 
@@ -223,18 +227,18 @@ public class RuleManager : MonoSingleton<RuleManager>
         isGameStart = true;
     }
 
-    private IEnumerator UpdateTotalUI(Text txt ,int target)
+    private IEnumerator UpdateTotalUI(Text txt ,int target, int j)  //카드 총합 업데이트
     {
         int current = int.Parse(txt.text);
-        for(int i=current; i<=target; i++)
+        for(int i=current; i!=target+j; i+=j)
         {
             yield return ws3;
             txt.text = i.ToString();
         }
-        isMovable = true;
+        isMovable = !isThrowing;
     }
 
-    private void SortCardList(PlayerScript ps, CardScript cs)
+    private void SortCardList(PlayerScript ps, CardScript cs)  //카드를 추가하고 정렬한다
     {
         Transform t = cs.transform;
         t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
@@ -270,19 +274,85 @@ public class RuleManager : MonoSingleton<RuleManager>
         {
             cs.RotateCard();
             if (ps.isMine)
-                StartCoroutine(UpdateTotalUI(PTotalTxt, player.total));
+                StartCoroutine(UpdateTotalUI(PTotalTxt, player.total,1));
             else
                 isMovable = true;
         }).Play();
 
-        CheckLeadership();
+        CheckLeadership(ps);
     }
 
-    private void CheckLeadership()
+    private void CheckLeadership(PlayerScript ps)
     {
-        if (player.total > GameManager.Instance.savedData.userInfo.leadership)
+        if (ps.isMine && ps.total > GameManager.Instance.savedData.userInfo.leadership)
         {
+            isMovable = false;
+            StartCoroutine(ThrowCard(ps));
+        }
+        else if(!isMyTurn && ps.total > enemyCastle.leaderShip)
+        {
+            isMovable = false;
+            StartCoroutine(ThrowCard(ps));
+        }
+    }
 
+    private IEnumerator ThrowCard(PlayerScript ps)
+    {
+        isThrowing = true;
+        float x1 = trashTrs[0].localPosition.x;
+        float x2 = trashTrs[trashTrs.Length - 1].localPosition.x;
+        float y = trashTrs[0].localPosition.y;
+        zPos = 0f;
+        int count = ps.cardList.Count;
+
+        yield return new WaitForSeconds(2.5f);
+        for (int i = count-1; i>=0; i--)  //카드 전부 버리기
+        {
+            trashCardList.Add(ps.cardList[i]);
+            Transform t = ps.cardList[i].transform;
+
+            t.DOScale(ruleData.trashCardScale, 0.3f);
+            for(int j=0; j<trashCardList.Count; j++)
+            {
+                zPos -= 0.01f;
+                trashCardList[j].transform.DOLocalMove(new Vector3(Mathf.Lerp(x1, x2, (float)j / (trashCardList.Count - 1)), y, zPos), 0.35f);
+            }
+            yield return ws1;
+        }
+        ps.RemoveAllCard();
+        isThrowing = false;
+
+        if (ps.isMine) StartCoroutine(UpdateTotalUI(PTotalTxt,0,-1));
+        else
+        {
+            ETotalTxt.text = "0";
+            isMovable = true;
+        }
+    }
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            hit = Physics2D.Raycast(pos, Vector2.zero);
+
+            if (hit.transform != null)
+            {
+                if (hit.transform.CompareTag("Card"))
+                {
+                    Sprite spr = hit.transform.GetComponent<SpriteRenderer>().sprite;
+
+                    if(spr != ruleData.backSprite)  //앞면이라면
+                    {
+                        if (!cardImg.gameObject.activeSelf)
+                        {
+                            cardImg.sprite = spr;
+                            UIManager.Instance.ViewUI(0);
+                        }
+                    }
+                }
+            }
         }
     }
 }
