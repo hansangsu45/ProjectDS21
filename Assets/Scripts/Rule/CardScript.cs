@@ -8,7 +8,7 @@ public class CardScript : MonoBehaviour
     public JQK jqk = JQK.NONE;
 
     public SpriteRenderer spriteRenderer;
-    private Sprite firstSpr;
+    private Sprite firstSpr;  //카드의 앞면 스프라이트
 
     private Vector3 rot1;
     

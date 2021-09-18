@@ -27,6 +27,8 @@ public class GameManager : MonoSingleton<GameManager>
     public List<StageBtn> stageBtns = new List<StageBtn>();
     public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
     [SerializeField] private short maxViewStage=4; //이제 깨야할 스테이지 '포함'해서 그 스테이지부터 몇 단계(개)까지 보여줄지
+    public static string castleInfo;
+    public static string mainInfo;
 
     public SceneType scType;
 
@@ -135,6 +137,8 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene(sceneName);
     }
 
+    public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci);
+    public void MInfoToJson(long s, Sprite cSpr, Sprite sold, Sprite ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch));
     #region OnApplication
     private void OnApplicationQuit()
     {

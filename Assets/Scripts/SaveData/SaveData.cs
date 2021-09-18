@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 [Serializable]
 public class SaveData 
@@ -17,7 +18,7 @@ public class UserInfo
     public short clearId; //클리어한 단계중 가장 높은 단계
 
     public int hp;  //현재 자신 성의 체력 
-    public int maxHp;  //최대 체력 
+    public int maxHp=20;  //최대 체력 
 
     public long gold = 0;  //금화 
    
@@ -95,4 +96,32 @@ public class StageCastle
         this.maxCrop = sc.maxCrop; 
     }*/
     #endregion
+}
+
+[Serializable]
+public class CastleInfo
+{
+    public int hp = 20; 
+    public short leaderShip = 21;  //적의 통솔력 (이 값을 '초과'하면 디짐)
+    public short minLeaderShip = 16;  //적의 최소 카드 총합은 이 값이다
+    public Sprite castleSprite;  //성 스프라이트
+    public Sprite soldier;  // 일반 병사
+    public Sprite chief;  //1ㄷ1 일기토 병사 
+}
+
+[Serializable]
+public class MainInfo
+{
+    public long silver; //전투비용
+    public Sprite castleSprite;  //성 스프라이트
+    public Sprite soldier;  // 일반 병사
+    public Sprite chief;  //1ㄷ1 일기토 병사 
+
+    public MainInfo(long s, Sprite cSpr, Sprite sold, Sprite ch)
+    {
+        silver = s;
+        castleSprite = cSpr;
+        soldier = sold;
+        chief = ch;
+    }
 }

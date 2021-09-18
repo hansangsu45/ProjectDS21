@@ -8,6 +8,8 @@ public class StageBtn : MonoBehaviour
 
     private Button btn;
 
+    public CastleInfo cInfo;
+
     private void Awake()
     {
         btn = GetComponent<Button>();
