@@ -17,6 +17,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private List<int> scrPanelIdx;
     private Dictionary<int, bool> scrPanelDic = new Dictionary<int, bool>();
 
+    public Text systemText;
+
     private IEnumerator Start()
     {
         while (!GameManager.Instance.isReady) yield return lWs;    //yield return null;
@@ -79,6 +81,13 @@ public class UIManager : MonoSingleton<UIManager>
                 screenTouchPanelBtn.gameObject.SetActive(false);
             }).Play();
         }
+    }
+
+    public void OnSystemMsg(string msg, int fontSize=81)
+    {
+        systemText.fontSize = fontSize;
+        systemText.text = msg;
+        ViewUI(1);
     }
 
 }

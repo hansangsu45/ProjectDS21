@@ -48,7 +48,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     [SerializeField] private Text PTotalTxt, ETotalTxt;
     [SerializeField] private Button drawBtn;
-    [SerializeField] private Text moneyTxt;
+    [SerializeField] private Text moneyTxt, continueTxt;
     [SerializeField] private Image cardImg;
 
     private void Awake()
@@ -56,8 +56,9 @@ public class RuleManager : MonoSingleton<RuleManager>
         Transform t = transform.GetChild(0);
         orgCardPRS = new PRS(t.localPosition, t.localRotation, t.localScale);
         allCardList = new List<CardScript>(transform.GetComponentsInChildren<CardScript>());
-       
+
         for (int i = 0; i < jqkImgs.Length; i++) jqkImgs[i].sprite = ruleData.backSprite;
+        continueTxt.text = string.Format("계속하기({0}은화 필요)", ruleData.resapwnSilver);
     }
 
     private void OnEnable()
@@ -91,12 +92,12 @@ public class RuleManager : MonoSingleton<RuleManager>
         for(int i=0; i<jqkImgs.Length; i++)
         {
             yield return ws2;
-            int ran = Random.Range(40, 61);
+            int ran = Random.Range(30, 51);
             int num = 1;  //이 값이 for문을 돌고나서 랜덤값으로 지정될거임
 
             for(int j=0; j<ran; j++)
             {
-                yield return new WaitForSeconds(0.1f);  //나중에 점점 텍스트 변화하는 속도 줄여나갈거임. 일단은 고정치로
+                yield return new WaitForSeconds(0.1f);  //나중에 점점 텍스트 변화하는 속도 줄여나갈거임(시간 되면). 일단은 고정치로
                 num = num % 10 + 1;
                 jqkTexts[i].text = num.ToString();
             }
@@ -125,7 +126,8 @@ public class RuleManager : MonoSingleton<RuleManager>
             {
                 if(isGameStart && myCastle.silver < ruleData.drawSilver)
                 {
-                    //돈 부족 창 띄우기
+                    UIManager.Instance.OnSystemMsg("전투 비용이 부족합니다.");
+                    isMovable = true;
                     return;
                 }
 
@@ -155,6 +157,9 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     private void Shuffle()  //셔플 함수
     {
+        player.RemoveAllCard();
+        enemy.RemoveAllCard();
+        trashCardList.Clear();
         deckCardList.Clear();
         int i;
 
