@@ -59,7 +59,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void ViewUI(int num)
+    public void ViewUI(int num)  //스케일이 점점 변하는 애니메이션으로 적용
     {
         bool active = gameUIs[num].activeSelf;
 
