@@ -23,7 +23,10 @@ public class RuleManager : MonoSingleton<RuleManager>
     [SerializeField] private List<CardScript> deckCardList = new List<CardScript>();
     [SerializeField] private CastleInfo enemyCastle;
     [SerializeField] private MainInfo myCastle;
+    public CastleInfo EnemyCastle { get { return enemyCastle; } }
+    public MainInfo MyCastle { get { return myCastle; } }
     public CameraMove camMove;
+    public SoldierSpawner spawner;
 
     private RaycastHit2D hit;
 
@@ -289,7 +292,11 @@ public class RuleManager : MonoSingleton<RuleManager>
         seq.AppendCallback(() =>
         {
             cs.RotateCard();
-            if (ps.isMine) StartCoroutine(UpdateTotalUI(PTotalTxt, player.total, 1));
+            if (ps.isMine)
+            {
+                StartCoroutine(UpdateTotalUI(PTotalTxt, player.total, 1));
+                spawner.SpawnMySoldiers(cs.Value);
+            }
             else isMovable = true;
         }).Play();
 
@@ -346,7 +353,11 @@ public class RuleManager : MonoSingleton<RuleManager>
         ps.RemoveAllCard();
         isThrowing = false;
 
-        if (ps.isMine) StartCoroutine(UpdateTotalUI(PTotalTxt,0,-1));
+        if (ps.isMine)
+        {
+            spawner.ResetData(true);
+            StartCoroutine(UpdateTotalUI(PTotalTxt, 0, -1));
+        }
         else
         {
             isMovable = true;

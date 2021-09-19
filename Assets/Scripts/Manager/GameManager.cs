@@ -32,6 +32,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     public SceneType scType;
     public GameObject touchEffectPrefab;
+    public GameObject[] soldierPrefabs;
+    public GameObject[] chiefPrefabs;
+
+    public Dictionary<short, GameObject> idToSoldier = new Dictionary<short, GameObject>();
+    public Dictionary<short, GameObject> idToChief = new Dictionary<short, GameObject>();
 
     public string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
@@ -50,12 +55,20 @@ public class GameManager : MonoSingleton<GameManager>
         Screen.SetResolution(screenWidth, screenHeight, true);
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-
+        if (scType == SceneType.MAIN)
+        {
+            short i;
+            for(i=0; i<soldierPrefabs.Length; i++)
+                idToSoldier.Add(i, soldierPrefabs[i]);
+            for (i = 0; i < chiefPrefabs.Length; i++)
+                idToChief.Add(i, chiefPrefabs[i]);
+        }
     }
 
     private void CreatePool()
     {
         PoolManager.CreatePool<TouchEffect>(touchEffectPrefab, transform, 40);
+       
     }
 
     private void Start()
@@ -134,12 +147,17 @@ public class GameManager : MonoSingleton<GameManager>
         Save();
 
         PoolManager.ClearItem<TouchEffect>();
+        if (scType == SceneType.MAIN)
+        {
+            PoolManager.ClearItem<Soldier>();
+            PoolManager.ClearItem<Chief>();
+        }
 
         SceneManager.LoadScene(sceneName);
     }
 
     public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci);
-    public void MInfoToJson(long s, Sprite cSpr, Sprite sold, Sprite ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch));
+    public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch));
     #region OnApplication
     private void OnApplicationQuit()
     {

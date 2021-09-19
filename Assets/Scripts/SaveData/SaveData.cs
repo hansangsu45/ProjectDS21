@@ -105,8 +105,8 @@ public class CastleInfo
     public short leaderShip = 21;  //적의 통솔력 (이 값을 '초과'하면 디짐)
     public short minLeaderShip = 16;  //적의 최소 카드 총합은 이 값이다
     public Sprite castleSprite;  //성 스프라이트
-    public Sprite soldier;  // 일반 병사
-    public Sprite chief;  //1ㄷ1 일기토 병사 
+    public short soldier;  // 일반 병사
+    public short chief;  //1ㄷ1 일기토 병사 
 }
 
 [Serializable]
@@ -114,10 +114,10 @@ public class MainInfo
 {
     public long silver; //전투비용
     public Sprite castleSprite;  //성 스프라이트
-    public Sprite soldier;  // 일반 병사
-    public Sprite chief;  //1ㄷ1 일기토 병사 
+    public short soldier;  // 일반 병사
+    public short chief;  //1ㄷ1 일기토 병사 
 
-    public MainInfo(long s, Sprite cSpr, Sprite sold, Sprite ch)
+    public MainInfo(long s, Sprite cSpr, short sold, short ch)
     {
         silver = s;
         castleSprite = cSpr;

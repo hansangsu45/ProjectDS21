@@ -33,7 +33,7 @@ public class EffectManager : MonoSingleton<EffectManager>
                     Vector3 mPos = mainCam.ScreenToWorldPoint(Input.mousePosition) + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
 
                     TouchEffect te = PoolManager.GetItem<TouchEffect>();
-                    te.gameObject.SetActive(true);
+                    
                     te.spr.sprite = cardSprites[Random.Range(0, cardSprites.Length)];
                     te.transform.position = mPos;
                     te.transform.rotation = Quaternion.Euler(0, 0, Random.Range(-30f, 30f));
