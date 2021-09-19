@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="CardRuleData", menuName = "Scriptable Object/CardRuleData",order =int.MaxValue)]
 public class CardRuleData : ScriptableObject
 {
+    public Color noColor;
     public Sprite backSprite;  //카드 뒷면
     public float[] mixX;  //카드 섞을 때 화면에서 안보이는 쪽으로 이동 시킬건데 그 위치값의 x좌표 구간
     public float mixY;  //카드 섞을 때 화면에서 안보이는 쪽으로 이동 시킬건데 그 위치값의 y

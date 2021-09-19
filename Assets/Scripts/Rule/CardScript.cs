@@ -10,7 +10,7 @@ public class CardScript : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     private Sprite firstSpr;  //카드의 앞면 스프라이트
 
-    private Vector3 rot1;
+    private Vector3 rot1, rot2;
     
 
     private void Awake()
@@ -19,6 +19,7 @@ public class CardScript : MonoBehaviour
         firstSpr = spriteRenderer.sprite;
 
         rot1 = new Vector3(0, -90, 0);
+        rot2 = new Vector3(0, -180, 0);
     }
 
     public void SetSprite(bool back=true)
@@ -27,14 +28,14 @@ public class CardScript : MonoBehaviour
         else spriteRenderer.sprite = RuleManager.Instance.ruleData.backSprite;
     }
 
-    public void RotateCard()
+    public void RotateCard(bool front=true)
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOLocalRotate(rot1, 0.12f));
         seq.AppendCallback(() =>
         {
-            SetSprite(false);
-            transform.DOLocalRotate(Vector3.zero, 0.12f);
-        });
+            SetSprite(!front);
+            transform.DOLocalRotate(front? Vector3.zero: rot2, 0.12f);
+        }).Play();
     }
 }

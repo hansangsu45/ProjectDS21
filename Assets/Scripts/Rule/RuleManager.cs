@@ -23,33 +23,38 @@ public class RuleManager : MonoSingleton<RuleManager>
     [SerializeField] private List<CardScript> deckCardList = new List<CardScript>();
     [SerializeField] private CastleInfo enemyCastle;
     [SerializeField] private MainInfo myCastle;
+    public CameraMove camMove;
 
     private RaycastHit2D hit;
 
     public GameObject clickPrevObj;
-    public CanvasGroup jqkDecidePanel;
+    public CanvasGroup jqkDecidePanel, continuePanel, viewPanel;
     [SerializeField] private Image[] jqkImgs;
     [SerializeField] private Text[] jqkTexts;
 
     public CardRuleData ruleData;
     private float zPos = 0f;
     private bool isGameStart;  //reset후에 true
-    private bool isMovable;
-    private bool isThrowing = false;
-    private bool isMyTurn=true;
+    private bool isMovable;  //뭔가 행동 가능?
+    private bool isThrowing = false;  //내 카드 버리는 중임?
+    private bool isMyTurn;  //내 턴인지
+    private bool isCardTouch;  //카드 확대 가능?
+
     public Transform[] trashTrs;
     private Vector3 rot1 = new Vector3(0, -90, 0);
 
     private WaitForSeconds ws1 = new WaitForSeconds(0.8f);
     private WaitForSeconds ws2 = new WaitForSeconds(0.3f);
-    private WaitForSeconds ws3 = new WaitForSeconds(0.15f);
+    private WaitForSeconds ws3 = new WaitForSeconds(0.1f);
+    private WaitForSeconds ws4 = new WaitForSeconds(0.03f);
 
     public PRS orgCardPRS;
 
     [SerializeField] private Text PTotalTxt, ETotalTxt;
-    [SerializeField] private Button drawBtn;
+    [SerializeField] private Button drawBtn, stopBtn;
     [SerializeField] private Text moneyTxt, continueTxt;
     [SerializeField] private Image cardImg;
+    [SerializeField] private Text[] leftUpJQKTexts;
 
     private void Awake()
     {
@@ -92,12 +97,12 @@ public class RuleManager : MonoSingleton<RuleManager>
         for(int i=0; i<jqkImgs.Length; i++)
         {
             yield return ws2;
-            int ran = Random.Range(30, 51);
+            int ran = Random.Range(20, 41);
             int num = 1;  //이 값이 for문을 돌고나서 랜덤값으로 지정될거임
 
             for(int j=0; j<ran; j++)
             {
-                yield return new WaitForSeconds(0.1f);  //나중에 점점 텍스트 변화하는 속도 줄여나갈거임(시간 되면). 일단은 고정치로
+                yield return new WaitForSeconds(0.07f);  //나중에 점점 텍스트 변화하는 속도 줄여나갈거임(시간 되면). 일단은 고정치로
                 num = num % 10 + 1;
                 jqkTexts[i].text = num.ToString();
             }
@@ -108,17 +113,19 @@ public class RuleManager : MonoSingleton<RuleManager>
             {
                 jqkImgs[i].sprite = ruleData.jqkSpr[i];
                 jqkImgs[i].transform.DORotate(Vector3.zero, 0.12f);
-            });  //90도에서 스프라이트 변경하고 다시 0도로 회전
+            }).Play();  //90도에서 스프라이트 변경하고 다시 0도로 회전
             allCardList.FindAll(x => (int)x.jqk == i + 1).ForEach(y => y.Value = num);  //카드 리스트에서 모든 J(혹은 Q나 K)를 찾고 그 값을 위에서 정한 랜덤값으로
+            leftUpJQKTexts[i].text = num.ToString();
             yield return ws1;
         }
 
         jqkDecidePanel.DOFade(0, 0.4f);  //JQK패널 꺼짐
+        leftUpJQKTexts[0].transform.parent.parent.gameObject.SetActive(true);
     }
 
     public void DrawCard(bool isPlayer)  //드로우
     {
-        if (isMyTurn && isMovable && deckCardList.Count>0)
+        if ( (isMyTurn && isMovable && deckCardList.Count>0) || (!isMyTurn && !isPlayer) )
         {
             isMovable = false;
 
@@ -152,6 +159,9 @@ public class RuleManager : MonoSingleton<RuleManager>
         clickPrevObj.SetActive(true);
         isGameStart = false;
         isMovable = false;
+        isMyTurn = true;
+        isCardTouch = true;
+        stopBtn.interactable = true;
         StartCoroutine(StartGame());
     }
 
@@ -187,21 +197,21 @@ public class RuleManager : MonoSingleton<RuleManager>
 
         for(int i=0; i<allCardList.Count; i++)
         {
-            seq.Append(allCardList[i].transform.DOLocalMove(orgCardPRS.position, 0.06f));  //모든 카드가 덱으로
+            seq.Append(allCardList[i].transform.DOLocalMove(orgCardPRS.position, 0.05f));  //모든 카드가 덱으로
         }
         seq.Play();
 
         Shuffle();  
 
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(4);
 
         for (int i = 0; i < trashTrs.Length; i++)  //카드 6장 버리기
         {
             trashCardList.Add(deckCardList[0]);
             Transform t = deckCardList[0].transform;
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
-            t.DOLocalMove(trashTrs[i].localPosition,0.5f);
-            t.DOScale(ruleData.trashCardScale,0.5f);
+            t.DOLocalMove(trashTrs[i].localPosition,0.4f);
+            t.DOScale(ruleData.trashCardScale,0.4f);
             
             yield return ws1;
             deckCardList[0].RotateCard();
@@ -241,6 +251,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             txt.text = i.ToString();
         }
         isMovable = !isThrowing;
+        if(deckCardList.Count==0 && !isThrowing) StartCoroutine(DeckReShuffle());
     }
 
     private void SortCardList(PlayerScript ps, CardScript cs)  //카드를 추가하고 정렬한다
@@ -278,26 +289,28 @@ public class RuleManager : MonoSingleton<RuleManager>
         seq.AppendCallback(() =>
         {
             cs.RotateCard();
-            if (ps.isMine)
-                StartCoroutine(UpdateTotalUI(PTotalTxt, player.total,1));
-            else
-                isMovable = true;
+            if (ps.isMine) StartCoroutine(UpdateTotalUI(PTotalTxt, player.total, 1));
+            else isMovable = true;
         }).Play();
 
-        CheckLeadership(ps);
+        if(isMyTurn) CheckLeadership(ps);
     }
 
-    private void CheckLeadership(PlayerScript ps)
+    private void CheckLeadership(PlayerScript ps, bool second=false)
     {
         if (ps.isMine && ps.total > GameManager.Instance.savedData.userInfo.leadership)
         {
             isMovable = false;
             StartCoroutine(ThrowCard(ps));
         }
-        else if(!isMyTurn && ps.total > enemyCastle.leaderShip)
+        else if(!isMyTurn && ps.total > enemyCastle.leaderShip && second)
         {
             isMovable = false;
             StartCoroutine(ThrowCard(ps));
+        }
+        else if(deckCardList.Count==0 && !isMyTurn)
+        {
+            StartCoroutine(DeckReShuffle());
         }
     }
 
@@ -309,6 +322,12 @@ public class RuleManager : MonoSingleton<RuleManager>
         float y = trashTrs[0].localPosition.y;
         zPos = 0f;
         int count = ps.cardList.Count;
+        if (ps.isMine)
+        {
+            continuePanel.gameObject.SetActive(true);
+            continuePanel.DOFade(1, 3);
+        }
+        isCardTouch = false;
 
         yield return new WaitForSeconds(2.5f);
         for (int i = count-1; i>=0; i--)  //카드 전부 버리기
@@ -330,9 +349,138 @@ public class RuleManager : MonoSingleton<RuleManager>
         if (ps.isMine) StartCoroutine(UpdateTotalUI(PTotalTxt,0,-1));
         else
         {
-            ETotalTxt.text = "0";
             isMovable = true;
+            if (deckCardList.Count == 0) StartCoroutine(DeckReShuffle());
         }
+    }
+
+    public void Stop()
+    {
+        if (!isMyTurn) return;
+
+        isMyTurn = false;
+        stopBtn.interactable = false;
+        isCardTouch = false;
+
+        if (continuePanel.gameObject.activeSelf)
+        {
+            Sequence seq = DOTween.Sequence();
+            seq.Append(continuePanel.DOFade(0, 1));
+            seq.AppendCallback(() => continuePanel.gameObject.SetActive(false));
+            
+            isCardTouch = true;
+        }
+
+        StartCoroutine(EnemyAI());
+    }
+
+    public void ContinueGame()
+    {
+        if(myCastle.silver<ruleData.resapwnSilver)
+        {
+            UIManager.Instance.OnSystemMsg("은화가 부족합니다.");
+            return;
+        }
+
+        myCastle.silver -= ruleData.resapwnSilver;
+        moneyTxt.text = myCastle.silver.ToString();
+
+        Sequence seq = DOTween.Sequence();
+        
+        seq.Append( continuePanel.DOFade(0, 2) );
+        seq.AppendCallback(() => continuePanel.gameObject.SetActive(false));
+        seq.Play(); //이 줄은 빼도 시퀀스가 실행이 됨 (일단은 그냥 명시적으로 넣음)
+        isCardTouch = true;
+    }
+
+    private IEnumerator DeckReShuffle()
+    {
+        isMovable = false;
+        yield return ws2;
+        int i;
+
+        for(i=0; i<trashCardList.Count; i++)
+        {
+            deckCardList.Add(trashCardList[i]);
+            trashCardList[i].transform.DOLocalMove(new Vector3(Random.Range(ruleData.mixX[0], ruleData.mixX[1]), ruleData.mixY, 0), 0.04f);
+            trashCardList[i].RotateCard(false);
+            yield return ws4;
+        }
+
+        trashCardList.Clear();
+        yield return ws1;
+
+        for (i = 0; i < deckCardList.Count; i++)
+        {
+            deckCardList[i].transform.DOLocalMove(orgCardPRS.position, 0.04f);
+            deckCardList[i].transform.DOScale(orgCardPRS.scale, 0.03f);
+            yield return ws4;
+        }
+
+        for(i = 0; i<25; ++i)
+        {
+            int r1 = Random.Range(0, deckCardList.Count);
+            int r2 = Random.Range(0, deckCardList.Count);
+
+            CardScript temp = deckCardList[r1];
+            deckCardList[r1] = deckCardList[r2];
+            deckCardList[r2] = temp;
+        }
+
+        for (i = 0; i < trashTrs.Length; i++)  //카드 6장 버리기
+        {
+            trashCardList.Add(deckCardList[0]);
+            Transform t = deckCardList[0].transform;
+            t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
+            t.DOLocalMove(trashTrs[i].localPosition, 0.4f);
+            t.DOScale(ruleData.trashCardScale, 0.4f);
+
+            yield return ws2;
+            deckCardList[0].RotateCard();
+            deckCardList.RemoveAt(0);
+            yield return ws2;
+        }
+
+        isMovable = true;
+    }
+
+    private IEnumerator EnemyAI()
+    {
+        while (isThrowing) yield return null;
+
+        while(enemy.total<enemyCastle.minLeaderShip)
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            CheckLeadership(enemy);
+            yield return ws3;
+            while (!isMovable) yield return null;
+
+            DrawCard(false);
+            yield return ws3;
+            while (!isMovable) yield return null;
+        }
+
+        yield return ws1;
+        enemy.cardList[0].RotateCard();
+
+        yield return ws2;
+        CheckLeadership(enemy, true);
+        yield return ws3;
+        while (!isMovable) yield return null;
+
+        ETotalTxt.text = enemy.total.ToString();
+
+        yield return new WaitForSeconds(.5f);
+
+        if (cardImg.gameObject.activeSelf)
+        {
+            UIManager.Instance.ViewUI(0);
+        }
+        viewPanel.DOFade(0, 1.3f);
+        allCardList.ForEach(x=>x.spriteRenderer.DOColor(ruleData.noColor,1.1f));
+
+        yield return new WaitForSeconds(1.3f);
     }
 
     private void Update()
@@ -348,7 +496,7 @@ public class RuleManager : MonoSingleton<RuleManager>
                 {
                     Sprite spr = hit.transform.GetComponent<SpriteRenderer>().sprite;
 
-                    if(spr != ruleData.backSprite)  //앞면이라면
+                    if(spr != ruleData.backSprite && isCardTouch)  //앞면이라면
                     {
                         if (!cardImg.gameObject.activeSelf)
                         {
