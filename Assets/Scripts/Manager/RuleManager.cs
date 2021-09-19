@@ -117,6 +117,7 @@ public class RuleManager : MonoSingleton<RuleManager>
                 jqkImgs[i].sprite = ruleData.jqkSpr[i];
                 jqkImgs[i].transform.DORotate(Vector3.zero, 0.12f);
             }).Play();  //90도에서 스프라이트 변경하고 다시 0도로 회전
+            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_OVERTURN);
             allCardList.FindAll(x => (int)x.jqk == i + 1).ForEach(y => y.Value = num);  //카드 리스트에서 모든 J(혹은 Q나 K)를 찾고 그 값을 위에서 정한 랜덤값으로
             leftUpJQKTexts[i].text = num.ToString();
             yield return ws1;
@@ -474,6 +475,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
         yield return ws1;
         enemy.cardList[0].RotateCard();
+        ETotalTxt.text = enemy.total.ToString();
 
         yield return ws2;
         CheckLeadership(enemy, true);

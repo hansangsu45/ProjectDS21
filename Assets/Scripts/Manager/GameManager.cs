@@ -31,7 +31,7 @@ public class GameManager : MonoSingleton<GameManager>
     public static string mainInfo;
 
     public SceneType scType;
-    public GameObject touchEffectPrefab;
+    public GameObject touchEffectPrefab, soundPrefab;
     public GameObject[] soldierPrefabs;
     public GameObject[] chiefPrefabs;
 
@@ -68,7 +68,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void CreatePool()
     {
         PoolManager.CreatePool<TouchEffect>(touchEffectPrefab, transform, 40);
-       
+        PoolManager.CreatePool<SoundPrefab>(soundPrefab, transform, 12);
     }
 
     private void Start()
@@ -147,6 +147,7 @@ public class GameManager : MonoSingleton<GameManager>
         Save();
 
         PoolManager.ClearItem<TouchEffect>();
+        PoolManager.ClearItem<SoundPrefab>();
         if (scType == SceneType.MAIN)
         {
             PoolManager.ClearItem<Soldier>();

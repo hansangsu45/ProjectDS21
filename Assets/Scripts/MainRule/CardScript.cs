@@ -11,7 +11,7 @@ public class CardScript : MonoBehaviour
     private Sprite firstSpr;  //카드의 앞면 스프라이트
 
     private Vector3 rot1, rot2;
-    
+    private SoundPrefab soundObj;
 
     private void Awake()
     {
@@ -37,5 +37,8 @@ public class CardScript : MonoBehaviour
             SetSprite(!front);
             transform.DOLocalRotate(front? Vector3.zero: rot2, 0.12f);
         }).Play();
+
+        soundObj = PoolManager.GetItem<SoundPrefab>();
+        soundObj.PlaySound(SoundEffectType.CARD_OVERTURN);
     }
 }
