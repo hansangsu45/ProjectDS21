@@ -521,8 +521,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             UIManager.Instance.ViewUI(0);
         }
         //모든 UI와 카드를 투명하게 해주고 전투를 시작해준다
-        viewPanel.DOFade(0, 1.3f);
-        allCardList.ForEach(x=>x.spriteRenderer.DOColor(ruleData.noColor,1.1f));
+        FadeObj(true, 1.3f, 1.1f);
 
         yield return new WaitForSeconds(1.3f);
         spawner.BattleStart(enemy.total);
@@ -609,8 +608,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         yield return new WaitForSeconds(1);
         isDrawBattle = true;
 
-        viewPanel.DOFade(1, 1);
-        allCardList.ForEach(x => x.spriteRenderer.DOColor(Color.white, 1));
+        FadeObj(false, 1, 1);
         yield return ws1;
 
         isMyTurnInDraw = true;
@@ -641,5 +639,12 @@ public class RuleManager : MonoSingleton<RuleManager>
         spawner.DecideWinner(pValue, eValue);
         isDrawBattle = false;
         isMyTurnInDraw = false;
+    }
+
+    public void FadeObj(bool off, params float[] times)
+    {
+        viewPanel.DOFade(off?0:1, times[0]);
+        Color c = off ? ruleData.noColor : Color.white;
+        allCardList.ForEach(x => x.spriteRenderer.DOColor(c, times[1]));
     }
 }

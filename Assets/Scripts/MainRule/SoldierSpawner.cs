@@ -195,8 +195,28 @@ public class SoldierSpawner : MonoBehaviour  //스폰만 담당하려다가 룰 매니저가 �
 
         yield return RuleManager.Instance.DrawBattle();
         yield return new WaitForSeconds(0.3f);
-        
+
         //이긴 우두머리가 진 놈한테 가서 공격하고 진놈은 나가떨어지고 약간 후에 이긴 놈 사라지고 진놈의 모든 병사는 사라지고 이긴 놈이 성으로 가서 뎀지를 준다. 
+        Chief winner = isWin ? _chiefs[0] : _chiefs[1];
+        Chief loser = isWin ? _chiefs[1] : _chiefs[0];
+
+        Transform t = loser.transform;
+        float x = isWin ? -xInterval : xInterval;
+        winner.ani.SetBool(runBool, true);
+        winner.transform.DOLocalMove(new Vector2(t.localPosition.x + x,t.localPosition.y), 0.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        winner.ani.SetTrigger(atkTrigger);
+        yield return new WaitForSeconds(0.2f);
+
+        loser.Fall(new Vector2(loser.transform.localPosition.x, fallY), fallSpeed);
+        yield return new WaitForSeconds(0.6f);
+
+        winner.gameObject.SetActive(false);
+        Camera.main.cullingMask = -1;
+
+        RuleManager.Instance.FadeObj(true,1,1);
+        yield return new WaitForSeconds(0.8f);
     }
 
     public void DecideWinner(int p, int e)
