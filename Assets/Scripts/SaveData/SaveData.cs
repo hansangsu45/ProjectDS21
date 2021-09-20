@@ -107,6 +107,9 @@ public class CastleInfo
     public Sprite castleSprite;  //성 스프라이트
     public short soldier;  // 일반 병사
     public short chief;  //1ㄷ1 일기토 병사 
+
+    public long rewardSilver;  //은화 보상
+    public long rewardGold;  //금화 보상
 }
 
 [Serializable]

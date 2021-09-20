@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class SoldierSpawner : MonoBehaviour
+public class SoldierSpawner : MonoBehaviour  //스폰만 담당하려다가 룰 매니저가 너무 길어져서 배틀도 담당하는 스크립트
 {
     public Transform[] castleTr;
     public Transform[] spawnTr; //병사 옵젝들 담을 부모 옵젝. 나중에 병사들 움직일 때 걍 이것을 움직이면 됨
@@ -29,16 +29,24 @@ public class SoldierSpawner : MonoBehaviour
     public float soldierRotSpeed = 115f;
     public float fallSpeed = 10f;  //떨어지는 속도
 
+    [SerializeField] float[] drawX;  //무승부 떠서 일기토 할 때 소환될 X좌표
+    private int soldierLayer;
+    private Chief[] _chiefs = new Chief[2];
+
     private void Start()
     {
         GameObject soldier = GameManager.Instance.idToSoldier[RuleManager.Instance.MyCastle.soldier];
-        PoolManager.CreatePool<Soldier>(soldier, transform, 25);
+        PoolManager.CreatePool<Soldier>(soldier, transform, 35);
         playersStartPos[0] = spawnTr[0].position;
         playersStartPos[1] = spawnTr[1].position;
         runBool = Animator.StringToHash("run");
         atkTrigger = Animator.StringToHash("attack");
         dustScale = dust.transform.localScale;
         dust.transform.localScale = Vector3.zero;
+
+        GameObject chief = GameManager.Instance.idToChief[RuleManager.Instance.MyCastle.chief];
+        PoolManager.CreatePool<Chief>(chief, transform, 3);
+        soldierLayer = LayerMask.NameToLayer("Soldier");
     }
 
     public void SpawnMySoldiers(int count) //병사를 count만큼 소환
@@ -51,6 +59,18 @@ public class SoldierSpawner : MonoBehaviour
             float x = ( (soldierList.Count-1) / spawnLocalYArr.Length) * xInterval;
             soldier.InitSet(-1, new Vector2(spawnX[0], spawnLocalYArr[index]), new Vector2(firstX[0]-x,spawnLocalYArr[index]) );
             index = ++index % spawnLocalYArr.Length;
+        }
+    }
+
+    public void SpawnChief()
+    {
+        Camera.main.cullingMask = ~(1 << soldierLayer);
+        for(int i=0; i<2; i++)
+        {
+            Chief chief = PoolManager.GetItem<Chief>();
+            chief.transform.parent = spawnTr[0];  //귀찮으니 일단 적 우두머리도 플레이어 그룹에 넣어주자
+            chief.InitSet(i == 0 ? -1 : 1, new Vector2(drawX[i], fallY), new Vector2(drawX[i], spawnLocalYArr[3]));
+            _chiefs[i] = chief;
         }
     }
 
@@ -74,17 +94,24 @@ public class SoldierSpawner : MonoBehaviour
                 x.Fall(new Vector3(x.transform.localPosition.x, fallY), fallSpeed);
             });
         }
+        isDraw = false;
+        isWin = false;
         soldierList.Clear();
     }
 
     public void BattleStart(int enemyCount)
     {
         bFighting = true;
-        RuleManager.Instance.camMove.target = spawnTr[0];
         soldierList.ForEach(x => x.ani.SetBool(runBool, true));
 
         if (soldierList.Count == enemyCount) isDraw = true;
         else isWin = soldierList.Count > enemyCount ? true : false;
+
+        if(!isDraw)
+        {
+            RuleManager.Instance.camMove.SetMoveState(true);
+            RuleManager.Instance.camMove.target = spawnTr[0];
+        }
 
         index = 0;
         for (int i = 0; i < enemyCount; i++)
@@ -99,25 +126,28 @@ public class SoldierSpawner : MonoBehaviour
         }
 
         Sequence seq = DOTween.Sequence();
-        if (enemyCount > 0 && soldierList.Count > 0)
+        if (enemyCount > 0 && soldierList.Count > 0 && !isDraw)
         {
             seq.Append(spawnTr[0].DOMove(playersTarget.position, 2.7f));
             spawnTr[1].DOMove(playersTarget.position, 1.4f);
             seq.InsertCallback(2.8f, () => { dust.SetActive(true); dust.transform.DOScale(dustScale, 0.3f); });
             seq.AppendCallback(() => StartCoroutine(BattleCo())).Play();
         }
-        else if(enemyCount==0 && soldierList.Count > 0)
+        else if( (enemyCount==0 && soldierList.Count > 0) || (enemyCount > 0 && soldierList.Count == 0) )
         {
             StartCoroutine(BattleCo());
         }
-        else if(enemyCount>0 && soldierList.Count==0)
+        else if(isDraw && enemyCount>0)
+        {
+            StartCoroutine(DrawCo());
+        }
+        else if(isDraw && enemyCount==0)  //둘다 노데미지로 끝나는 무승부
         {
             StartCoroutine(BattleCo());
         }
-        else if(enemyCount==0 && soldierList.Count==0)
+        else
         {
-            spawnTr[1].position = playersTarget.position;
-            spawnTr[0].DOMove(playersTarget.position, 1.8f);
+            Debug.Log("예상하지 못한 예외처리");
         }
     }
 
@@ -127,37 +157,51 @@ public class SoldierSpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(0.3f, 0.7f));
 
-            enemySoldierList[0].Fall(GetRemoveTrm(false).position, fallSpeed);
+            enemySoldierList[0].Fall(GetRemoveTrm(false).position, fallSpeed, false);
             enemySoldierList[0].rotSpeed = -soldierRotSpeed;
-            soldierList[0].Fall(GetRemoveTrm(true).position, fallSpeed);
+            soldierList[0].Fall(GetRemoveTrm(true).position, fallSpeed, false);
             soldierList[0].rotSpeed = soldierRotSpeed;
 
             enemySoldierList.RemoveAt(0);
             soldierList.RemoveAt(0);
         }
 
-        dust.transform.DOScale(Vector3.zero, 0.25f);
-        yield return new WaitForSeconds(0.5f);
-        dust.SetActive(false);
+        if (!isDraw)
+        {
+            dust.transform.DOScale(Vector3.zero, 0.25f);
+            yield return new WaitForSeconds(0.5f);
+            dust.SetActive(false);
 
-        if(isDraw)
-        {
-            Debug.Log("무승부 일기토");
-        }
-        else
-        {
+            //이긴 쪽을 따라가서 이긴쪽이 성을 공격하고 데미지를 준다
             Transform winTr = isWin ? spawnTr[0] : spawnTr[1];
             RuleManager.Instance.camMove.target = winTr;
-            winTr.DOMove(castleTr[isWin?1:0].position, 2.5f);
+            winTr.DOMove(castleTr[isWin ? 1 : 0].position, 2.5f);
             yield return new WaitForSeconds(2.6f);
 
             List<Soldier> sList = isWin ? soldierList : enemySoldierList;
             sList.ForEach(x => x.ani.SetTrigger(atkTrigger));
+            yield return new WaitForSeconds(.4f);
             RuleManager.Instance.Damaged(isWin, sList.Count);
-            yield return new WaitForSeconds(2.5f);
-
-            ResetData(false);
         }
+        else RuleManager.Instance.Damaged(false, -1);
+
+        yield return new WaitForSeconds(2.5f);
+        ResetData(false);
+    }
+
+    private IEnumerator DrawCo()
+    {
+        SpawnChief();
+
+        yield return RuleManager.Instance.DrawBattle();
+        yield return new WaitForSeconds(0.3f);
+        
+        //이긴 우두머리가 진 놈한테 가서 공격하고 진놈은 나가떨어지고 약간 후에 이긴 놈 사라지고 진놈의 모든 병사는 사라지고 이긴 놈이 성으로 가서 뎀지를 준다. 
+    }
+
+    public void DecideWinner(int p, int e)
+    {
+        isWin = p > e;
     }
 
     /*private int GetMinCount()

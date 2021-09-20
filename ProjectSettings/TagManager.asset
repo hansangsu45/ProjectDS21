@@ -5,10 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Card
-  - Ground
-  - Block
   - Enemy
   - Castle
+  - Soldier
+  - Chief
   layers:
   - Default
   - TransparentFX
@@ -20,8 +20,8 @@ TagManager:
   - Player
   - Enemy
   - Castle
-  - 
-  - 
+  - Soldier
+  - Chief
   - 
   - 
   - 

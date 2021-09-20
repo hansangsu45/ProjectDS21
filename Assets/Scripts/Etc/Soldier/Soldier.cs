@@ -6,7 +6,7 @@ public class Soldier : MonoBehaviour
     public Animator ani;
     public float rotSpeed = 0f;
 
-    protected bool isMoving = false;
+    protected bool isMoving = false, isLocal;
     protected Vector3 target;
     protected float moveSpeed;
 
@@ -25,23 +25,37 @@ public class Soldier : MonoBehaviour
     {
         transform.Rotate(Vector3.forward * rotSpeed * Time.deltaTime);
 
-        if(isMoving)
+        if(isMoving) //어쩔 수 없다.. 편하게 간다..
         {
-            dir = target - transform.localPosition;
-            transform.localPosition += dir.normalized * moveSpeed * Time.deltaTime;
-
-            if((transform.localPosition-target).sqrMagnitude<=0.64f)
+            if (isLocal)
             {
-                gameObject.SetActive(false);
+                dir = target - transform.localPosition;
+                transform.localPosition += dir.normalized * moveSpeed * Time.deltaTime;
+
+                if ((transform.localPosition - target).sqrMagnitude <= 0.64f)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                dir = target - transform.position;
+                transform.position += dir.normalized * moveSpeed * Time.deltaTime;
+
+                if ((transform.position - target).sqrMagnitude <= 0.64f)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
 
-    public void Fall(Vector3 target, float speed)
+    public void Fall(Vector3 target, float speed, bool local=true)
     {
         this.target = target;
         moveSpeed = speed;
         isMoving = true;
+        isLocal = local;
     }
 
     protected void OnDisable()

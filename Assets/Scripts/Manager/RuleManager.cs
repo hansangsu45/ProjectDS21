@@ -42,6 +42,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     private bool isThrowing = false;  //내 카드 버리는 중임?
     private bool isMyTurn;  //내 턴인지
     private bool isCardTouch;  //카드 확대 가능?
+    private bool isDrawBattle=false, isMyTurnInDraw;
 
     public Transform[] trashTrs;
     private Vector3 rot1 = new Vector3(0, -90, 0);
@@ -54,10 +55,11 @@ public class RuleManager : MonoSingleton<RuleManager>
     public PRS orgCardPRS;
 
     [SerializeField] private Text PTotalTxt, ETotalTxt;
-    [SerializeField] private Button drawBtn, stopBtn;
+    [SerializeField] private Button drawBtn, stopBtn, stopBtn2;
     [SerializeField] private Text moneyTxt, continueTxt;
     [SerializeField] private Image cardImg;
     [SerializeField] private Text[] leftUpJQKTexts;
+    [SerializeField] Text[] hpTxt;
 
     private void Awake()
     {
@@ -78,6 +80,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     private IEnumerator Start()
     {
+        SetHpUI();
         allCardList.ForEach(x=>
         {
             x.SetSprite();
@@ -129,13 +132,13 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     public void DrawCard(bool isPlayer)  //드로우
     {
-        if ( (isMyTurn && isMovable && deckCardList.Count>0) || (!isMyTurn && !isPlayer) )
+        if ( (isMyTurn && isMovable && deckCardList.Count>0) || (!isMyTurn && !isPlayer) || (isMovable && isDrawBattle && isMyTurnInDraw) )
         {
             isMovable = false;
 
             if (isPlayer)
             {
-                if(isGameStart && myCastle.silver < ruleData.drawSilver)
+                if(isGameStart && myCastle.silver < ruleData.drawSilver && !isDrawBattle)
                 {
                     UIManager.Instance.OnSystemMsg("전투 비용이 부족합니다.");
                     isMovable = true;
@@ -143,7 +146,7 @@ public class RuleManager : MonoSingleton<RuleManager>
                 }
 
                 SortCardList(player, deckCardList[0]);
-                if (isGameStart)  //처음에 주는 카드 한 장은 무료이므로 이런 조건문 달아준다
+                if (isGameStart && !isDrawBattle)  //처음에 주는 카드 한 장은 무료이므로 이런 조건문 달아준다
                 {
                     myCastle.silver -= ruleData.drawSilver;
                     moneyTxt.text = myCastle.silver.ToString();
@@ -261,6 +264,12 @@ public class RuleManager : MonoSingleton<RuleManager>
         if(deckCardList.Count==0 && !isThrowing) StartCoroutine(DeckReShuffle());  // 
     }
 
+    void SetHpUI()
+    {
+        hpTxt[0].text = GameManager.Instance.savedData.userInfo.hp.ToString();
+        hpTxt[1].text = enemyCastle.hp.ToString();
+    }
+
     private void SortCardList(PlayerScript ps, CardScript cs)  //카드를 추가하고 정렬한다. 
     {
         Transform t = cs.transform;
@@ -298,10 +307,26 @@ public class RuleManager : MonoSingleton<RuleManager>
             cs.RotateCard();
             if (ps.isMine)
             {
-                StartCoroutine(UpdateTotalUI(PTotalTxt, player.total, 1));  //유저는 카드 합 텍스트가 순차적으로 변하게 보여주지만 적은 한 번에 바뀌므로 이렇게 구분함
-                spawner.SpawnMySoldiers(cs.Value);
+                if (!isDrawBattle)
+                {
+                    StartCoroutine(UpdateTotalUI(PTotalTxt, player.total, 1));  //유저는 카드 합 텍스트가 순차적으로 변하게 보여주지만 적은 한 번에 바뀌므로 이렇게 구분함
+                    spawner.SpawnMySoldiers(cs.Value);
+                }
+                else
+                {
+                    ps.total -= cs.Value;
+                    isMyTurnInDraw = false;
+                    isMovable = true;
+                }
             }
-            else isMovable = true;
+            else
+            {
+                if (isDrawBattle)
+                {
+                    ps.total -= cs.Value;
+                }
+                isMovable = true;
+            }
         }).Play();
 
         if(isMyTurn) CheckLeadership(ps);  //적 턴에서는 코루틴에서 해당 함수를 실행해주므로 유저 턴일 때만 실행
@@ -328,6 +353,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     private IEnumerator ThrowCard(PlayerScript ps)  //ps의 모든 카드를 버리기 (버리는 존으로 이동함)
     {
         isThrowing = true;
+        stopBtn2.interactable = false;
         float x1 = trashTrs[0].localPosition.x;
         float x2 = trashTrs[trashTrs.Length - 1].localPosition.x;
         float y = trashTrs[0].localPosition.y;
@@ -359,6 +385,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
         if (ps.isMine)
         {
+            stopBtn2.interactable = true;
             spawner.ResetData(true);
             StartCoroutine(UpdateTotalUI(PTotalTxt, 0, -1));
         }
@@ -499,19 +526,24 @@ public class RuleManager : MonoSingleton<RuleManager>
 
         yield return new WaitForSeconds(1.3f);
         spawner.BattleStart(enemy.total);
-        camMove.SetMoveState(true);
+        //camMove.SetMoveState(true);
     }
 
     public void Damaged(bool isEnemy, int damage)
     {
-        if (isEnemy)
+        if (damage > 0)
         {
-            enemyCastle.hp -= damage;
+            if (isEnemy)
+            {
+                enemyCastle.hp -= damage;
+            }
+            else
+            {
+                GameManager.Instance.savedData.userInfo.hp -= damage;
+            }
         }
-        else
-        {
-            GameManager.Instance.savedData.userInfo.hp -= damage;
-        }
+
+        CheckDie();
 
         allCardList.ForEach(x =>
         {
@@ -524,6 +556,26 @@ public class RuleManager : MonoSingleton<RuleManager>
         viewPanel.DOFade(1, 1.2f);
         ResetGame();
         camMove.SetMoveState(false);
+        SetHpUI();
+    }
+
+    private void CheckDie()
+    {
+        if (GameManager.Instance.savedData.userInfo.hp <= 0)
+        {
+            GameManager.Instance.savedData.userInfo.hp = 0;
+            EndGame(false);
+        }
+        else if (enemyCastle.hp <= 0)
+        {
+            enemyCastle.hp = 0;
+            EndGame(true);
+        }
+    }
+
+    private void EndGame(bool win)
+    {
+        Debug.Log("게임 종료");
     }
 
     private void Update()
@@ -550,5 +602,44 @@ public class RuleManager : MonoSingleton<RuleManager>
                 }
             }
         }
+    }
+
+    public IEnumerator DrawBattle()
+    {
+        yield return new WaitForSeconds(1);
+        isDrawBattle = true;
+
+        viewPanel.DOFade(1, 1);
+        allCardList.ForEach(x => x.spriteRenderer.DOColor(Color.white, 1));
+        yield return ws1;
+
+        isMyTurnInDraw = true;
+        int pValue=0, eValue=0;
+
+        while(pValue==eValue)
+        {
+            isMovable = true;
+            CheckLeadership(enemy); //카드가 비었는지만 체크하자(내 턴)
+            while (!isMovable) yield return null;
+
+            while (isMyTurnInDraw) yield return ws3;
+            pValue = player.cardList[player.cardList.Count - 1].Value;
+            yield return ws2;
+
+            isMovable = true;
+            CheckLeadership(enemy); //카드가 비었는지만 체크하자(적 턴)
+            while (!isMovable) yield return null;
+            yield return ws3;
+
+            DrawCard(false);
+            while (!isMovable) yield return ws3;
+            eValue = enemy.cardList[enemy.cardList.Count - 1].Value;
+
+            if (eValue == pValue) isMyTurnInDraw = true;
+        }
+
+        spawner.DecideWinner(pValue, eValue);
+        isDrawBattle = false;
+        isMyTurnInDraw = false;
     }
 }
