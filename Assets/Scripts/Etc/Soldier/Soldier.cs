@@ -6,21 +6,22 @@ public class Soldier : MonoBehaviour
     public Animator ani;
     public float rotSpeed = 0f;
 
-    private bool isMoving = false;
-    private Vector3 target;
-    private float moveSpeed;
+    protected bool isMoving = false;
+    protected Vector3 target;
+    protected float moveSpeed;
 
-    Vector3 dir;
+    protected Vector3 dir;
 
-    public void InitSet(int scaleX, Vector2 localPos, Vector2 target)
+    public void InitSet(int scaleX, Vector2 localPos, Vector2 target, bool targetToMove=true)
     {
         transform.localScale = new Vector2(scaleX, 1);
         transform.localPosition = localPos;
 
-        transform.DOLocalMove(target, 0.6f);
+        if(targetToMove)
+           transform.DOLocalMove(target, 0.6f);
     }
 
-    private void Update()
+    protected void Update()
     {
         transform.Rotate(Vector3.forward * rotSpeed * Time.deltaTime);
 
@@ -43,9 +44,10 @@ public class Soldier : MonoBehaviour
         isMoving = true;
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         rotSpeed = 0;
         isMoving = false;
+        transform.localRotation = Quaternion.identity;
     }
 }

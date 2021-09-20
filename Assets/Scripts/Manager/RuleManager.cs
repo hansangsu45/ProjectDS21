@@ -196,6 +196,8 @@ public class RuleManager : MonoSingleton<RuleManager>
     {
         yield return new WaitForSeconds(1.5f);
         jqkDecidePanel.gameObject.SetActive(false);
+        ETotalTxt.text = "??";
+        PTotalTxt.text = "0";
 
         Sequence seq = DOTween.Sequence();
 
@@ -369,7 +371,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     public void Stop()
     {
-        if (!isMyTurn) return;
+        if (!isMyTurn || !isMovable) return;
 
         isMyTurn = false;
         stopBtn.interactable = false;
@@ -496,6 +498,32 @@ public class RuleManager : MonoSingleton<RuleManager>
         allCardList.ForEach(x=>x.spriteRenderer.DOColor(ruleData.noColor,1.1f));
 
         yield return new WaitForSeconds(1.3f);
+        spawner.BattleStart(enemy.total);
+        camMove.SetMoveState(true);
+    }
+
+    public void Damaged(bool isEnemy, int damage)
+    {
+        if (isEnemy)
+        {
+            enemyCastle.hp -= damage;
+        }
+        else
+        {
+            GameManager.Instance.savedData.userInfo.hp -= damage;
+        }
+
+        allCardList.ForEach(x =>
+        {
+            x.transform.localScale = orgCardPRS.scale;
+            x.SetSprite();
+            x.spriteRenderer.color = Color.white;
+            x.transform.localPosition = new Vector3(Random.Range(ruleData.mixX[0], ruleData.mixX[1]), ruleData.mixY, 0);
+        });
+
+        viewPanel.DOFade(1, 1.2f);
+        ResetGame();
+        camMove.SetMoveState(false);
     }
 
     private void Update()
