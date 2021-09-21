@@ -142,8 +142,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void ChangeScene(string sceneName)
     {
-        //∆‰¿ÃµÂ æ∆øÙ
-
+        UIManager.Instance.FadeInOut(false);  
+        
         Save();
 
         PoolManager.ClearItem<TouchEffect>();
@@ -154,7 +154,13 @@ public class GameManager : MonoSingleton<GameManager>
             PoolManager.ClearItem<Chief>();
         }
 
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(ChangeDelay(sceneName));
+    }
+
+    IEnumerator ChangeDelay(string _name)
+    {
+        yield return new WaitForSeconds(1.2f);
+        SceneManager.LoadScene(_name);
     }
 
     public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci);

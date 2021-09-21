@@ -31,7 +31,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     private RaycastHit2D hit;
 
     public GameObject clickPrevObj;
-    public CanvasGroup jqkDecidePanel, continuePanel, viewPanel;
+    public CanvasGroup jqkDecidePanel, continuePanel, viewPanel, resultCvsg;
     [SerializeField] private Image[] jqkImgs;
     [SerializeField] private Text[] jqkTexts;
 
@@ -56,7 +56,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     [SerializeField] private Text PTotalTxt, ETotalTxt;
     [SerializeField] private Button drawBtn, stopBtn, stopBtn2;
-    [SerializeField] private Text moneyTxt, continueTxt;
+    [SerializeField] private Text moneyTxt, continueTxt, resultTxt;
     [SerializeField] private Image cardImg;
     [SerializeField] private Text[] leftUpJQKTexts;
     [SerializeField] Text[] hpTxt;
@@ -574,7 +574,9 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     private void EndGame(bool win)
     {
-        Debug.Log("게임 종료");
+        resultCvsg.gameObject.SetActive(true);
+        resultCvsg.DOFade(1, 1.5f);
+        resultTxt.text = win ? "승리하였습니다" : "패배하였습니다";
     }
 
     private void Update()

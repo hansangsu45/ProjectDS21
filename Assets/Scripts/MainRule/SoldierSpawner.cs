@@ -216,7 +216,22 @@ public class SoldierSpawner : MonoBehaviour  //스폰만 담당하려다가 룰 매니저가 �
         Camera.main.cullingMask = -1;
 
         RuleManager.Instance.FadeObj(true,1,1);
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.9f);
+
+        RuleManager.Instance.camMove.SetMoveState(true);
+        if (isWin)
+        {
+            enemySoldierList.ForEach(x => x.gameObject.SetActive(false));
+            enemySoldierList.Clear();
+        }
+        else
+        {
+            soldierList.ForEach(x => x.gameObject.SetActive(false));
+            soldierList.Clear();
+        }
+        isDraw = false;
+
+        StartCoroutine(BattleCo());
     }
 
     public void DecideWinner(int p, int e)
