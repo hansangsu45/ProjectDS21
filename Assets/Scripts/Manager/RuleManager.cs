@@ -67,7 +67,8 @@ public class RuleManager : MonoSingleton<RuleManager>
         orgCardPRS = new PRS(t.localPosition, t.localRotation, t.localScale);
         allCardList = new List<CardScript>(transform.GetComponentsInChildren<CardScript>());
 
-        for (int i = 0; i < jqkImgs.Length; i++) jqkImgs[i].sprite = ruleData.backSprite;
+        //for (int i = 0; i < jqkImgs.Length; i++) jqkImgs[i].sprite = ruleData.backSprite;
+        for (int i = 0; i < jqkImgs.Length; i++) jqkImgs[i].sprite = ruleData.jqkSpr[i];
         continueTxt.text = string.Format("계속하기({0}은화 필요)", ruleData.resapwnSilver);
     }
 
@@ -113,14 +114,14 @@ public class RuleManager : MonoSingleton<RuleManager>
                 jqkTexts[i].text = num.ToString();
             }
 
-            Sequence seq = DOTween.Sequence();
+            /*Sequence seq = DOTween.Sequence();
             seq.Append( jqkImgs[i].transform.DORotate(rot1, 0.12f));  //카드 회전 효과
             seq.AppendCallback(() =>
             {
                 jqkImgs[i].sprite = ruleData.jqkSpr[i];
                 jqkImgs[i].transform.DORotate(Vector3.zero, 0.12f);
-            }).Play();  //90도에서 스프라이트 변경하고 다시 0도로 회전
-            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_OVERTURN);  //뒤집는 소리
+            }).Play();*/  //90도에서 스프라이트 변경하고 다시 0도로 회전
+            //PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_OVERTURN);  //뒤집는 소리
             allCardList.FindAll(x => (int)x.jqk == i + 1).ForEach(y => y.Value = num);  //카드 리스트에서 모든 J(혹은 Q나 K)를 찾고 그 값을 위에서 정한 랜덤값으로
             leftUpJQKTexts[i].text = num.ToString();  
             yield return ws1;
@@ -490,7 +491,10 @@ public class RuleManager : MonoSingleton<RuleManager>
     {
         while (isThrowing) yield return null;
 
-        while(enemy.total<enemyCastle.minLeaderShip)
+        yield return ws1;
+        enemy.cardList[0].RotateCard();  //처음에 뒤집은 카드를 이제 오픈
+
+        while (enemy.total<enemyCastle.minLeaderShip)
         {
             yield return new WaitForSeconds(1.5f);
 
@@ -503,8 +507,6 @@ public class RuleManager : MonoSingleton<RuleManager>
             while (!isMovable) yield return null;
         }
 
-        yield return ws1;
-        enemy.cardList[0].RotateCard();  //처음에 뒤집은 카드를 이제 오픈
         ETotalTxt.text = enemy.total.ToString();
 
         yield return ws2;
