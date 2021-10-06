@@ -168,7 +168,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         isGameStart = false;
         isMovable = false;
         isMyTurn = true;
-        isCardTouch = true;
+        isCardTouch = false;
         stopBtn.interactable = true;
         StartCoroutine(StartGame());
     }
@@ -200,7 +200,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     {
         yield return new WaitForSeconds(1.5f);
         jqkDecidePanel.gameObject.SetActive(false);
-        ETotalTxt.text = "??";
+        ETotalTxt.text = "0";
         PTotalTxt.text = "0";
 
         Sequence seq = DOTween.Sequence();
@@ -245,11 +245,14 @@ public class RuleManager : MonoSingleton<RuleManager>
         isMovable = true;
         DrawCard(false);
         while (!isMovable) yield return null;
+        ETotalTxt.text = (enemy.total - enemy.cardList[0].Value).ToString();
+
         DrawCard(true);
         while (!isMovable) yield return null;
         yield return new WaitForSeconds(1);
         clickPrevObj.SetActive(false);
 
+        isCardTouch = true;
         isGameStart = true;
     }
 
@@ -493,6 +496,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
         yield return ws1;
         enemy.cardList[0].RotateCard();  //처음에 뒤집은 카드를 이제 오픈
+        ETotalTxt.text = enemy.total.ToString();
 
         while (enemy.total<enemyCastle.minLeaderShip)
         {
@@ -504,6 +508,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
             DrawCard(false);
             yield return ws3;
+            ETotalTxt.text = enemy.total.ToString();
             while (!isMovable) yield return null;
         }
 

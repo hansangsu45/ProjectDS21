@@ -3043,12 +3043,12 @@ MonoBehaviour:
   - {fileID: 1218578655}
   - {fileID: 235927056}
   spawnLocalYArr:
-  - -2.73
-  - -1.30443
-  - 0.08442998
-  - 1.51
+  - -2.7
+  - -1.6
+  - -0.5
+  - 0.6
   fallY: -8.73
-  xInterval: 1.2642225
+  xInterval: 0.5
   firstX:
   - -0.15
   - 0.15
@@ -10382,7 +10382,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ??
+  m_Text: 0
 --- !u!222 &1632059938
 CanvasRenderer:
   m_ObjectHideFlags: 0
