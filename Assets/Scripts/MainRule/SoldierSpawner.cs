@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class SoldierSpawner : MonoBehaviour  //스폰만 담당하려다가 룰 매니저가 너무 길어져서 배틀도 담당하는 스크립트
 {
+    [SerializeField] private CameraMove camMove;
+
     public Transform[] castleTr;
     public Transform[] spawnTr; //병사 옵젝들 담을 부모 옵젝. 나중에 병사들 움직일 때 걍 이것을 움직이면 됨
     public Transform playersTarget; //병사들 전체를 움직일 때의 타겟 위치
@@ -180,11 +182,15 @@ public class SoldierSpawner : MonoBehaviour  //스폰만 담당하려다가 룰 매니저가 �
 
             List<Soldier> sList = isWin ? soldierList : enemySoldierList;
             sList.ForEach(x => x.ani.SetTrigger(atkTrigger));
-            yield return new WaitForSeconds(.4f);
+            camMove.ShakeCamera(0.3f, 2.5f);
+            yield return new WaitForSeconds(2f);
             RuleManager.Instance.Damaged(isWin, sList.Count);
         }
-        else RuleManager.Instance.Damaged(false, -1);
-
+        else
+        {
+            yield return new WaitForSeconds(1.5f);
+            RuleManager.Instance.Damaged(false, -1);
+        }
         yield return new WaitForSeconds(2.5f);
         ResetData(false);
     }

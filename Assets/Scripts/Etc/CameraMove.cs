@@ -1,7 +1,9 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraMove : MonoBehaviour
 {
+    private Camera cam;
     public Transform target;
     private bool isMoving = false;
     [SerializeField] private float speed = 10f;
@@ -10,6 +12,7 @@ public class CameraMove : MonoBehaviour
 
     private void Awake()
     {
+        cam = GetComponent<Camera>();
         orgPos = transform.position;
     }
 
@@ -29,4 +32,9 @@ public class CameraMove : MonoBehaviour
     }
 
     public void SetMoveState(bool move) => isMoving = move;
+
+    public void ShakeCamera(float duration, float strength)
+    {
+        cam.DOShakePosition(duration, strength);
+    }
 }

@@ -258,14 +258,28 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     private IEnumerator UpdateTotalUI(Text txt ,int target, int j)  //카드 총합 업데이트  j는 1이나 -1로 받아서 카드의 합이 증가하거나 감소할 때 둘다 처리 가능하게 한다
     {
+        bool cMove = false;
+        int limit = GameManager.Instance.savedData.userInfo.leadership;
+
         int current = int.Parse(txt.text);
         for(int i=current; i!=target+j; i+=j)  
         {
             yield return ws3;
             txt.text = i.ToString();
+            if(j==1 && !cMove && int.Parse(txt.text)>limit)
+            {
+                cMove = true;
+                camMove.ShakeCamera(0.4f, 2.6f);
+                txt.DOColor(Color.red, 0.7f);
+            }
         }
         isMovable = !isThrowing;  //카드를 버리는 중에는 false를 계속 유지해야하므로 이렇게
         if(deckCardList.Count==0 && !isThrowing) StartCoroutine(DeckReShuffle());  // 
+        if (cMove)
+        {
+            yield return new WaitForSeconds(0.7f);
+            txt.DOColor(ruleData.totalTxtColor, 0.5f);
+        }
     }
 
     void SetHpUI()
@@ -498,6 +512,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         enemy.cardList[0].RotateCard();  //처음에 뒤집은 카드를 이제 오픈
         ETotalTxt.text = enemy.total.ToString();
 
+        bool cMove = false;
         while (enemy.total<enemyCastle.minLeaderShip)
         {
             yield return new WaitForSeconds(1.5f);
@@ -509,10 +524,16 @@ public class RuleManager : MonoSingleton<RuleManager>
             DrawCard(false);
             yield return ws3;
             ETotalTxt.text = enemy.total.ToString();
+            if(!cMove && enemy.total>enemyCastle.leaderShip)
+            {
+                cMove = true;
+                camMove.ShakeCamera(0.4f, 2.6f);
+                ETotalTxt.DOColor(Color.red, 0.7f);
+            }
             while (!isMovable) yield return null;
         }
 
-        ETotalTxt.text = enemy.total.ToString();
+        //ETotalTxt.text = enemy.total.ToString();
 
         yield return ws2;
         CheckLeadership(enemy, true);  //적의 카드 합이 통솔력 넘으면 카드 전부 버리게 함
@@ -522,6 +543,10 @@ public class RuleManager : MonoSingleton<RuleManager>
         ETotalTxt.text = enemy.total.ToString();
 
         yield return new WaitForSeconds(.5f);  //0.5초 대기
+        if (cMove)
+        {
+            ETotalTxt.DOColor(ruleData.totalTxtColor, 0.5f);
+        }
 
         if (cardImg.gameObject.activeSelf)
         {

@@ -3023,6 +3023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b14eaa4c4ee9e54296b964b35f03667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camMove: {fileID: 769656961}
   castleTr:
   - {fileID: 1038164715}
   - {fileID: 1284764558}
