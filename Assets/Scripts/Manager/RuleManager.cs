@@ -202,6 +202,8 @@ public class RuleManager : MonoSingleton<RuleManager>
         jqkDecidePanel.gameObject.SetActive(false);
         ETotalTxt.text = "0";
         PTotalTxt.text = "0";
+        ETotalTxt.color = ruleData.totalTxtColor;
+        PTotalTxt.color = ruleData.totalTxtColor;
 
         Sequence seq = DOTween.Sequence();
 
@@ -279,6 +281,10 @@ public class RuleManager : MonoSingleton<RuleManager>
         {
             yield return new WaitForSeconds(0.7f);
             txt.DOColor(ruleData.totalTxtColor, 0.5f);
+        }
+        else if (player.total == limit)
+        {
+            txt.DOColor(Color.yellow, 0.3f);
         }
     }
 
@@ -541,6 +547,10 @@ public class RuleManager : MonoSingleton<RuleManager>
         while (!isMovable) yield return null;
 
         ETotalTxt.text = enemy.total.ToString();
+        if(enemy.total == enemyCastle.leaderShip)
+        {
+            ETotalTxt.color = Color.yellow;
+        }
 
         yield return new WaitForSeconds(.5f);  //0.5√  ¥Î±‚
         if (cMove)

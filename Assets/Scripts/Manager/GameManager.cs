@@ -35,6 +35,8 @@ public class GameManager : MonoSingleton<GameManager>
     public GameObject[] soldierPrefabs;
     public GameObject[] chiefPrefabs;
 
+    [SerializeField] private float nxSpeed = 1f;
+
     public Dictionary<short, GameObject> idToSoldier = new Dictionary<short, GameObject>();
     public Dictionary<short, GameObject> idToChief = new Dictionary<short, GameObject>();
 
@@ -161,6 +163,17 @@ public class GameManager : MonoSingleton<GameManager>
     {
         yield return new WaitForSeconds(1.2f);
         SceneManager.LoadScene(_name);
+    }
+
+    public void GameSpeedUP(float speed=-1f)
+    {
+        if (speed<0)
+        {
+            Time.timeScale = 1;
+            return;
+        }
+
+        Time.timeScale = speed;
     }
 
     public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci);
