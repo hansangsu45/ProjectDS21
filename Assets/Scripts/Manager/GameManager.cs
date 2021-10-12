@@ -40,6 +40,9 @@ public class GameManager : MonoSingleton<GameManager>
     public Dictionary<short, GameObject> idToSoldier = new Dictionary<short, GameObject>();
     public Dictionary<short, GameObject> idToChief = new Dictionary<short, GameObject>();
 
+    private List<Vector3> startPos = new List<Vector3>();
+    private List<Vector3> startRot = new List<Vector3>();
+
     public string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
     private void Awake()
@@ -60,6 +63,17 @@ public class GameManager : MonoSingleton<GameManager>
         if (scType == SceneType.MAIN)
         {
             short i;
+
+            GameObject o = Instantiate(soldierPrefabs[0]);
+            List <Transform> trList = new List<Transform>(o.GetComponentsInChildren<Transform>());
+            trList.RemoveAt(0);
+            for(i=0; i<trList.Count; i++)
+            {
+                startPos.Add(trList[i].localPosition);
+                startRot.Add(trList[i].localRotation.eulerAngles);
+            }
+            Destroy(o);
+
             for(i=0; i<soldierPrefabs.Length; i++)
                 idToSoldier.Add(i, soldierPrefabs[i]);
             for (i = 0; i < chiefPrefabs.Length; i++)
@@ -174,6 +188,15 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         Time.timeScale = speed;
+    }
+
+    public void ResetSoldier(Transform[] trList)
+    {
+        for(int i=1; i<trList.Length; i++)
+        {
+            trList[i].localPosition = startPos[i - 1];
+            trList[i].localRotation = Quaternion.Euler(startRot[i - 1]);
+        }
     }
 
     public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci);

@@ -63,5 +63,6 @@ public class Soldier : MonoBehaviour
         rotSpeed = 0;
         isMoving = false;
         transform.localRotation = Quaternion.identity;
+        GameManager.Instance.ResetSoldier(GetComponentsInChildren<Transform>());
     }
 }
