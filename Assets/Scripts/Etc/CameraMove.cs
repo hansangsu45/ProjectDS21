@@ -10,10 +10,17 @@ public class CameraMove : MonoBehaviour
 
     private Vector3 orgPos;
 
+    public Vector2 posMin, posMax;
+
     private void Awake()
     {
         cam = GetComponent<Camera>();
         orgPos = transform.position;
+    }
+
+    private void Update()
+    {
+        PositionList();    
     }
 
     private void LateUpdate()
@@ -36,5 +43,12 @@ public class CameraMove : MonoBehaviour
     public void ShakeCamera(float duration, float strength)
     {
         cam.DOShakePosition(duration, strength);
+    }
+
+    private void PositionList()
+    {
+        float X = Mathf.Clamp(transform.position.x, posMin.x, posMax.x);
+        float Y = Mathf.Clamp(transform.position.y, posMin.y, posMax.y);
+        transform.position = new Vector3(X, Y, -10);
     }
 }
