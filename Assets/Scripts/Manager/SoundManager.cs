@@ -3,7 +3,8 @@ using UnityEngine;
 
 public enum SoundEffectType
 {
-    CARD_OVERTURN
+    CARD_OVERTURN,
+    CARD_TAKEOUT
 }
 
 public class SoundManager : MonoSingleton<SoundManager>

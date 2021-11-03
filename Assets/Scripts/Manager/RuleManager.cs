@@ -12,6 +12,14 @@ public enum JQK
     K
 }
 
+public enum Shape
+{
+    CLOVER,
+    HEART,
+    DIAMOND,
+    SPADE
+}
+
 public class RuleManager : MonoSingleton<RuleManager>
 {
     public bool isReady = false;
@@ -136,6 +144,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         if ( (isMyTurn && isMovable && deckCardList.Count>0) || (!isMyTurn && !isPlayer) || (isMovable && isDrawBattle && isMyTurnInDraw) )
         {
             isMovable = false;
+            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
 
             if (isPlayer)
             {
@@ -220,6 +229,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         for (int i = 0; i < trashTrs.Length; i++)  //카드 6장 버리기
         {
             trashCardList.Add(deckCardList[0]);
+            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
             Transform t = deckCardList[0].transform;
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
             t.DOLocalMove(trashTrs[i].localPosition,0.4f);
@@ -236,6 +246,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             t2.localPosition = new Vector3(t2.localPosition.x, t2.localPosition.y, -0.01f);
             t2.DOLocalMove(enemy.cardTrs[0].localPosition, 0.4f);
             t2.DOScale(ruleData.cardScale, 0.4f);
+            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
 
             yield return ws1;
             enemy.AddCard(deckCardList[0]);
@@ -399,6 +410,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             t.DOScale(ruleData.trashCardScale, 0.3f);
             for(int j=0; j<trashCardList.Count; j++)
             {
+                PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
                 zPos -= 0.01f;
                 trashCardList[j].transform.DOLocalMove(new Vector3(Mathf.Lerp(x1, x2, (float)j / (trashCardList.Count - 1)), y, zPos), 0.35f);
             }

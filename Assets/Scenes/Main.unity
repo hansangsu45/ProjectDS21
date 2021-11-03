@@ -3836,8 +3836,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583002575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.86, y: 0.19, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 21.964, y: 0.19, z: 0}
+  m_LocalScale: {x: 2, y: 2.2, z: 1}
   m_Children: []
   m_Father: {fileID: 922338283}
   m_RootOrder: 1
@@ -6747,7 +6747,7 @@ Transform:
   m_GameObject: {fileID: 1113130744}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.22, y: 0.19, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 2.2, y: 2.2, z: 1}
   m_Children: []
   m_Father: {fileID: 922338283}
   m_RootOrder: 0
@@ -7084,6 +7084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectClips:
   - {fileID: 8300000, guid: b174bc59834860d48a6bb57c29cbed3a, type: 3}
+  - {fileID: 8300000, guid: 02af32bc18db8fe419aa443d7cd3f0c8, type: 3}
 --- !u!1 &1149971511
 GameObject:
   m_ObjectHideFlags: 0
@@ -9863,8 +9864,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452083195}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42.940002, y: 0.19, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 44.044003, y: 0.19, z: 0}
+  m_LocalScale: {x: 2, y: 2.2, z: 1}
   m_Children: []
   m_Father: {fileID: 922338283}
   m_RootOrder: 2
