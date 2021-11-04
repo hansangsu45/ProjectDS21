@@ -81,7 +81,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    private void CreatePool()
+    private void CreatePool() //풀 생성
     {
         PoolManager.CreatePool<TouchEffect>(touchEffectPrefab, transform, 40);
         PoolManager.CreatePool<SoundPrefab>(soundPrefab, transform, 12);
@@ -179,7 +179,7 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene(_name);
     }
 
-    public void GameSpeedUP(float speed=-1f)
+    public void GameSpeedUP(float speed=-1f) //카드 게임 배속
     {
         if (speed<0)
         {
@@ -190,7 +190,7 @@ public class GameManager : MonoSingleton<GameManager>
         Time.timeScale = speed;
     }
 
-    public void ResetSoldier(Transform[] trList)
+    public void ResetSoldier(Transform[] trList) //한 번 전투하면 병사들 Transform 값들 이상해져서 원래 값으로 초기화를 시켜줘야함.
     {
         for(int i=1; i<trList.Length; i++)
         {
@@ -199,8 +199,8 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci);
-    public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch));
+    public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci); //n스테이지의 성 정보를 string으로 저장
+    public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch)); //내 전투 정보 저장
     #region OnApplication
     private void OnApplicationQuit()
     {

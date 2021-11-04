@@ -144,7 +144,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         if ( (isMyTurn && isMovable && deckCardList.Count>0) || (!isMyTurn && !isPlayer) || (isMovable && isDrawBattle && isMyTurnInDraw) )
         {
             isMovable = false;
-            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
+            SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
 
             if (isPlayer)
             {
@@ -205,7 +205,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         }
     }
 
-    private IEnumerator StartGame()
+    private IEnumerator StartGame()  //겜 시작
     {
         yield return new WaitForSeconds(1.5f);
         jqkDecidePanel.gameObject.SetActive(false);
@@ -229,7 +229,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         for (int i = 0; i < trashTrs.Length; i++)  //카드 6장 버리기
         {
             trashCardList.Add(deckCardList[0]);
-            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
+            SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
             Transform t = deckCardList[0].transform;
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
             t.DOLocalMove(trashTrs[i].localPosition,0.4f);
@@ -246,7 +246,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             t2.localPosition = new Vector3(t2.localPosition.x, t2.localPosition.y, -0.01f);
             t2.DOLocalMove(enemy.cardTrs[0].localPosition, 0.4f);
             t2.DOScale(ruleData.cardScale, 0.4f);
-            PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
+            SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
 
             yield return ws1;
             enemy.AddCard(deckCardList[0]);
@@ -282,7 +282,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             if(j==1 && !cMove && int.Parse(txt.text)>limit)
             {
                 cMove = true;
-                camMove.ShakeCamera(0.4f, 2.6f);
+                camMove.ShakeCamera(0.4f, 2f);
                 txt.DOColor(Color.red, 0.7f);
             }
         }
@@ -410,7 +410,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             t.DOScale(ruleData.trashCardScale, 0.3f);
             for(int j=0; j<trashCardList.Count; j++)
             {
-                PoolManager.GetItem<SoundPrefab>().PlaySound(SoundEffectType.CARD_TAKEOUT);
+                SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
                 zPos -= 0.01f;
                 trashCardList[j].transform.DOLocalMove(new Vector3(Mathf.Lerp(x1, x2, (float)j / (trashCardList.Count - 1)), y, zPos), 0.35f);
             }
@@ -432,7 +432,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         }
     }
 
-    public void Stop()
+    public void Stop() //전투시작
     {
         if (!isMyTurn || !isMovable) return;
 
@@ -452,7 +452,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         StartCoroutine(EnemyAI());
     }
 
-    public void ContinueGame()  
+    public void ContinueGame()  //통솔력 초과로 병사 디지고 카드 다시 뽑을지
     {
         if(myCastle.silver<ruleData.resapwnSilver)
         {
@@ -545,7 +545,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             if(!cMove && enemy.total>enemyCastle.leaderShip)
             {
                 cMove = true;
-                camMove.ShakeCamera(0.4f, 2.6f);
+                camMove.ShakeCamera(0.4f, 2f);
                 ETotalTxt.DOColor(Color.red, 0.7f);
             }
             while (!isMovable) yield return null;
@@ -635,7 +635,7 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0))  //카드 확대
         {
             Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             hit = Physics2D.Raycast(pos, Vector2.zero);
@@ -659,7 +659,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         }
     }
 
-    public IEnumerator DrawBattle()
+    public IEnumerator DrawBattle()  //무승부 시의 카드겜
     {
         yield return new WaitForSeconds(1);
         isDrawBattle = true;
@@ -697,7 +697,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         isMyTurnInDraw = false;
     }
 
-    public void FadeObj(bool off, params float[] times)
+    public void FadeObj(bool off, params float[] times) //카드랑 UI 페이드 효과
     {
         viewPanel.DOFade(off?0:1, times[0]);
         Color c = off ? ruleData.noColor : Color.white;

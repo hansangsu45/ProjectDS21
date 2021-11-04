@@ -12,7 +12,7 @@ public class Soldier : MonoBehaviour
 
     protected Vector3 dir;
 
-    public void InitSet(int scaleX, Vector2 localPos, Vector2 target, bool targetToMove=true)
+    public void InitSet(int scaleX, Vector2 localPos, Vector2 target, bool targetToMove=true) 
     {
         transform.localScale = new Vector2(scaleX, 1);
         transform.localPosition = localPos;
@@ -50,7 +50,7 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    public void Fall(Vector3 target, float speed, bool local=true)
+    public void Fall(Vector3 target, float speed, bool local=true) 
     {
         this.target = target;
         moveSpeed = speed;

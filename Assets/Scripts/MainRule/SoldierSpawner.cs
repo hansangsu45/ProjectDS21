@@ -64,7 +64,7 @@ public class SoldierSpawner : MonoBehaviour  //½ºÆù¸¸ ´ã´çÇÏ·Á´Ù°¡ ·ê ¸Å´ÏÀú°¡ ³
         }
     }
 
-    public void SpawnChief()
+    public void SpawnChief()  //¿ìµÎ¸Ó¸® ¼ÒÈ¯ÇÏ°í ÀÏ¹Ý º´»ç ¾È º¸ÀÌ°Ô
     {
         Camera.main.cullingMask = ~(1 << soldierLayer);
         for(int i=0; i<2; i++)
@@ -76,7 +76,7 @@ public class SoldierSpawner : MonoBehaviour  //½ºÆù¸¸ ´ã´çÇÏ·Á´Ù°¡ ·ê ¸Å´ÏÀú°¡ ³
         }
     }
 
-    public void ResetData(bool isAnimation)
+    public void ResetData(bool isAnimation) 
     {
         index = 0;
         spawnTr[0].position = playersStartPos[0];
@@ -101,7 +101,7 @@ public class SoldierSpawner : MonoBehaviour  //½ºÆù¸¸ ´ã´çÇÏ·Á´Ù°¡ ·ê ¸Å´ÏÀú°¡ ³
         soldierList.Clear();
     }
 
-    public void BattleStart(int enemyCount)
+    public void BattleStart(int enemyCount)  //ÀüÅõ ½ÃÀÛ ¼¼ÆÃ
     {
         bFighting = true;
         soldierList.ForEach(x => x.ani.SetBool(runBool, true));
@@ -153,7 +153,7 @@ public class SoldierSpawner : MonoBehaviour  //½ºÆù¸¸ ´ã´çÇÏ·Á´Ù°¡ ·ê ¸Å´ÏÀú°¡ ³
         }
     }
 
-    private IEnumerator BattleCo()
+    private IEnumerator BattleCo()  //ÀüÅõ ½ÃÀÛÇÏ°í ¹èÆ²Áß
     {
         while(enemySoldierList.Count>0 && soldierList.Count>0)
         {
@@ -182,7 +182,7 @@ public class SoldierSpawner : MonoBehaviour  //½ºÆù¸¸ ´ã´çÇÏ·Á´Ù°¡ ·ê ¸Å´ÏÀú°¡ ³
 
             List<Soldier> sList = isWin ? soldierList : enemySoldierList;
             sList.ForEach(x => x.ani.SetTrigger(atkTrigger));
-            camMove.ShakeCamera(0.3f, 2.5f);
+            camMove.ShakeCamera(0.3f, 2f);
             yield return new WaitForSeconds(2f);
             RuleManager.Instance.Damaged(isWin, sList.Count);
         }
@@ -195,7 +195,7 @@ public class SoldierSpawner : MonoBehaviour  //½ºÆù¸¸ ´ã´çÇÏ·Á´Ù°¡ ·ê ¸Å´ÏÀú°¡ ³
         ResetData(false);
     }
 
-    private IEnumerator DrawCo()
+    private IEnumerator DrawCo()  //¹«½ÂºÎ ½ÃÀÇ ÀüÅõ
     {
         SpawnChief();
 
@@ -258,5 +258,6 @@ public class SoldierSpawner : MonoBehaviour  //½ºÆù¸¸ ´ã´çÇÏ·Á´Ù°¡ ·ê ¸Å´ÏÀú°¡ ³
         return 0;
     }*/
 
+    //ÀüÅõ»óÅÂÀÇ º´»çµé ³¯¶ó°¡°Ô ÀÚºüÁö°Ô ÇÒ ¶§ Å¸°Ù À§Ä¡ Á¤ÇÔ
     private Transform GetRemoveTrm(bool player) => removeTrs[Random.Range(player?0:5, player?5:removeTrs.Length)];
 }

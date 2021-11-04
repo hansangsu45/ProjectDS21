@@ -24,7 +24,7 @@ public class EffectManager : MonoSingleton<EffectManager>
 
     private void LateUpdate()
     {
-        if(Input.GetMouseButton(0) && onTouchEffect)
+        if(Input.GetMouseButton(0) && onTouchEffect) //터치 이펙트
         {
             if(lastTime<Time.time)
             {

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SoundPrefab : MonoBehaviour
 {
-    GameManager gameMng;
     [SerializeField] private AudioSource _audio;
     private bool isSoundPlaying;
 
@@ -12,14 +11,10 @@ public class SoundPrefab : MonoBehaviour
         isSoundPlaying = false;
     }
 
-    public void PlaySound(SoundEffectType set)  //2
+    public void PlaySound(AudioClip ac, float volume)  //2
     {
-        if (gameMng == null) gameMng = GameManager.Instance;
-
-        if (gameMng.savedData.option.soundEffectSize <= 0) gameObject.SetActive(false);
-
-        _audio.clip = SoundManager.Instance.effectClips[(int)set];
-        _audio.volume = gameMng.savedData.option.bgmSize;
+        _audio.clip = ac;
+        _audio.volume = volume;
         _audio.Play();
 
         isSoundPlaying = true;

@@ -16,6 +16,7 @@ public class CameraMove : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         orgPos = transform.position;
+        
     }
 
     private void Update()
@@ -40,7 +41,7 @@ public class CameraMove : MonoBehaviour
 
     public void SetMoveState(bool move) => isMoving = move;
 
-    public void ShakeCamera(float duration, float strength)
+    public void ShakeCamera(float duration, float strength) 
     {
         cam.DOShakePosition(duration, strength);
     }
