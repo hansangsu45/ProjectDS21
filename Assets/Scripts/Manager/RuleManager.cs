@@ -78,12 +78,14 @@ public class RuleManager : MonoSingleton<RuleManager>
         //for (int i = 0; i < jqkImgs.Length; i++) jqkImgs[i].sprite = ruleData.backSprite;
         for (int i = 0; i < jqkImgs.Length; i++) jqkImgs[i].sprite = ruleData.jqkSpr[i];
         continueTxt.text = string.Format("계속하기({0}은화 필요)", ruleData.resapwnSilver);
+       
     }
 
     private void OnEnable()
     {
         //enemyCastle = JsonUtility.FromJson<CastleInfo>(GameManager.castleInfo);
         //myCastle = JsonUtility.FromJson<MainInfo>(GameManager.mainInfo);
+        GameManager.Instance.savedData.userInfo.silver -= myCastle.silver;
         moneyTxt.text = myCastle.silver.ToString();
     }
 
@@ -144,7 +146,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         if ( (isMyTurn && isMovable && deckCardList.Count>0) || (!isMyTurn && !isPlayer) || (isMovable && isDrawBattle && isMyTurnInDraw) )
         {
             isMovable = false;
-            SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
+            
 
             if (isPlayer)
             {
@@ -155,6 +157,7 @@ public class RuleManager : MonoSingleton<RuleManager>
                     return;
                 }
 
+                SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
                 SortCardList(player, deckCardList[0]);
                 if (isGameStart && !isDrawBattle)  //처음에 주는 카드 한 장은 무료이므로 이런 조건문 달아준다
                 {
@@ -164,6 +167,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             }
             else
             {
+                SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
                 SortCardList(enemy, deckCardList[0]);
             }
 
