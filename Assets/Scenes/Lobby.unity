@@ -549,7 +549,7 @@ MonoBehaviour:
   maxViewStage: 4
   scType: 0
   touchEffectPrefab: {fileID: 1017202135463684722, guid: 21755f888a196e6459ecf2d62b5a3caf, type: 3}
-  soundPrefab: {fileID: 0}
+  soundPrefab: {fileID: 5802794265017718575, guid: d7efd739dbab2c0439ad1588fc660e88, type: 3}
   soldierPrefabs: []
   chiefPrefabs: []
   nxSpeed: 1
