@@ -19,6 +19,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public Text systemText;
 
+    public TrashCardUI[] trashCardUIArr;
+
     private IEnumerator Start()
     {
         while (!GameManager.Instance.isReady) yield return lWs;    //yield return null;
@@ -90,4 +92,17 @@ public class UIManager : MonoSingleton<UIManager>
         ViewUI(1);
     }
 
+    public void SetTrashUI(CardScript card = null)
+    {
+        if (card == null)  //√ ±‚»≠
+        {
+            for (int i = 0; i < trashCardUIArr.Length; i++) trashCardUIArr[i].UpdateUI();
+            return;
+        }
+
+        int idx = card.Value-1;
+        trashCardUIArr[idx].trashCnt++;
+        trashCardUIArr[idx].isTrashShape[(int)card.cardShape] = true;
+        trashCardUIArr[idx].UpdateUI((int)card.cardShape);
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class SaveData 
@@ -127,5 +128,31 @@ public class MainInfo
         castleSprite = cSpr;
         soldier = sold;
         chief = ch;
+    }
+}
+
+[Serializable]
+public class TrashCardUI
+{
+    public int trashCnt;  //해당 숫자 버린 개수
+    public Text trashCountTxt; //해당 숫자 버린 개수를 나타내는 텍스트 UI
+
+    public bool[] isTrashShape; // L: 4   //해당 모양의 카드가 버려졌는지
+    public Image[] shapeImageList;  // L: 4   //Shape열거형에서 나열한대로 똑같이 순서맞춰서 이미지를 집어넣는다.
+
+    public void UpdateUI(int shape = -1)
+    {
+        if (shape == -1) //reset
+        {
+            trashCnt = 0;
+            trashCountTxt.text = "0";
+            for (int i = 0; i < isTrashShape.Length; i++) isTrashShape[i] = false;
+            for (int i = 0; i < shapeImageList.Length; i++) shapeImageList[i].gameObject.SetActive(false);
+
+            return;
+        }
+
+        shapeImageList[shape].gameObject.SetActive(true);
+        trashCountTxt.text = trashCnt.ToString();
     }
 }
