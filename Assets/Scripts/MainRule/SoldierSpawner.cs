@@ -183,7 +183,7 @@ public class SoldierSpawner : MonoBehaviour  //스폰만 담당하려다가 룰 매니저가 �
             List<Soldier> sList = isWin ? soldierList : enemySoldierList;
             sList.ForEach(x => x.ani.SetTrigger(atkTrigger));
             camMove.ShakeCamera(0.3f, 2f);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             RuleManager.Instance.Damaged(isWin, sList.Count);
         }
         else
@@ -191,7 +191,7 @@ public class SoldierSpawner : MonoBehaviour  //스폰만 담당하려다가 룰 매니저가 �
             yield return new WaitForSeconds(1.5f);
             RuleManager.Instance.Damaged(false, -1);
         }
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1.5f);
         ResetData(false);
     }
 

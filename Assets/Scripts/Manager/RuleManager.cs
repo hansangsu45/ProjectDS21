@@ -412,12 +412,12 @@ public class RuleManager : MonoSingleton<RuleManager>
             Transform t = ps.cardList[i].transform;
 
             t.DOScale(ruleData.trashCardScale, 0.3f);
-            for(int j=0; j<trashCardList.Count; j++)
+            for (int j=0; j<trashCardList.Count; j++)
             {
-                SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
                 zPos -= 0.01f;
                 trashCardList[j].transform.DOLocalMove(new Vector3(Mathf.Lerp(x1, x2, (float)j / (trashCardList.Count - 1)), y, zPos), 0.35f);
             }
+            SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
             yield return ws1;
         }
         ps.RemoveAllCard();

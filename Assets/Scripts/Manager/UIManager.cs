@@ -100,7 +100,7 @@ public class UIManager : MonoSingleton<UIManager>
             return;
         }
 
-        int idx = card.Value-1;
+        int idx = card.jqk == JQK.NONE ? card.Value - 1 : 9 + (int)card.jqk;
         trashCardUIArr[idx].trashCnt++;
         trashCardUIArr[idx].isTrashShape[(int)card.cardShape] = true;
         trashCardUIArr[idx].UpdateUI((int)card.cardShape);
