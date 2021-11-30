@@ -23,15 +23,15 @@ public class UserInfo
 
     public long gold = 0;  //금화 
    
-    public long cropSilver;  //'분'당 '쌓이는' 은화 
-    public long currentSilver;  //현재 '쌓여있는' 은화의 양 
-    public long maxSilver;  //최대로 '쌓일 수 있는' 은화 양 
+    public long cropSilver = 100;  //'분'당 '쌓이는' 은화 
+    public long currentSilver = 0;  //현재 '쌓여있는' 은화의 양 
+    public long maxSilver = 1000;  //최대로 '쌓일 수 있는' 은화 양 
     public long silver; //현재 '가지고' 있는 은화의 양
 
     public string quitDate;  //게임 종료 날짜
 
-    public List<StageCastle> stageCastles = new List<StageCastle>(); //처음 시작할 때 전부 들어옴
-
+    public List<StageCastle> stageCastles = new List<StageCastle>(); //처음 시작할 때 전부 들어옴 (기획대로라면 굳이 이거 없어도 할 수는 있지만 뭐가 추가될지 모르니 일단 함)
+    
 
     public StageCastle GetStage(short id) => stageCastles.Find(x => x.id == id);
 
@@ -51,7 +51,7 @@ public class Option
 }
 
 [Serializable]
-public class StageCastle
+public class StageCastle  //적의 성들 (스테이지)  이것도 당연히 기획대로라면 없어도 할 수 있지만 뭐가 추가될지 모르니 일단 함
 {
     public short id;  //단계
 
@@ -101,7 +101,7 @@ public class StageCastle
 }
 
 [Serializable]
-public class CastleInfo
+public class CastleInfo  //적 성의 능력치 정보
 {
     public int hp = 20; 
     public short leaderShip = 21;  //적의 통솔력 (이 값을 '초과'하면 디짐)

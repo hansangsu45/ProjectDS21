@@ -627,6 +627,9 @@ public class RuleManager : MonoSingleton<RuleManager>
         {
             enemyCastle.hp = 0;
             EndGame(true);
+
+            GameManager.Instance.savedData.userInfo.silver += enemyCastle.rewardSilver;
+            GameManager.Instance.savedData.userInfo.gold += enemyCastle.rewardGold;
         }
     }
 
