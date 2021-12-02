@@ -2,91 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StageInfo : MonoBehaviour
 {
-    public int index = 0;
     public GameObject[] panels;
     public Button[] buttons;
+    public Button fightButton;
 
-    public void Open()
+    public void Open(int index)
     {
         panels[index].SetActive(true);
     }
 
-    public void Close()
+    public void Close(int index)
     {
         panels[index].SetActive(false);
     }
 
-    private void Update()
+    public void Start()
     {
+        fightButton.gameObject.SetActive(false);
         buttons[0].onClick.AddListener(delegate
         {
-            index = 0;
-            Open();
+            fightButton.gameObject.SetActive(true);
+
         });
         buttons[1].onClick.AddListener(delegate
         {
-            index = 1;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[2].onClick.AddListener(delegate
         {
-            index = 2;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[3].onClick.AddListener(delegate
         {
-            index = 3;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[4].onClick.AddListener(delegate
         {
-            index = 4;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[5].onClick.AddListener(delegate
         {
-            index = 5;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[6].onClick.AddListener(delegate
         {
-            index = 6;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[7].onClick.AddListener(delegate
         {
-            index = 7;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[8].onClick.AddListener(delegate
         {
-            index = 8;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
         buttons[9].onClick.AddListener(delegate
         {
-            index = 9;
-            Open();
+            fightButton.gameObject.SetActive(true);
         });
-        buttons[10].onClick.AddListener(delegate
-        {
-            index = 10;
-            Open();
-        });
-        buttons[11].onClick.AddListener(delegate
-        {
-            index = 11;
-            Open();
-        });
-        buttons[12].onClick.AddListener(delegate
-        {
-            index = 12;
-            Open();
-        });
+    }
 
-
+    public void Fight()
+    {
+        SceneManager.LoadScene("Main");
     }
 }
