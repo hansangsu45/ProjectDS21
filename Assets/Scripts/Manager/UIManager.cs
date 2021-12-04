@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -20,6 +21,39 @@ public class UIManager : MonoSingleton<UIManager>
     public Text systemText;
 
     public TrashCardUI[] trashCardUIArr;
+    public GameObject trashUIPref;
+    public Transform trashUIPrefParent;
+
+    private void Awake()
+    {
+        trashCardUIArr = new TrashCardUI[13];
+        for(int i=0; i<=12; ++i)
+        {
+            trashCardUIArr[i] = new TrashCardUI();
+
+            GameObject o = Instantiate(trashUIPref, trashUIPrefParent);
+            o.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetInitCardNum(i+1).ToString();
+
+            Transform t = o.transform.GetChild(1);
+            trashCardUIArr[i].trashCountTxt = t.GetChild(0).GetComponent<Text>();
+            for(int j=0; j<4; j++)
+            {
+                trashCardUIArr[i].shapeImageList[j] = t.GetChild(j + 1).GetComponent<Image>();
+            }
+        }
+    }
+
+    private string GetInitCardNum(int num)
+    {
+        switch (num)
+        {
+            case 1: return "A";
+            case 11: return "J";
+            case 12: return "Q";
+            case 13: return "K";
+        }
+        return num.ToString();
+    }
 
     private IEnumerator Start()
     {
@@ -102,7 +136,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         int idx = card.jqk == JQK.NONE ? card.Value - 1 : 9 + (int)card.jqk;
         trashCardUIArr[idx].trashCnt++;
-        trashCardUIArr[idx].isTrashShape[(int)card.cardShape] = true;
+        //trashCardUIArr[idx].isTrashShape[(int)card.cardShape] = true;
         trashCardUIArr[idx].UpdateUI((int)card.cardShape);
     }
 }

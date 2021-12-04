@@ -137,8 +137,8 @@ public class TrashCardUI
     public int trashCnt;  //해당 숫자 버린 개수
     public Text trashCountTxt; //해당 숫자 버린 개수를 나타내는 텍스트 UI
 
-    public bool[] isTrashShape; // L: 4   //해당 모양의 카드가 버려졌는지
-    public Image[] shapeImageList;  // L: 4   //Shape열거형에서 나열한대로 똑같이 순서맞춰서 이미지를 집어넣는다.
+    //public bool[] isTrashShape; // L: 4   //해당 모양의 카드가 버려졌는지
+    public Image[] shapeImageList = new Image[4];  //  //Shape열거형에서 나열한대로 똑같이 순서맞춰서 이미지를 집어넣는다.
 
     public void UpdateUI(int shape = -1)
     {
@@ -146,7 +146,7 @@ public class TrashCardUI
         {
             trashCnt = 0;
             trashCountTxt.text = "0";
-            for (int i = 0; i < isTrashShape.Length; i++) isTrashShape[i] = false;
+            //for (int i = 0; i < isTrashShape.Length; i++) isTrashShape[i] = false;
             for (int i = 0; i < shapeImageList.Length; i++) shapeImageList[i].gameObject.SetActive(false);
 
             return;

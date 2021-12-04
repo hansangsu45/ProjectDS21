@@ -213,6 +213,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     {
         yield return new WaitForSeconds(1.5f);
         jqkDecidePanel.gameObject.SetActive(false);
+        UIManager.Instance.SetTrashUI();
         ETotalTxt.text = "0";
         PTotalTxt.text = "0";
         ETotalTxt.color = ruleData.totalTxtColor;
@@ -238,7 +239,8 @@ public class RuleManager : MonoSingleton<RuleManager>
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
             t.DOLocalMove(trashTrs[i].localPosition,0.4f);
             t.DOScale(ruleData.trashCardScale,0.4f);
-            
+            UIManager.Instance.SetTrashUI(deckCardList[0]);
+
             yield return ws1;
             deckCardList[0].RotateCard();
             deckCardList.RemoveAt(0);
@@ -410,6 +412,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         {
             trashCardList.Add(ps.cardList[i]);
             Transform t = ps.cardList[i].transform;
+            UIManager.Instance.SetTrashUI(ps.cardList[i]);
 
             t.DOScale(ruleData.trashCardScale, 0.3f);
             for (int j=0; j<trashCardList.Count; j++)
