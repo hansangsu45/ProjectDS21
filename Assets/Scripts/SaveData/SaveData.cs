@@ -134,6 +134,8 @@ public class MainInfo
 [Serializable]
 public class TrashCardUI
 {
+    public GameObject panel;
+
     public int trashCnt;  //해당 숫자 버린 개수
     public Text trashCountTxt; //해당 숫자 버린 개수를 나타내는 텍스트 UI
 
@@ -152,6 +154,7 @@ public class TrashCardUI
             return;
         }
 
+        if (!panel.activeSelf) panel.SetActive(true);
         shapeImageList[shape].gameObject.SetActive(true);
         trashCountTxt.text = trashCnt.ToString();
     }

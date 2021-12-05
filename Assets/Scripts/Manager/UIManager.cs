@@ -32,6 +32,7 @@ public class UIManager : MonoSingleton<UIManager>
             trashCardUIArr[i] = new TrashCardUI();
 
             GameObject o = Instantiate(trashUIPref, trashUIPrefParent);
+            trashCardUIArr[i].panel = o;
             o.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetInitCardNum(i+1).ToString();
 
             Transform t = o.transform.GetChild(1);
@@ -40,6 +41,8 @@ public class UIManager : MonoSingleton<UIManager>
             {
                 trashCardUIArr[i].shapeImageList[j] = t.GetChild(j + 1).GetComponent<Image>();
             }
+
+            o.SetActive(false);
         }
     }
 
@@ -130,7 +133,11 @@ public class UIManager : MonoSingleton<UIManager>
     {
         if (card == null)  //√ ±‚»≠
         {
-            for (int i = 0; i < trashCardUIArr.Length; i++) trashCardUIArr[i].UpdateUI();
+            for (int i = 0; i < trashCardUIArr.Length; i++)
+            {
+                trashCardUIArr[i].UpdateUI();
+                trashCardUIArr[i].panel.SetActive(false);
+            }
             return;
         }
 
