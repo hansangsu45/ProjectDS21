@@ -10,10 +10,12 @@ public class StageInfo : MonoBehaviour
     public Button[] buttons;
     public Button fightButton;
 
-    public void Open(int index)
+    public void Open(int index)//, int EnemyHp ,//int EnemyCardMaxValue)
     {
         panels[index].SetActive(true);
-    }
+        //상대 성 체력 설정
+        fightButton.gameObject.SetActive(true);
+    }   
 
     public void Close(int index)
     {
@@ -23,47 +25,6 @@ public class StageInfo : MonoBehaviour
     public void Start()
     {
         fightButton.gameObject.SetActive(false);
-        buttons[0].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-
-        });
-        buttons[1].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[2].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[3].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[4].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[5].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[6].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[7].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[8].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
-        buttons[9].onClick.AddListener(delegate
-        {
-            fightButton.gameObject.SetActive(true);
-        });
     }
 
     public void Fight()

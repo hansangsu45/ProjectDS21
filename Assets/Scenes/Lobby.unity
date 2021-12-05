@@ -434,7 +434,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 22"
 --- !u!222 &30269806
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1465,7 +1465,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC131 \uB0B4\uAD6C\uB3C4 : 20"
 --- !u!222 &148461651
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1677,7 +1677,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 21"
 --- !u!222 &179400784
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1914,7 +1914,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 21"
 --- !u!222 &219068281
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2141,7 +2141,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC131 \uB0B4\uAD6C\uB3C4 : 20"
 --- !u!222 &249828892
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2395,7 +2395,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC131 \uB0B4\uAD6C\uB3C4 : 20"
 --- !u!222 &299466927
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2885,7 +2885,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC218\uD6A8\uACFC :"
+  m_Text: "\uD2B9\uC218\uD6A8\uACFC : \uC5C6\uC74C"
 --- !u!222 &413522440
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3120,7 +3120,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC218\uD6A8\uACFC :"
+  m_Text: "\uD2B9\uC218\uD6A8\uACFC : \uC5C6\uC74C"
 --- !u!222 &446385283
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3199,7 +3199,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 22"
 --- !u!222 &453098310
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3253,7 +3253,7 @@ MonoBehaviour:
   - {fileID: 591960618}
   - {fileID: 1886130425}
   - {fileID: 106845759}
-  fightButton: {fileID: 0}
+  fightButton: {fileID: 1203212945}
 --- !u!1 &483643321
 GameObject:
   m_ObjectHideFlags: 0
@@ -4446,7 +4446,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC131 \uB0B4\uAD6C\uB3C4 : 40"
 --- !u!222 &642487460
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4967,7 +4967,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC218\uD6A8\uACFC :"
+  m_Text: "\uD2B9\uC218\uD6A8\uACFC : \uC5C6\uC74C"
 --- !u!222 &730086401
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5397,7 +5397,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 21"
 --- !u!222 &817153160
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5730,7 +5730,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 22"
 --- !u!222 &877842613
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7698,7 +7698,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC218\uD6A8\uACFC :"
+  m_Text: "\uD2B9\uC218\uD6A8\uACFC : \uC5C6\uC74C"
 --- !u!222 &890282722
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7987,7 +7987,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 21"
 --- !u!222 &928541038
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8066,7 +8066,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC131 \uB0B4\uAD6C\uB3C4 : 50"
 --- !u!222 &954086624
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8222,7 +8222,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC218\uD6A8\uACFC :"
+  m_Text: "\uD2B9\uC218\uD6A8\uACFC : \uC5C6\uC74C"
 --- !u!222 &1020890166
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8301,7 +8301,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 21"
 --- !u!222 &1042756189
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8555,7 +8555,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC801 \uB0B4\uAD6C\uB3C4 : 30"
 --- !u!222 &1101717985
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8859,7 +8859,7 @@ GameObject:
   - component: {fileID: 1203212946}
   - component: {fileID: 1203212945}
   m_Layer: 5
-  m_Name: Button
+  m_Name: FightButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8928,7 +8928,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1203212946}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 468421637}
+        m_TargetAssemblyTypeName: StageInfo, Assembly-CSharp
+        m_MethodName: Fight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1203212946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9338,7 +9350,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 22"
 --- !u!222 &1233362967
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9496,7 +9508,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC218\uD6A8\uACFC :"
+  m_Text: "\uD2B9\uC218\uD6A8\uACFC : \uC5C6\uC74C"
 --- !u!222 &1281024076
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12180,6 +12192,8 @@ MonoBehaviour:
   scrPanelIdx: 
   systemText: {fileID: 0}
   trashCardUIArr: []
+  trashUIPref: {fileID: 0}
+  trashUIPrefParent: {fileID: 0}
 --- !u!1 &1414360075
 GameObject:
   m_ObjectHideFlags: 0
@@ -13928,7 +13942,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC801 \uB0B4\uAD6C\uB3C4 : 30"
 --- !u!222 &1828038058
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14242,7 +14256,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC801 \uB0B4\uAD6C\uB3C4 : 30"
 --- !u!222 &1892881618
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14454,7 +14468,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC131 \uB0B4\uAD6C\uB3C4 : 30"
 --- !u!222 &1970126295
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14533,7 +14547,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD1B5\uC194\uB825 :"
+  m_Text: "\uC801 \uD1B5\uC194\uB825 : 22"
 --- !u!222 &2053267673
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14689,7 +14703,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC131\uC758 \uCCB4\uB825 :"
+  m_Text: "\uC131 \uB0B4\uAD6C\uB3C4 : 20"
 --- !u!222 &2074096496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14943,7 +14957,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC218\uD6A8\uACFC :"
+  m_Text: "\uD2B9\uC218\uD6A8\uACFC : \uC5C6\uC74C"
 --- !u!222 &2119172626
 CanvasRenderer:
   m_ObjectHideFlags: 0
