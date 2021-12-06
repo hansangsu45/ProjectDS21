@@ -85,6 +85,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     {
         //enemyCastle = JsonUtility.FromJson<CastleInfo>(GameManager.castleInfo);
         //myCastle = JsonUtility.FromJson<MainInfo>(GameManager.mainInfo);
+        
         GameManager.Instance.savedData.userInfo.silver -= myCastle.silver;
         moneyTxt.text = myCastle.silver.ToString();
     }

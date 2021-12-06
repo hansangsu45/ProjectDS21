@@ -30,4 +30,9 @@ public class PoolManager
         if(poolDic.ContainsKey(t.ToString()))
            poolDic.Remove(t.ToString());
     }
+
+    public static void ClearAll()
+    {
+        poolDic.Clear();
+    }
 }

@@ -115,7 +115,7 @@ public class CastleInfo  //적 성의 능력치 정보
 }
 
 [Serializable]
-public class MainInfo
+public class MainInfo  //내 전투 정보
 {
     public long silver; //전투비용
     public Sprite castleSprite;  //성 스프라이트

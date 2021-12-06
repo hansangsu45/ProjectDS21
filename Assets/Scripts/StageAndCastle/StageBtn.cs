@@ -20,7 +20,11 @@ public class StageBtn : MonoBehaviour
             {
                 if (stageCastle.isOpen)
                 {
-                    //해당 스테이지의 정보(체력, 통솔력, 병사와 성 이미지 등)를 보내주고 게임 씬으로 이동
+                    StageInfo.Instance.StartAction = () =>
+                    {
+                        GameManager.Instance.CInfoToJson(cInfo);
+                    };
+                    //해당 스테이지의 정보(체력, 통솔력, 병사와 성 이미지 등)
                 }
                 else
                 {
