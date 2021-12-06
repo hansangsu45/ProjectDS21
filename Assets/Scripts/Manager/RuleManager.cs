@@ -29,8 +29,8 @@ public class RuleManager : MonoSingleton<RuleManager>
     public PlayerScript enemy;
     [SerializeField] private List<CardScript> trashCardList = new List<CardScript>();
     [SerializeField] private List<CardScript> deckCardList = new List<CardScript>();
-    [SerializeField] private CastleInfo enemyCastle;
-    [SerializeField] private MainInfo myCastle;
+    [SerializeField] private CastleInfo enemyCastle = new CastleInfo();
+    [SerializeField] private MainInfo myCastle = new MainInfo();
     public CastleInfo EnemyCastle { get { return enemyCastle; } }
     public MainInfo MyCastle { get { return myCastle; } }
     public CameraMove camMove;
@@ -81,17 +81,13 @@ public class RuleManager : MonoSingleton<RuleManager>
        
     }
 
-    private void OnEnable()
-    {
-        //enemyCastle = JsonUtility.FromJson<CastleInfo>(GameManager.castleInfo);
-        //myCastle = JsonUtility.FromJson<MainInfo>(GameManager.mainInfo);
-        
-        GameManager.Instance.savedData.userInfo.silver -= myCastle.silver;
-        moneyTxt.text = myCastle.silver.ToString();
-    }
-
     private IEnumerator Start()
     {
+        enemyCastle = GameManager.Instance.savedData.battleInfo.enemyCastle;
+        myCastle = GameManager.Instance.savedData.battleInfo.myCastle;
+        GameManager.Instance.savedData.userInfo.silver -= myCastle.silver;
+        moneyTxt.text = myCastle.silver.ToString();
+
         SetHpUI();
         allCardList.ForEach(x=>
         {

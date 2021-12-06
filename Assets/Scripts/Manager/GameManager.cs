@@ -27,7 +27,8 @@ public class GameManager : MonoSingleton<GameManager>
     public List<StageBtn> stageBtns = new List<StageBtn>();
     public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
     [SerializeField] private short maxViewStage=4; //이제 깨야할 스테이지 '포함'해서 그 스테이지부터 몇 단계(개)까지 보여줄지
-    public static string castleInfo;
+    //밑 두줄 나중에 지울것
+    //public static string castleInfo;  
     public static string mainInfo;
 
     public SceneType scType;
@@ -199,7 +200,11 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci); //n스테이지의 성 정보를 string으로 저장
+    //전투씬으로 넘어가기 전에 밑의 두 함수를 호출해서 내 성과 적 성 정보를 보내주고 'Save'함수를 호출해야한다. (씬 넘어가기 전에 풀 삭제도 해야함)
+    public void CInfoToJson(CastleInfo ci) => saveData.battleInfo.enemyCastle = ci;
+    public void MInfoToJson(long cost) => saveData.battleInfo.myCastle = new MainInfo(cost);
+    //밑 두줄 지울것
+    //public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci); 
     public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch)); //내 전투 정보 저장
     #region OnApplication
     private void OnApplicationQuit()

@@ -8,6 +8,7 @@ public class SaveData
 {
     public UserInfo userInfo = new UserInfo();
     public Option option = new Option();
+    public BattleInfo battleInfo = new BattleInfo();
 }
 
 [Serializable]
@@ -48,6 +49,13 @@ public class Option
     //0f~1f
     public float bgmSize = 0.5f;
     public float soundEffectSize = 0.7f;
+}
+
+[Serializable]
+public class BattleInfo
+{
+    public CastleInfo enemyCastle = new CastleInfo();
+    public MainInfo myCastle = new MainInfo();
 }
 
 [Serializable]
@@ -106,9 +114,9 @@ public class CastleInfo  //적 성의 능력치 정보
     public int hp = 20; 
     public short leaderShip = 21;  //적의 통솔력 (이 값을 '초과'하면 디짐)
     public short minLeaderShip = 16;  //적의 최소 카드 총합은 이 값이다
-    public Sprite castleSprite;  //성 스프라이트
-    public short soldier;  // 일반 병사
-    public short chief;  //1ㄷ1 일기토 병사 
+    public Sprite castleSprite;  //성 스프라이트      일단 당장은 안씀
+    public short soldier;  // 일반 병사   일단 당장은 안씀
+    public short chief;  //1ㄷ1 일기토 병사      일단 당장은 안씀
 
     public long rewardSilver;  //은화 보상
     public long rewardGold;  //금화 보상
@@ -122,6 +130,11 @@ public class MainInfo  //내 전투 정보
     public short soldier;  // 일반 병사
     public short chief;  //1ㄷ1 일기토 병사 
 
+    public MainInfo() { }
+    public MainInfo(long silver)
+    {
+        this.silver = silver;
+    }
     public MainInfo(long s, Sprite cSpr, short sold, short ch)
     {
         silver = s;
