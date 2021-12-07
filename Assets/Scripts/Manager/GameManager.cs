@@ -138,11 +138,12 @@ public class GameManager : MonoSingleton<GameManager>
                 }
             }*/
 
+            short ci = saveData.userInfo.clearId;
             for(int i=0; i<stageBtns.Count; i++)
             {
-                if(stageBtns[i].stageID<saveData.userInfo.clearId)
+                if(stageBtns[i].stageID < ci || stageBtns[i].stageID > ci + 4)
                 {
-
+                    stageBtns[i].gameObject.SetActive(false);
                 }
             }
 

@@ -31,8 +31,11 @@ public class UserInfo
 
     public string quitDate;  //게임 종료 날짜
 
+    //public short soldier;  // 일반 병사   일단 당장은 안씀
+    //public short chief;  //1ㄷ1 일기토 병사      일단 당장은 안씀
+
     //public List<StageCastle> stageCastles = new List<StageCastle>(); //처음 시작할 때 전부 들어옴 (기획대로라면 굳이 이거 없어도 할 수는 있지만 뭐가 추가될지 모르니 일단 함)
-    
+
 
     /*public StageCastle GetStage(short id) => stageCastles.Find(x => x.id == id);
 
