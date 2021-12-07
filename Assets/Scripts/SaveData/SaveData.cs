@@ -17,7 +17,7 @@ public class UserInfo
     public bool isFirstStart = true;  //이 게임을 처음 시작했는지
 
     public short leadership = 21; //통솔력 (한 번에 전투에 참여시킬 수 있는 최대 병사 수)
-    public short clearId; //클리어한 단계중 가장 높은 단계
+    public short clearId = 0; //클리어한 단계중 가장 높은 단계
 
     public int hp = 20;  //현재 자신 성의 체력 
     public int maxHp=20;  //최대 체력 
@@ -31,16 +31,16 @@ public class UserInfo
 
     public string quitDate;  //게임 종료 날짜
 
-    public List<StageCastle> stageCastles = new List<StageCastle>(); //처음 시작할 때 전부 들어옴 (기획대로라면 굳이 이거 없어도 할 수는 있지만 뭐가 추가될지 모르니 일단 함)
+    //public List<StageCastle> stageCastles = new List<StageCastle>(); //처음 시작할 때 전부 들어옴 (기획대로라면 굳이 이거 없어도 할 수는 있지만 뭐가 추가될지 모르니 일단 함)
     
 
-    public StageCastle GetStage(short id) => stageCastles.Find(x => x.id == id);
+    /*public StageCastle GetStage(short id) => stageCastles.Find(x => x.id == id);
 
     public StageCastle CreateCastleInfo(StageCastle sc)
     {
         stageCastles.Add(new StageCastle(sc));
         return sc;
-    }
+    }*/
 }
 
 [Serializable]
@@ -58,7 +58,8 @@ public class BattleInfo
     public MainInfo myCastle = new MainInfo();
 }
 
-[Serializable]
+#region 주석1
+/*[Serializable]
 public class StageCastle  //적의 성들 (스테이지)  이것도 당연히 기획대로라면 없어도 할 수 있지만 뭐가 추가될지 모르니 일단 함
 {
     public short id;  //단계
@@ -75,7 +76,7 @@ public class StageCastle  //적의 성들 (스테이지)  이것도 당연히 기획대로라면 없�
     }
 
     #region 주석
-    /*public short level = 1;  //강화 수치
+    *//*public short level = 1;  //강화 수치
     public short maxLevel;
 
     //needTimeForCrop초에 한 번씩 crop만큼 gold들어옴. maxCrop에 도달하면 수확하기 전까지 더 안 쌓임
@@ -104,9 +105,10 @@ public class StageCastle  //적의 성들 (스테이지)  이것도 당연히 기획대로라면 없�
         this.needTimeForCrop = sc.needTimeForCrop;
         this.crop = sc.crop;
         this.maxCrop = sc.maxCrop; 
-    }*/
+    }*//*
     #endregion
-}
+}*/
+#endregion
 
 [Serializable]
 public class CastleInfo  //적 성의 능력치 정보
