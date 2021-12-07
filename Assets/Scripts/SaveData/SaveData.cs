@@ -116,6 +116,7 @@ public class StageCastle  //적의 성들 (스테이지)  이것도 당연히 기획대로라면 없�
 [Serializable]
 public class CastleInfo  //적 성의 능력치 정보
 {
+    public short stageID; // n스테이지
     public int hp = 20; 
     public short leaderShip = 21;  //적의 통솔력 (이 값을 '초과'하면 디짐)
     public short minLeaderShip = 16;  //적의 최소 카드 총합은 이 값이다

@@ -7,8 +7,6 @@ public class StageBtn : MonoBehaviour
     //public StageCastle stageCastle;
 
     private Button btn;
-
-    public short stageID; // n스테이지
     public CastleInfo cInfo;
 
     private void Awake()
