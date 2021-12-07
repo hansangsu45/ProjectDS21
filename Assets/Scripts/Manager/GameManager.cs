@@ -25,7 +25,7 @@ public class GameManager : MonoSingleton<GameManager>
     public bool isReady = false;
 
     public List<StageBtn> stageBtns = new List<StageBtn>();
-    public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
+    //public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
     [SerializeField] private short maxViewStage=4; //이제 깨야할 스테이지 '포함'해서 그 스테이지부터 몇 단계(개)까지 보여줄지
     //밑 두줄 나중에 지울것
     //public static string castleInfo;  
@@ -126,13 +126,22 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (scType == SceneType.LOBBY)
         {
-            for (int i = 0; i < stageBtns.Count; i++)
+            /*for (int i = 0; i < stageBtns.Count; i++)
             {
-                stageBtns[i].stageCastle = saveData.userInfo.GetStage(stageBtns[i].stageCastle.id) ?? saveData.userInfo.CreateCastleInfo(stageBtns[i].stageCastle);
-                idToCastle.Add(stageBtns[i].stageCastle.id, stageBtns[i].stageCastle);
+                //stageBtns[i].stageCastle = saveData.userInfo.GetStage(stageBtns[i].stageCastle.id) ?? saveData.userInfo.CreateCastleInfo(stageBtns[i].stageCastle);
+                //idToCastle.Add(stageBtns[i].stageCastle.id, stageBtns[i].stageCastle);
 
                 if ((stageBtns[i].stageCastle.isClear && stageBtns[i].stageCastle.id != saveData.userInfo.clearId)
                     || stageBtns[i].stageCastle.id > saveData.userInfo.clearId + maxViewStage)
+                {
+                    stageBtns[i].gameObject.SetActive(false);
+                }
+            }*/
+
+            short ci = saveData.userInfo.clearId;
+            for(int i=0; i<stageBtns.Count; i++)
+            {
+                if(stageBtns[i].cInfo.stageID < ci || stageBtns[i].cInfo.stageID > ci + 4)
                 {
                     stageBtns[i].gameObject.SetActive(false);
                 }
@@ -140,15 +149,8 @@ public class GameManager : MonoSingleton<GameManager>
 
             TimeSpan ts = new TimeSpan();
 
-            try
-            {
-                ts = DateTime.Now - Convert.ToDateTime(saveData.userInfo.quitDate);
-                saveData.userInfo.currentSilver += (long)ts.TotalMinutes * saveData.userInfo.cropSilver;
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e);
-            }
+            ts = DateTime.Now - Convert.ToDateTime(saveData.userInfo.quitDate);
+            saveData.userInfo.currentSilver += (long)ts.TotalMinutes * saveData.userInfo.cropSilver;
         }
     }
 
@@ -201,7 +203,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     //전투씬으로 넘어가기 전에 밑의 두 함수를 호출해서 내 성과 적 성 정보를 보내주고 'Save'함수를 호출해야한다. (씬 넘어가기 전에 풀 삭제도 해야함)
-    public void CInfoToJson(CastleInfo ci) => saveData.battleInfo.enemyCastle = ci;
+    public void CInfoToJson(CastleInfo ci) => saveData.battleInfo.enemyCastle = ci;  
     public void MInfoToJson(long cost) => saveData.battleInfo.myCastle = new MainInfo(cost);
     //밑 두줄 지울것
     //public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci); 
