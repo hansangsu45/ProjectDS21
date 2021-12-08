@@ -64,10 +64,12 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     [SerializeField] private Text PTotalTxt, ETotalTxt;
     [SerializeField] private Button drawBtn, stopBtn, stopBtn2;
-    [SerializeField] private Text moneyTxt, continueTxt, resultTxt;
+    [SerializeField] private Text moneyTxt, continueTxt, resultTxt, rewardTxt;
     [SerializeField] private Image cardImg;
     [SerializeField] private Text[] leftUpJQKTexts;
     [SerializeField] Text[] hpTxt;
+
+    public Transform newTrashTr;
 
     private void Awake()
     {
@@ -228,14 +230,19 @@ public class RuleManager : MonoSingleton<RuleManager>
 
         yield return new WaitForSeconds(4);
 
+        zPos = 0f;
+        float x = newTrashTr.localPosition.x;
+        float y = newTrashTr.localPosition.y;
         for (int i = 0; i < trashTrs.Length; i++)  //카드 6장 버리기
         {
             trashCardList.Add(deckCardList[0]);
             SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
             Transform t = deckCardList[0].transform;
-            t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
-            t.DOLocalMove(trashTrs[i].localPosition,0.4f);
-            t.DOScale(ruleData.trashCardScale,0.4f);
+            zPos -= 0.01f;
+            t.DOLocalMove(new Vector3(x, y, zPos), 0.3f);
+            //t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
+            //t.DOLocalMove(trashTrs[i].localPosition,0.4f);
+            //t.DOScale(ruleData.trashCardScale,0.4f);
             UIManager.Instance.SetTrashUI(deckCardList[0]);
 
             yield return ws1;
@@ -334,10 +341,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         {
             seq.Append(t.DOScale(ruleData.cardScale, 0.4f));
 
-            for(int i=0; i<ps.cardList.Count; i++)
-            {
-                t.DOLocalMove(ps.cardTrs[i].localPosition, 0.4f);
-            }
+            t.DOLocalMove(ps.cardTrs[ps.cardList.Count-1].localPosition, 0.4f);
         }
 
         seq.AppendCallback(() =>
@@ -392,10 +396,12 @@ public class RuleManager : MonoSingleton<RuleManager>
     {
         isThrowing = true;
         stopBtn2.interactable = false;
-        float x1 = trashTrs[0].localPosition.x;
-        float x2 = trashTrs[trashTrs.Length - 1].localPosition.x;
-        float y = trashTrs[0].localPosition.y;
-        zPos = 0f;
+        //float x1 = trashTrs[0].localPosition.x;
+        //float x2 = trashTrs[trashTrs.Length - 1].localPosition.x;
+        //float y = trashTrs[0].localPosition.y;
+        zPos = trashCardList[trashCardList.Count - 1].transform.localPosition.z;
+        float x = newTrashTr.localPosition.x;
+        float y = newTrashTr.localPosition.y;
         int count = ps.cardList.Count;
         if (ps.isMine)
         {
@@ -411,12 +417,15 @@ public class RuleManager : MonoSingleton<RuleManager>
             Transform t = ps.cardList[i].transform;
             UIManager.Instance.SetTrashUI(ps.cardList[i]);
 
-            t.DOScale(ruleData.trashCardScale, 0.3f);
-            for (int j=0; j<trashCardList.Count; j++)
+            zPos -= 0.01f;
+            t.DOScale(orgCardPRS.scale, 0.3f);
+            t.DOLocalMove(new Vector3(x, y, zPos), 0.3f);
+            //t.DOScale(ruleData.trashCardScale, 0.3f);
+            /*for (int j=0; j<trashCardList.Count; j++)
             {
                 zPos -= 0.01f;
                 trashCardList[j].transform.DOLocalMove(new Vector3(Mathf.Lerp(x1, x2, (float)j / (trashCardList.Count - 1)), y, zPos), 0.35f);
-            }
+            }*/
             SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
             yield return ws1;
         }
@@ -509,13 +518,18 @@ public class RuleManager : MonoSingleton<RuleManager>
             deckCardList[r2] = temp;
         }
 
+        zPos = 0f;
+        float x = newTrashTr.localPosition.x;
+        float y = newTrashTr.localPosition.y;
         for (i = 0; i < trashTrs.Length; i++)  //카드 6장 버리기
         {
             trashCardList.Add(deckCardList[0]);
             Transform t = deckCardList[0].transform;
-            t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
-            t.DOLocalMove(trashTrs[i].localPosition, 0.4f);
-            t.DOScale(ruleData.trashCardScale, 0.4f);
+            zPos -= 0.01f;
+            t.DOLocalMove( new Vector3(x, y, zPos),0.3f);
+            //t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, -0.01f);
+            //t.DOLocalMove(trashTrs[i].localPosition, 0.4f);
+            //t.DOScale(ruleData.trashCardScale, 0.4f);
 
             yield return ws2;
             deckCardList[0].RotateCard();
@@ -627,9 +641,6 @@ public class RuleManager : MonoSingleton<RuleManager>
         {
             enemyCastle.hp = 0;
             EndGame(true);
-
-            GameManager.Instance.savedData.userInfo.silver += enemyCastle.rewardSilver;
-            GameManager.Instance.savedData.userInfo.gold += enemyCastle.rewardGold;
         }
     }
 
@@ -638,6 +649,13 @@ public class RuleManager : MonoSingleton<RuleManager>
         resultCvsg.gameObject.SetActive(true);
         resultCvsg.DOFade(1, 1.5f);
         resultTxt.text = win ? "승리하였습니다" : "패배하였습니다";
+
+        if(win)
+        {
+            GameManager.Instance.savedData.userInfo.silver += enemyCastle.rewardSilver;
+            GameManager.Instance.savedData.userInfo.gold += enemyCastle.rewardGold;
+            rewardTxt.text = $"획득 은화: <color=white>{enemyCastle.rewardSilver}</color>  획득 금화: <color=white>{enemyCastle.rewardGold}</color>";
+        }
     }
 
     private void Update()
