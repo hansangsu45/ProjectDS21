@@ -11,6 +11,7 @@ public class StageInfo : MonoSingleton<StageInfo>
     public Button[] buttons;
     public Button fightButton;
     public InputField costInput;
+    public GameObject costPanel;
 
     public Action StartAction = null;
 
@@ -28,9 +29,13 @@ public class StageInfo : MonoSingleton<StageInfo>
     public void Start()
     {
         fightButton.gameObject.SetActive(false);
+        costPanel.gameObject.SetActive(false);
     }
 
-
+    public void FightOpen()
+    {
+        costPanel.gameObject.SetActive(true);
+    }
 
     public void Fight()
     {
