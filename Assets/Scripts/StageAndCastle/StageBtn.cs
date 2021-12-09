@@ -15,7 +15,7 @@ public class StageBtn : MonoBehaviour
 
         btn.onClick.AddListener(() =>
         {
-            //GameManager.Instance.CInfoToJson(cInfo);
+            GameManager.Instance.CInfoToJson(cInfo);
         });
     }
 }

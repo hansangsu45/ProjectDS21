@@ -19,6 +19,7 @@ public class StageInfo : MonoSingleton<StageInfo>
     {
         panels[index].SetActive(true);
         fightButton.gameObject.SetActive(true);
+
     }   
 
     public void Close(int index)
@@ -47,11 +48,10 @@ public class StageInfo : MonoSingleton<StageInfo>
             return;
         }
 
+        GameManager.Instance.MInfoToJson(cost);
         PoolManager.ClearAll();
 
-        GameManager.Instance.MInfoToJson(cost, null, 0, 0);
-
-        StartAction?.Invoke();
+        GameManager.Instance.Save();
         SceneManager.LoadScene("Main");
     }
 }

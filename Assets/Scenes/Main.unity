@@ -5200,9 +5200,9 @@ MonoBehaviour:
   touchEffectPrefab: {fileID: 1017202135463684722, guid: 21755f888a196e6459ecf2d62b5a3caf, type: 3}
   soundPrefab: {fileID: 5802794265017718575, guid: d7efd739dbab2c0439ad1588fc660e88, type: 3}
   soldierPrefabs:
-  - {fileID: 7856061380331875861, guid: 1769f7dee2764ca478ed0ea0d65a5c6d, type: 3}
+  - {fileID: 7856061380331875861, guid: 2c32caa94ee8feb4ba1090d06f74151c, type: 3}
   chiefPrefabs:
-  - {fileID: 7856061380331875861, guid: 3900d0dbd8319864c9ca2016c71a0080, type: 3}
+  - {fileID: 7856061380331875861, guid: 1f10812baabf5cd4198f9caff5a50000, type: 3}
   nxSpeed: 1
 --- !u!1 &765096712
 GameObject:

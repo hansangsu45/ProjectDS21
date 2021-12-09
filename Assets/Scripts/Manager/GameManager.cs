@@ -29,7 +29,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private short maxViewStage=4; //이제 깨야할 스테이지 '포함'해서 그 스테이지부터 몇 단계(개)까지 보여줄지
     //밑 두줄 나중에 지울것
     //public static string castleInfo;  
-    public static string mainInfo;
+    //public static string mainInfo;
 
     public SceneType scType;
     public GameObject touchEffectPrefab, soundPrefab;
@@ -207,7 +207,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void MInfoToJson(long cost) => saveData.battleInfo.myCastle = new MainInfo(cost);
     //밑 두줄 지울것
     //public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci); 
-    public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch)); //내 전투 정보 저장
+    //public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch)); //내 전투 정보 저장
     #region OnApplication
     private void OnApplicationQuit()
     {
