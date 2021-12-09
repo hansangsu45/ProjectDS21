@@ -2035,7 +2035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 1
+    stageID: 2
     hp: 20
     leaderShip: 21
     minLeaderShip: 16
@@ -3043,15 +3043,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 0
-    hp: 20
-    leaderShip: 21
+    stageID: 9
+    hp: 30
+    leaderShip: 22
     minLeaderShip: 16
     castleSprite: {fileID: 0}
     soldier: 0
     chief: 0
-    rewardSilver: 0
-    rewardGold: 0
+    rewardSilver: 1700
+    rewardGold: 100
 --- !u!1 &420917989
 GameObject:
   m_ObjectHideFlags: 0
@@ -8281,15 +8281,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 0
-    hp: 20
-    leaderShip: 21
+    stageID: 10
+    hp: 50
+    leaderShip: 22
     minLeaderShip: 16
     castleSprite: {fileID: 0}
     soldier: 0
     chief: 0
-    rewardSilver: 0
-    rewardGold: 0
+    rewardSilver: 3000
+    rewardGold: 120
 --- !u!1 &927304072
 GameObject:
   m_ObjectHideFlags: 0
@@ -8671,7 +8671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 3
+    stageID: 4
     hp: 20
     leaderShip: 21
     minLeaderShip: 16
@@ -9387,15 +9387,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 0
-    hp: 20
-    leaderShip: 21
+    stageID: 7
+    hp: 30
+    leaderShip: 22
     minLeaderShip: 16
     castleSprite: {fileID: 0}
     soldier: 0
     chief: 0
-    rewardSilver: 0
-    rewardGold: 0
+    rewardSilver: 1500
+    rewardGold: 100
 --- !u!1 &1203212943
 GameObject:
   m_ObjectHideFlags: 0
@@ -12701,15 +12701,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 0
-    hp: 20
+    stageID: 5
+    hp: 40
     leaderShip: 21
     minLeaderShip: 16
     castleSprite: {fileID: 0}
     soldier: 0
     chief: 0
-    rewardSilver: 0
-    rewardGold: 0
+    rewardSilver: 2000
+    rewardGold: 120
 --- !u!1 &1392481569 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3764864820929827025, guid: 1cc84d7dd3492e84f8a3e910098eb61f, type: 3}
@@ -12800,15 +12800,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 0
-    hp: 20
-    leaderShip: 21
+    stageID: 8
+    hp: 30
+    leaderShip: 22
     minLeaderShip: 16
     castleSprite: {fileID: 0}
     soldier: 0
     chief: 0
-    rewardSilver: 0
-    rewardGold: 0
+    rewardSilver: 1700
+    rewardGold: 100
 --- !u!1 &1405567159
 GameObject:
   m_ObjectHideFlags: 0
@@ -14405,15 +14405,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 0
-    hp: 20
-    leaderShip: 21
+    stageID: 6
+    hp: 30
+    leaderShip: 22
     minLeaderShip: 16
     castleSprite: {fileID: 0}
     soldier: 0
     chief: 0
-    rewardSilver: 0
-    rewardGold: 0
+    rewardSilver: 1500
+    rewardGold: 100
 --- !u!1 &1671140783
 GameObject:
   m_ObjectHideFlags: 0
@@ -15515,7 +15515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cInfo:
-    stageID: 2
+    stageID: 3
     hp: 20
     leaderShip: 21
     minLeaderShip: 16
