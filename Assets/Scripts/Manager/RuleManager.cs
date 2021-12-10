@@ -64,12 +64,14 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     [SerializeField] private Text PTotalTxt, ETotalTxt;
     [SerializeField] private Button drawBtn, stopBtn, stopBtn2;
-    [SerializeField] private Text moneyTxt, continueTxt, resultTxt, rewardTxt;
+    [SerializeField] private Text moneyTxt, continueTxt, resultTxt, rewardTxt, turnTxt;
     [SerializeField] private Image cardImg;
     [SerializeField] private Text[] leftUpJQKTexts;
     [SerializeField] Text[] hpTxt;
 
     public Transform newTrashTr;
+
+    int turn = 0;
 
     private void Awake()
     {
@@ -217,6 +219,9 @@ public class RuleManager : MonoSingleton<RuleManager>
         PTotalTxt.text = "0";
         ETotalTxt.color = ruleData.totalTxtColor;
         PTotalTxt.color = ruleData.totalTxtColor;
+
+        turn++;
+        turnTxt.text = string.Concat("<color=#FF6500>TURN</color> ", turn.ToString());
 
         Sequence seq = DOTween.Sequence();
 

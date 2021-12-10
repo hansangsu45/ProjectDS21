@@ -44,6 +44,10 @@ public class GameManager : MonoSingleton<GameManager>
     private List<Vector3> startPos = new List<Vector3>();
     private List<Vector3> startRot = new List<Vector3>();
 
+    public Image gameSpeedImg;
+    public Sprite gameSpeedx1Sprite;
+    private Sprite gameSpeedx2Sprite;
+
     public string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
     private void Awake()
@@ -79,6 +83,12 @@ public class GameManager : MonoSingleton<GameManager>
                 idToSoldier.Add(i, soldierPrefabs[i]);
             for (i = 0; i < chiefPrefabs.Length; i++)
                 idToChief.Add(i, chiefPrefabs[i]);
+
+            gameSpeedx2Sprite = gameSpeedImg.sprite;
+        }
+        else if(scType == SceneType.LOBBY)
+        {
+            Time.timeScale = 1;
         }
     }
 
@@ -182,7 +192,7 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene(_name);
     }
 
-    public void GameSpeedUP(float speed=-1f) //카드 게임 배속
+    /*public void GameSpeedUP(float speed=-1f) //카드 게임 배속
     {
         if (speed<0)
         {
@@ -191,6 +201,19 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         Time.timeScale = speed;
+    }*/
+    public void GameSpeed()
+    {
+        if(Time.timeScale<=1f)
+        {
+            Time.timeScale = 2f;
+            gameSpeedImg.sprite = gameSpeedx1Sprite;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            gameSpeedImg.sprite = gameSpeedx2Sprite;
+        }
     }
 
     public void ResetSoldier(Transform[] trList) //한 번 전투하면 병사들 Transform 값들 이상해져서 원래 값으로 초기화를 시켜줘야함.
