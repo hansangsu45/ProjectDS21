@@ -27,7 +27,7 @@ public class UserInfo
     public long cropSilver = 100;  //'분'당 '쌓이는' 은화 
     public long currentSilver = 0;  //현재 '쌓여있는' 은화의 양 
     public long maxSilver = 1000;  //최대로 '쌓일 수 있는' 은화 양 
-    public long silver; //현재 '가지고' 있는 은화의 양
+    public long silver = 1000; //현재 '가지고' 있는 은화의 양
 
     public string quitDate;  //게임 종료 날짜
 

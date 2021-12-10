@@ -63,15 +63,17 @@ public class RuleManager : MonoSingleton<RuleManager>
     public PRS orgCardPRS;
 
     [SerializeField] private Text PTotalTxt, ETotalTxt;
-    [SerializeField] private Button drawBtn, stopBtn, stopBtn2;
+    [SerializeField] private Button stopBtn, stopBtn2;
     [SerializeField] private Text moneyTxt, continueTxt, resultTxt, rewardTxt, turnTxt;
     [SerializeField] private Image cardImg;
     [SerializeField] private Text[] leftUpJQKTexts;
     [SerializeField] Text[] hpTxt;
+    [SerializeField] Image[] hpFill;
 
     public Transform newTrashTr;
 
     int turn = 0;
+    int enemyMaxHp;
 
     private void Awake()
     {
@@ -89,6 +91,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     {
         enemyCastle = GameManager.Instance.savedData.battleInfo.enemyCastle;
         myCastle = GameManager.Instance.savedData.battleInfo.myCastle;
+        enemyMaxHp = enemyCastle.hp;
         GameManager.Instance.savedData.userInfo.silver -= myCastle.silver;
         moneyTxt.text = myCastle.silver.ToString();
 
@@ -316,8 +319,13 @@ public class RuleManager : MonoSingleton<RuleManager>
 
     void SetHpUI()
     {
-        hpTxt[0].text = GameManager.Instance.savedData.userInfo.hp.ToString();
+        UserInfo uif = GameManager.Instance.savedData.userInfo;
+
+        hpTxt[0].text = uif.hp.ToString();
         hpTxt[1].text = enemyCastle.hp.ToString();
+
+        hpFill[0].fillAmount = uif.hp/(float)uif.maxHp;
+        hpFill[1].fillAmount = enemyCastle.hp / (float)enemyMaxHp;
     }
 
     private void SortCardList(PlayerScript ps, CardScript cs)  //카드를 추가하고 정렬한다. 
