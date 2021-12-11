@@ -175,13 +175,7 @@ public class GameManager : MonoSingleton<GameManager>
         
         Save();
 
-        PoolManager.ClearItem<TouchEffect>();
-        PoolManager.ClearItem<SoundPrefab>();
-        if (scType == SceneType.MAIN)
-        {
-            PoolManager.ClearItem<Soldier>();
-            PoolManager.ClearItem<Chief>();
-        }
+        PoolManager.ClearAll();
 
         StartCoroutine(ChangeDelay(sceneName));
     }

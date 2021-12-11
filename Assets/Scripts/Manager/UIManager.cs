@@ -24,6 +24,8 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject trashUIPref;
     public Transform trashUIPrefParent;
 
+    public Slider snfSlider;
+
     private void Awake()
     {
         trashCardUIArr = new TrashCardUI[13];
@@ -67,9 +69,22 @@ public class UIManager : MonoSingleton<UIManager>
             while (!RuleManager.Instance.isReady) yield return lWs;
         }
 
-        screenTouchPanelBtn.onClick.AddListener(() => ViewUI(gameUIs.IndexOf(uiList[uiList.Count - 1])) );
+        if(screenTouchPanelBtn != null)
+           screenTouchPanelBtn.onClick.AddListener(() => ViewUI(gameUIs.IndexOf(uiList[uiList.Count - 1])) );
         scrPanelIdx.ForEach(x => scrPanelDic.Add(x, true));
         FadeInOut(true);
+
+        SetOption();
+    }
+
+    public void SetOption()
+    {
+        snfSlider.value = GameManager.Instance.savedData.option.soundEffectSize;
+    }
+
+    public void OnChangedSnfSliderValue()
+    {
+        GameManager.Instance.savedData.option.soundEffectSize = snfSlider.value;
     }
 
     private void Update()
@@ -93,7 +108,7 @@ public class UIManager : MonoSingleton<UIManager>
             }
             else
             {
-                //Á¾·á Ã¢
+                ViewUI(3);
             }
         }
     }

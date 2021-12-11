@@ -39,7 +39,7 @@ public class RuleManager : MonoSingleton<RuleManager>
     private RaycastHit2D hit;
 
     public GameObject clickPrevObj;
-    public CanvasGroup jqkDecidePanel, continuePanel, viewPanel, resultCvsg;
+    public CanvasGroup jqkDecidePanel, continuePanel, viewPanel, resultCvsg, noPrevClick;
     [SerializeField] private Image[] jqkImgs;
     [SerializeField] private Text[] jqkTexts;
 
@@ -638,6 +638,8 @@ public class RuleManager : MonoSingleton<RuleManager>
         });
 
         viewPanel.DOFade(1, 1.2f);
+        noPrevClick.DOFade(1, 1);
+        noPrevClick.interactable = true;
         ResetGame();
         camMove.SetMoveState(false);
         SetHpUI();
@@ -738,6 +740,8 @@ public class RuleManager : MonoSingleton<RuleManager>
     public void FadeObj(bool off, params float[] times) //카드랑 UI 페이드 효과
     {
         viewPanel.DOFade(off?0:1, times[0]);
+        noPrevClick.DOFade(off ? 0 : 1, times[0]);
+        noPrevClick.interactable = !off;
         Color c = off ? ruleData.noColor : Color.white;
         allCardList.ForEach(x => x.spriteRenderer.DOColor(c, times[1]));
     }
