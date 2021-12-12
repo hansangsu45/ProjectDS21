@@ -12,6 +12,8 @@ public class StageInfo : MonoSingleton<StageInfo>
     public Button fightButton;
     public InputField costInput;
     public GameObject costPanel;
+    public GameObject trueYesPanel;
+    public Text trueMoney;
 
     public Action StartAction = null;
 
@@ -19,8 +21,17 @@ public class StageInfo : MonoSingleton<StageInfo>
     {
         panels[index].SetActive(true);
         fightButton.gameObject.SetActive(true);
-
-    }   
+    }  
+    
+    public void trueYesOpen()
+    {
+        trueYesPanel.SetActive(true);
+        trueMoney.text = costInput.text;
+    }
+    public void trueYesClose()
+    {
+        trueYesPanel.SetActive(false);
+    }
 
     public void Close(int index)
     {
@@ -31,6 +42,7 @@ public class StageInfo : MonoSingleton<StageInfo>
     {
         fightButton.gameObject.SetActive(false);
         costPanel.gameObject.SetActive(false);
+        trueYesPanel.SetActive(false);
     }
 
     public void FightOpen()
