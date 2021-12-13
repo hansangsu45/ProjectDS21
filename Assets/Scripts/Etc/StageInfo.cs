@@ -15,7 +15,8 @@ public class StageInfo : MonoSingleton<StageInfo>
     public GameObject trueYesPanel;
     public Text trueMoney;
     public Text myMoney;
-    public Text noText;
+    public int maxMoney = 10000;
+    //public Text noText;
 
     public Action StartAction = null;
 
@@ -28,12 +29,16 @@ public class StageInfo : MonoSingleton<StageInfo>
     public void trueYesOpen()
     {
         trueYesPanel.SetActive(true);
+        if (long.Parse(costInput.text) > GameManager.Instance.savedData.userInfo.silver)
+        {
+            costInput.text = GameManager.Instance.savedData.userInfo.silver.ToString();
+        }
         trueMoney.text = costInput.text;
     }
     public void trueYesClose()
     {
         trueYesPanel.SetActive(false);
-        noText.gameObject.SetActive(false);
+        //noText.gameObject.SetActive(false);
     }
 
     public void Close(int index)
@@ -46,7 +51,7 @@ public class StageInfo : MonoSingleton<StageInfo>
         fightButton.gameObject.SetActive(false);
         costPanel.gameObject.SetActive(false);
         trueYesPanel.SetActive(false);
-        noText.gameObject.SetActive(false);
+        //noText.gameObject.SetActive(false);
     }
 
     public void FightOpen()
@@ -61,9 +66,11 @@ public class StageInfo : MonoSingleton<StageInfo>
 
         if(cost>GameManager.Instance.savedData.userInfo.silver)
         {
-            noText.gameObject.SetActive(true);
+            //noText.gameObject.SetActive(true);
             return;
         }
+
+        
 
         GameManager.Instance.MInfoToJson(cost);
         PoolManager.ClearAll();
