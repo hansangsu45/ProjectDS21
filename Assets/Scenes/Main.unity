@@ -10973,6 +10973,7 @@ MonoBehaviour:
   trashUIPref: {fileID: 7095423951053614509, guid: 67e675a048449dc40970e12bb56cbc1b, type: 3}
   trashUIPrefParent: {fileID: 878823160}
   snfSlider: {fileID: 620740778}
+  quitPanelIndex: 3
 --- !u!1 &1352797425
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,25 +26,30 @@ public class UIManager : MonoSingleton<UIManager>
 
     public Slider snfSlider;
 
+    public int quitPanelIndex;
+
     private void Awake()
     {
-        trashCardUIArr = new TrashCardUI[13];
-        for(int i=0; i<=12; ++i)
+        if (GameManager.Instance.scType == SceneType.MAIN)
         {
-            trashCardUIArr[i] = new TrashCardUI();
-
-            GameObject o = Instantiate(trashUIPref, trashUIPrefParent);
-            trashCardUIArr[i].panel = o;
-            o.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetInitCardNum(i+1).ToString();
-
-            Transform t = o.transform.GetChild(1);
-            trashCardUIArr[i].trashCountTxt = t.GetChild(0).GetComponent<Text>();
-            for(int j=0; j<4; j++)
+            trashCardUIArr = new TrashCardUI[13];
+            for (int i = 0; i <= 12; ++i)
             {
-                trashCardUIArr[i].shapeImageList[j] = t.GetChild(j + 1).GetComponent<Image>();
-            }
+                trashCardUIArr[i] = new TrashCardUI();
 
-            o.SetActive(false);
+                GameObject o = Instantiate(trashUIPref, trashUIPrefParent);
+                trashCardUIArr[i].panel = o;
+                o.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetInitCardNum(i + 1).ToString();
+
+                Transform t = o.transform.GetChild(1);
+                trashCardUIArr[i].trashCountTxt = t.GetChild(0).GetComponent<Text>();
+                for (int j = 0; j < 4; j++)
+                {
+                    trashCardUIArr[i].shapeImageList[j] = t.GetChild(j + 1).GetComponent<Image>();
+                }
+
+                o.SetActive(false);
+            }
         }
     }
 
@@ -79,7 +84,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void SetOption()
     {
-        snfSlider.value = GameManager.Instance.savedData.option.soundEffectSize;
+        if(snfSlider!=null)
+           snfSlider.value = GameManager.Instance.savedData.option.soundEffectSize;
     }
 
     public void OnChangedSnfSliderValue()
@@ -102,13 +108,14 @@ public class UIManager : MonoSingleton<UIManager>
     {
         if(Input.GetKeyDown(KeyCode.Escape))  //뒤로가기
         {
+    
             if(uiList.Count>0)
-            {
+            { 
                 ViewUI(gameUIs.IndexOf(uiList[uiList.Count-1]));
             }
             else
             {
-                ViewUI(3);
+                ViewUI(quitPanelIndex);
             }
         }
     }
@@ -121,19 +128,29 @@ public class UIManager : MonoSingleton<UIManager>
         {
             gameUIs[num].SetActive(true);
             uiList.Add(gameUIs[num]);
-            gameUIs[num].transform.DOScale(Vector3.one, 0.4f).SetEase(eases[1]);
-            if (scrPanelDic.ContainsKey(num)) screenTouchPanelBtn.gameObject.SetActive(true);
+            if (GameManager.Instance.scType == SceneType.MAIN)
+            {
+                gameUIs[num].transform.DOScale(Vector3.one, 0.4f).SetEase(eases[1]);
+                if (scrPanelDic.ContainsKey(num)) screenTouchPanelBtn.gameObject.SetActive(true);
+            }
         }
         else
         {
             uiList.Remove(gameUIs[num]);
-            Sequence seq = DOTween.Sequence();
-            seq.Append(gameUIs[num].transform.DOScale(Vector3.zero, 0.3f).SetEase(eases[2]));
-            seq.AppendCallback(() =>
+            if (GameManager.Instance.scType == SceneType.MAIN)
+            {
+                Sequence seq = DOTween.Sequence();
+                seq.Append(gameUIs[num].transform.DOScale(Vector3.zero, 0.3f).SetEase(eases[2]));
+                seq.AppendCallback(() =>
+                {
+                    gameUIs[num].SetActive(false);
+                    screenTouchPanelBtn.gameObject.SetActive(false);
+                }).Play();
+            }
+            else
             {
                 gameUIs[num].SetActive(false);
-                screenTouchPanelBtn.gameObject.SetActive(false);
-            }).Play();
+            }
         }
     }
 
