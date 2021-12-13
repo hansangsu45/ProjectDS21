@@ -14,6 +14,8 @@ public class StageInfo : MonoSingleton<StageInfo>
     public GameObject costPanel;
     public GameObject trueYesPanel;
     public Text trueMoney;
+    public Text myMoney;
+    public Text noText;
 
     public Action StartAction = null;
 
@@ -31,6 +33,7 @@ public class StageInfo : MonoSingleton<StageInfo>
     public void trueYesClose()
     {
         trueYesPanel.SetActive(false);
+        noText.gameObject.SetActive(false);
     }
 
     public void Close(int index)
@@ -43,11 +46,13 @@ public class StageInfo : MonoSingleton<StageInfo>
         fightButton.gameObject.SetActive(false);
         costPanel.gameObject.SetActive(false);
         trueYesPanel.SetActive(false);
+        noText.gameObject.SetActive(false);
     }
 
     public void FightOpen()
     {
         costPanel.gameObject.SetActive(true);
+        myMoney.text = GameManager.Instance.savedData.userInfo.silver.ToString();
     }
 
     public void Fight()
@@ -56,7 +61,7 @@ public class StageInfo : MonoSingleton<StageInfo>
 
         if(cost>GameManager.Instance.savedData.userInfo.silver)
         {
-            //가져갈 수 없음
+            noText.gameObject.SetActive(true);
             return;
         }
 
