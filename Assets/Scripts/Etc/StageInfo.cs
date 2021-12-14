@@ -15,7 +15,7 @@ public class StageInfo : MonoSingleton<StageInfo>
     public GameObject trueYesPanel;
     public Text trueMoney;
     public Text myMoney;
-    public int maxMoney = 10000;
+    public int minMoney = 100;
     //public Text noText;
 
     public Action StartAction = null;
@@ -32,6 +32,10 @@ public class StageInfo : MonoSingleton<StageInfo>
         if (long.Parse(costInput.text) > GameManager.Instance.savedData.userInfo.silver)
         {
             costInput.text = GameManager.Instance.savedData.userInfo.silver.ToString();
+        }
+        else if(long.Parse(costInput.text) < minMoney)
+        {
+            costInput.text = minMoney.ToString();
         }
         trueMoney.text = costInput.text;
     }
