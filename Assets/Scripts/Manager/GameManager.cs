@@ -285,6 +285,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
 
+    //임시용
     float time1 = 0f;
     private void Update()
     {
@@ -346,6 +347,11 @@ public class GameManager : MonoSingleton<GameManager>
             trList[i].localPosition = startPos[i - 1];
             trList[i].localRotation = Quaternion.Euler(startRot[i - 1]);
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     //���������� �Ѿ�� ���� ���� �� �Լ��� ȣ���ؼ� �� ���� �� �� ������ �����ְ� 'Save'�Լ��� ȣ���ؾ��Ѵ�. (�� �Ѿ�� ���� Ǯ ������ �ؾ���)
