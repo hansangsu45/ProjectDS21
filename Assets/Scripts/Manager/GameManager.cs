@@ -26,8 +26,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public List<StageBtn> stageBtns = new List<StageBtn>();
     //public Dictionary<short, StageCastle> idToCastle = new Dictionary<short, StageCastle>();
-    [SerializeField] private short maxViewStage=4; //ÀÌÁ¦ ±ú¾ßÇÒ ½ºÅ×ÀÌÁö 'Æ÷ÇÔ'ÇØ¼­ ±× ½ºÅ×ÀÌÁöºÎÅÍ ¸î ´Ü°è(°³)±îÁö º¸¿©ÁÙÁö
-    //¹Ø µÎÁÙ ³ªÁß¿¡ Áö¿ï°Í
+    [SerializeField] private short maxViewStage=4; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 'ï¿½ï¿½ï¿½ï¿½'ï¿½Ø¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ü°ï¿½(ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     //public static string castleInfo;  
     //public static string mainInfo;
 
@@ -47,6 +47,39 @@ public class GameManager : MonoSingleton<GameManager>
     public Image gameSpeedImg;
     public Sprite gameSpeedx1Sprite;
     private Sprite gameSpeedx2Sprite;
+
+    [SerializeField]
+    private Text[] statTexts;
+    [SerializeField]
+    private Text[] nextLevels;
+    [SerializeField]
+    private Text[] nextStats;
+    [SerializeField]
+    private Text[] nextPrices;
+
+    [SerializeField]
+    private int commandStat = 20;
+    [SerializeField]
+    private int defanseStat = 20;
+    [SerializeField]
+    private int goldStat = 10000;
+    [SerializeField]
+    private int silverStat = 90000000;
+    [SerializeField]
+    private int rouletteStat = 1;
+
+    [SerializeField]
+    private int command_price = 100;
+    [SerializeField]
+    private int defanse_price = 100;
+    [SerializeField]
+    private int roulette_price = 500;
+
+    private int command_level = 1;
+    private int defanse_level = 1;
+    private int roulette_level = 1;
+
+    private List<int> statList = new List<int>();
 
     public string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
@@ -92,7 +125,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    private void CreatePool() //Ç® »ý¼º
+    private void CreatePool() //Ç® ï¿½ï¿½ï¿½ï¿½
     {
         PoolManager.CreatePool<TouchEffect>(touchEffectPrefab, transform, 40);
         PoolManager.CreatePool<SoundPrefab>(soundPrefab, transform, 12);
@@ -164,9 +197,71 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void Upgrade_Command()
+    {
+        if (goldStat >= command_price) {
+            goldStat -= command_price;
+            commandStat++;
+            command_level++;
+            command_price += 100;
+        }
+    }
+
+    public void Upgrade_Defanse()
+    {
+        if (goldStat >= defanse_price) {
+            goldStat -= defanse_price;
+            defanseStat++;
+            defanse_level++;
+            defanse_price += 100;
+        }
+    }
+
+    public void Upgrade_Roulette()
+    {
+        if (goldStat >= roulette_price) {
+            goldStat -= roulette_price;
+            rouletteStat++;
+            roulette_level++;
+            roulette_price += 1500;
+        }
+    }
+
+    private void StatBarText()
+    {
+        statTexts[0].text = commandStat.ToString();
+        statTexts[1].text = defanseStat.ToString();
+        statTexts[2].text = goldStat.ToString();
+        statTexts[3].text = silverStat.ToString();
+    }
+
+    private void StatLevelText()
+    {
+        nextLevels[0].text = "Lv" + " " + command_level + " " + "->" + " " + (command_level + 1);
+        nextLevels[1].text = "Lv" + " " + defanse_level + " " + "->" + " " + (defanse_level + 1);
+        nextLevels[2].text = "Lv" + " " + roulette_level + " " + "->" + " " + (roulette_level + 1);
+    }
+
+    private void NextStatText()
+    {
+        nextStats[0].text = "í†µì†”ë ¥: " + commandStat + " " + "->" + " " + (commandStat + 1);
+        nextStats[1].text = "ë‚´êµ¬ë ¥: " + defanseStat + " " + "->" + " " + (defanseStat + 1);
+        nextStats[2].text = "ë£°ë › ë°°ì¹˜ ì½”ì¸: " + rouletteStat + " " + "->" + " " + (rouletteStat + 1);
+    }
+
+    private void NextPriceText()
+    {
+        nextPrices[0].text = "ë¹„ìš©(ê¸ˆí™”): " + command_price + " " + "->" + " " + (command_price + 100);
+        nextPrices[1].text = "ë¹„ìš©(ê¸ˆí™”): " + defanse_price + " " + "->" + " " + (defanse_price + 100);
+        nextPrices[2].text = "ë¹„ìš©(ê¸ˆí™”): " + roulette_price + " " + "->" + " " + (roulette_price + 1500);
+    }
+
     private void Update()
     {
-        
+        StatBarText();
+        StatLevelText();
+        NextStatText();
+        NextPriceText();
     }
 
     public void ChangeScene(string sceneName)
@@ -186,7 +281,7 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene(_name);
     }
 
-    /*public void GameSpeedUP(float speed=-1f) //Ä«µå °ÔÀÓ ¹è¼Ó
+    /*public void GameSpeedUP(float speed=-1f) //Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     {
         if (speed<0)
         {
@@ -210,7 +305,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void ResetSoldier(Transform[] trList) //ÇÑ ¹ø ÀüÅõÇÏ¸é º´»çµé Transform °ªµé ÀÌ»óÇØÁ®¼­ ¿ø·¡ °ªÀ¸·Î ÃÊ±âÈ­¸¦ ½ÃÄÑÁà¾ßÇÔ.
+    public void ResetSoldier(Transform[] trList) //ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Transform ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
     {
         for(int i=1; i<trList.Length; i++)
         {
@@ -219,12 +314,12 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    //ÀüÅõ¾ÀÀ¸·Î ³Ñ¾î°¡±â Àü¿¡ ¹ØÀÇ µÎ ÇÔ¼ö¸¦ È£ÃâÇØ¼­ ³» ¼º°ú Àû ¼º Á¤º¸¸¦ º¸³»ÁÖ°í 'Save'ÇÔ¼ö¸¦ È£ÃâÇØ¾ßÇÑ´Ù. (¾À ³Ñ¾î°¡±â Àü¿¡ Ç® »èÁ¦µµ ÇØ¾ßÇÔ)
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ 'Save'ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ñ´ï¿½. (ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ï¿½ï¿½)
     public void CInfoToJson(CastleInfo ci) => saveData.battleInfo.enemyCastle = ci;  
     public void MInfoToJson(long cost) => saveData.battleInfo.myCastle = new MainInfo(cost);
-    //¹Ø µÎÁÙ Áö¿ï°Í
+    //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     //public void CInfoToJson(CastleInfo ci) => castleInfo = JsonUtility.ToJson(ci); 
-    //public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch)); //³» ÀüÅõ Á¤º¸ ÀúÀå
+    //public void MInfoToJson(long s, Sprite cSpr, short sold, short ch) => mainInfo = JsonUtility.ToJson(new MainInfo(s,cSpr,sold,ch)); //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     #region OnApplication
     private void OnApplicationQuit()
     {

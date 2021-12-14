@@ -14,27 +14,27 @@ public class SaveData
 [Serializable]
 public class UserInfo
 {
-    public bool isFirstStart = true;  //ÀÌ °ÔÀÓÀ» Ã³À½ ½ÃÀÛÇß´ÂÁö
+    public bool isFirstStart = true;  //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½
 
-    public short leadership = 21; //Åë¼Ö·Â (ÇÑ ¹ø¿¡ ÀüÅõ¿¡ Âü¿©½ÃÅ³ ¼ö ÀÖ´Â ÃÖ´ë º´»ç ¼ö)
-    public short clearId = 0; //Å¬¸®¾îÇÑ ´Ü°èÁß °¡Àå ³ôÀº ´Ü°è
+    public short leadership = 21; //ï¿½ï¿½Ö·ï¿½ (ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
+    public short clearId = 0; //Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½
 
-    public int hp = 20;  //ÇöÀç ÀÚ½Å ¼ºÀÇ Ã¼·Â 
-    public int maxHp=20;  //ÃÖ´ë Ã¼·Â 
+    public int hp = 20;  //ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ 
+    public int maxHp=20;  //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½ 
 
-    public long gold = 0;  //±ÝÈ­ 
+    public long gold = 0;  //ï¿½ï¿½È­ 
    
-    public long cropSilver = 100;  //'ºÐ'´ç '½×ÀÌ´Â' ÀºÈ­ 
-    public long currentSilver = 0;  //ÇöÀç '½×¿©ÀÖ´Â' ÀºÈ­ÀÇ ¾ç 
-    public long maxSilver = 1000;  //ÃÖ´ë·Î '½×ÀÏ ¼ö ÀÖ´Â' ÀºÈ­ ¾ç 
-    public long silver = 1000; //ÇöÀç '°¡Áö°í' ÀÖ´Â ÀºÈ­ÀÇ ¾ç
+    public long cropSilver = 100;  //'ï¿½ï¿½'ï¿½ï¿½ 'ï¿½ï¿½ï¿½Ì´ï¿½' ï¿½ï¿½È­ 
+    public long currentSilver = 0;  //ï¿½ï¿½ï¿½ï¿½ 'ï¿½×¿ï¿½ï¿½Ö´ï¿½' ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ 
+    public long maxSilver = 1000;  //ï¿½Ö´ï¿½ï¿½ 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½' ï¿½ï¿½È­ ï¿½ï¿½ 
+    public long silver = 1000; //ï¿½ï¿½ï¿½ï¿½ 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' ï¿½Ö´ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½
 
-    public string quitDate;  //°ÔÀÓ Á¾·á ³¯Â¥
+    public string quitDate;  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
 
-    //public short soldier;  // ÀÏ¹Ý º´»ç   ÀÏ´Ü ´çÀåÀº ¾È¾¸
-    //public short chief;  //1¤§1 ÀÏ±âÅä º´»ç      ÀÏ´Ü ´çÀåÀº ¾È¾¸
+    //public short soldier;  // ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½   ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¾ï¿½
+    //public short chief;  //1ï¿½ï¿½1 ï¿½Ï±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½      ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¾ï¿½
 
-    //public List<StageCastle> stageCastles = new List<StageCastle>(); //Ã³À½ ½ÃÀÛÇÒ ¶§ ÀüºÎ µé¾î¿È (±âÈ¹´ë·Î¶ó¸é ±»ÀÌ ÀÌ°Å ¾ø¾îµµ ÇÒ ¼ö´Â ÀÖÁö¸¸ ¹¹°¡ Ãß°¡µÉÁö ¸ð¸£´Ï ÀÏ´Ü ÇÔ)
+    //public List<StageCastle> stageCastles = new List<StageCastle>(); //Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½È¹ï¿½ï¿½Î¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½îµµ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ð¸£´ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½)
 
 
     /*public StageCastle GetStage(short id) => stageCastles.Find(x => x.id == id);
@@ -61,11 +61,11 @@ public class BattleInfo
     public MainInfo myCastle = new MainInfo();
 }
 
-#region ÁÖ¼®1
+#region ï¿½Ö¼ï¿½1
 /*[Serializable]
-public class StageCastle  //ÀûÀÇ ¼ºµé (½ºÅ×ÀÌÁö)  ÀÌ°Íµµ ´ç¿¬È÷ ±âÈ¹´ë·Î¶ó¸é ¾ø¾îµµ ÇÒ ¼ö ÀÖÁö¸¸ ¹¹°¡ Ãß°¡µÉÁö ¸ð¸£´Ï ÀÏ´Ü ÇÔ
+public class StageCastle  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)  ï¿½Ì°Íµï¿½ ï¿½ç¿¬ï¿½ï¿½ ï¿½ï¿½È¹ï¿½ï¿½Î¶ï¿½ï¿½ ï¿½ï¿½ï¿½îµµ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ð¸£´ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½
 {
-    public short id;  //´Ü°è
+    public short id;  //ï¿½Ü°ï¿½
 
     public bool isOpen;
     public bool isClear = false;
@@ -78,13 +78,13 @@ public class StageCastle  //ÀûÀÇ ¼ºµé (½ºÅ×ÀÌÁö)  ÀÌ°Íµµ ´ç¿¬È÷ ±âÈ¹´ë·Î¶ó¸é ¾ø¾
         isClear = sc.isClear;
     }
 
-    #region ÁÖ¼®
-    *//*public short level = 1;  //°­È­ ¼öÄ¡
+    #region ï¿½Ö¼ï¿½
+    *//*public short level = 1;  //ï¿½ï¿½È­ ï¿½ï¿½Ä¡
     public short maxLevel;
 
-    //needTimeForCropÃÊ¿¡ ÇÑ ¹ø¾¿ crop¸¸Å­ goldµé¾î¿È. maxCrop¿¡ µµ´ÞÇÏ¸é ¼öÈ®ÇÏ±â Àü±îÁö ´õ ¾È ½×ÀÓ
-    public float needTimeForCrop;  //´ÜÀ§: ÃÊ 
-    public long crop; //ÇÑ ¹ø Àû¸³µÉ ¶§¸¶´Ù ½×ÀÌ´Â µ·
+    //needTimeForCropï¿½Ê¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ cropï¿½ï¿½Å­ goldï¿½ï¿½ï¿½ï¿½. maxCropï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½È®ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float needTimeForCrop;  //ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ 
+    public long crop; //ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½
     public long currentCrop;
     public long maxCrop;
 
@@ -114,27 +114,27 @@ public class StageCastle  //ÀûÀÇ ¼ºµé (½ºÅ×ÀÌÁö)  ÀÌ°Íµµ ´ç¿¬È÷ ±âÈ¹´ë·Î¶ó¸é ¾ø¾
 #endregion
 
 [Serializable]
-public class CastleInfo  //Àû ¼ºÀÇ ´É·ÂÄ¡ Á¤º¸
+public class CastleInfo  //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 {
-    public short stageID; // n½ºÅ×ÀÌÁö
+    public short stageID; // nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public int hp = 20; 
-    public short leaderShip = 21;  //ÀûÀÇ Åë¼Ö·Â (ÀÌ °ªÀ» 'ÃÊ°ú'ÇÏ¸é µðÁü)
-    public short minLeaderShip = 16;  //ÀûÀÇ ÃÖ¼Ò Ä«µå ÃÑÇÕÀº ÀÌ °ªÀÌ´Ù
-    public Sprite castleSprite;  //¼º ½ºÇÁ¶óÀÌÆ®      ÀÏ´Ü ´çÀåÀº ¾È¾¸
-    public short soldier;  // ÀÏ¹Ý º´»ç   ÀÏ´Ü ´çÀåÀº ¾È¾¸
-    public short chief;  //1¤§1 ÀÏ±âÅä º´»ç      ÀÏ´Ü ´çÀåÀº ¾È¾¸
+    public short leaderShip = 21;  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ö·ï¿½ (ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 'ï¿½Ê°ï¿½'ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    public short minLeaderShip = 16;  //ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½
+    public Sprite castleSprite;  //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®      ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¾ï¿½
+    public short soldier;  // ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½   ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¾ï¿½
+    public short chief;  //1ï¿½ï¿½1 ï¿½Ï±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½      ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¾ï¿½
 
-    public long rewardSilver;  //ÀºÈ­ º¸»ó
-    public long rewardGold;  //±ÝÈ­ º¸»ó
+    public long rewardSilver;  //ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
+    public long rewardGold;  //ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
 }
 
 [Serializable]
-public class MainInfo  //³» ÀüÅõ Á¤º¸
+public class MainInfo  //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 {
-    public long silver; //ÀüÅõºñ¿ë
-    public Sprite castleSprite;  //¼º ½ºÇÁ¶óÀÌÆ®
-    public short soldier;  // ÀÏ¹Ý º´»ç
-    public short chief;  //1¤§1 ÀÏ±âÅä º´»ç 
+    public long silver; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Sprite castleSprite;  //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public short soldier;  // ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public short chief;  //1ï¿½ï¿½1 ï¿½Ï±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 
     public MainInfo() { }
     public MainInfo(long silver)
@@ -155,11 +155,11 @@ public class TrashCardUI
 {
     public GameObject panel;
 
-    public int trashCnt;  //ÇØ´ç ¼ýÀÚ ¹ö¸° °³¼ö
-    public Text trashCountTxt; //ÇØ´ç ¼ýÀÚ ¹ö¸° °³¼ö¸¦ ³ªÅ¸³»´Â ÅØ½ºÆ® UI
+    public int trashCnt;  //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public Text trashCountTxt; //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® UI
 
-    //public bool[] isTrashShape; // L: 4   //ÇØ´ç ¸ð¾çÀÇ Ä«µå°¡ ¹ö·ÁÁ³´ÂÁö
-    public Image[] shapeImageList = new Image[4];  //  //Shape¿­°ÅÇü¿¡¼­ ³ª¿­ÇÑ´ë·Î ¶È°°ÀÌ ¼ø¼­¸ÂÃç¼­ ÀÌ¹ÌÁö¸¦ Áý¾î³Ö´Â´Ù.
+    //public bool[] isTrashShape; // L: 4   //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Image[] shapeImageList = new Image[4];  //  //Shapeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ ï¿½È°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¼­ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´Â´ï¿½.
 
     public void UpdateUI(int shape = -1)
     {
