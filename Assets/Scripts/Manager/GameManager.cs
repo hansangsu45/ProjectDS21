@@ -288,7 +288,7 @@ public class GameManager : MonoSingleton<GameManager>
     float time1 = 0f;
     private void Update()
     {
-        if (time1 < Time.time)
+        if (time1 < Time.time && scType==SceneType.LOBBY)
         {
             StatBarText();
             //StatLevelText();
