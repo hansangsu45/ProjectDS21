@@ -56,9 +56,11 @@ public class GameManager : MonoSingleton<GameManager>
     private Text[] nextStats;
     [SerializeField]
     private Text[] nextPrices;
+    [SerializeField]
+    private Text[] lobbyStatTexts;
 
     [SerializeField]
-    private int commandStat = 20;
+    private int commandStat = 21;
     [SerializeField]
     private int defanseStat = 20;
     [SerializeField]
@@ -199,21 +201,33 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void Upgrade_Command()
     {
-        if (goldStat >= command_price) {
+        /*if (goldStat >= command_price) {
             goldStat -= command_price;
             commandStat++;
             command_level++;
             command_price += 100;
+            saveData.userInfo.leadership++;
+        }*/
+        if (saveData.userInfo.gold >= 300)
+        {
+            saveData.userInfo.gold -= 300;
+            saveData.userInfo.leadership++;
         }
     }
 
     public void Upgrade_Defanse()
     {
-        if (goldStat >= defanse_price) {
+        /*if (goldStat >= defanse_price) {
             goldStat -= defanse_price;
             defanseStat++;
             defanse_level++;
             defanse_price += 100;
+            
+        }*/
+        if(saveData.userInfo.gold>=200)
+        {
+            saveData.userInfo.gold -= 200;
+            saveData.userInfo.maxHp++;
         }
     }
 
@@ -227,12 +241,26 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void Recovery()
+    {
+        if(saveData.userInfo.silver>=100)
+        {
+            saveData.userInfo.silver -= 100;
+            saveData.userInfo.hp = saveData.userInfo.maxHp;
+        }
+    }
+
     private void StatBarText()
     {
-        statTexts[0].text = commandStat.ToString();
-        statTexts[1].text = defanseStat.ToString();
-        statTexts[2].text = goldStat.ToString();
-        statTexts[3].text = silverStat.ToString();
+        statTexts[0].text = saveData.userInfo.leadership.ToString();
+        statTexts[1].text = saveData.userInfo.maxHp.ToString();
+        statTexts[2].text = saveData.userInfo.gold.ToString();
+        statTexts[3].text = saveData.userInfo.silver.ToString();
+
+        lobbyStatTexts[0].text = saveData.userInfo.leadership.ToString();
+        lobbyStatTexts[1].text = saveData.userInfo.maxHp.ToString();
+        lobbyStatTexts[2].text = saveData.userInfo.gold.ToString();
+        lobbyStatTexts[3].text = saveData.userInfo.silver.ToString();
     }
 
     private void StatLevelText()
@@ -256,12 +284,18 @@ public class GameManager : MonoSingleton<GameManager>
         nextPrices[2].text = "비용(금화): " + roulette_price + " " + "->" + " " + (roulette_price + 1500);
     }
 
+
+    float time1 = 0f;
     private void Update()
     {
-        StatBarText();
-        StatLevelText();
-        NextStatText();
-        NextPriceText();
+        if (time1 < Time.time)
+        {
+            StatBarText();
+            //StatLevelText();
+            //NextStatText();
+            //NextPriceText();
+            time1 = Time.time + 1f;
+        }
     }
 
     public void ChangeScene(string sceneName)
