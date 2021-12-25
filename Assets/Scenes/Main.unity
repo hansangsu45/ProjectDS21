@@ -5669,7 +5669,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -356881513034132219, guid: fc39f1561321b47449a791d8730486a2, type: 3}
+  m_Sprite: {fileID: 2370203089569782965, guid: fc39f1561321b47449a791d8730486a2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6349,7 +6349,7 @@ MonoBehaviour:
   - {fileID: 7856061380331875861, guid: 1f10812baabf5cd4198f9caff5a50000, type: 3}
   nxSpeed: 1
   gameSpeedImg: {fileID: 710091682}
-  gameSpeedx1Sprite: {fileID: 2370203089569782965, guid: fc39f1561321b47449a791d8730486a2, type: 3}
+  gameSpeedx1Sprite: {fileID: -356881513034132219, guid: fc39f1561321b47449a791d8730486a2, type: 3}
   statTexts: []
   nextLevels: []
   nextStats: []
