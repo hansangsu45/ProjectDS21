@@ -50,7 +50,8 @@ public class RuleManager : MonoSingleton<RuleManager>
     private bool isThrowing = false;  //내 카드 버리는 중임?
     private bool isMyTurn;  //내 턴인지
     private bool isCardTouch;  //카드 확대 가능?
-    private bool isDrawBattle=false, isMyTurnInDraw;
+    private bool isDrawBattle=false, isMyTurnInDraw; //무승부 배틀중?, 무승부 배틀중에 내 차례?
+    private bool isCompulsory; //강제징용 함?
 
     public Transform[] trashTrs;
     private Vector3 rot1 = new Vector3(0, -90, 0);
@@ -179,6 +180,28 @@ public class RuleManager : MonoSingleton<RuleManager>
         }
     }
 
+    public void CompulsoryBtn() //강제징용 버튼 클릭
+    {
+        if (isMyTurn && isMovable && deckCardList.Count > 0 && !isDrawBattle && isGameStart)
+        {
+            isMovable = false;
+
+            if (myCastle.silver < ruleData.drawSilver * 5)
+            {
+                UIManager.Instance.OnSystemMsg("전투 비용이 부족합니다.");
+                isMovable = true;
+                return;
+            }
+
+            SoundManager.Instance.PlaySound(SoundEffectType.CARD_TAKEOUT);
+            SortCardList(player, deckCardList[0]);
+
+            myCastle.silver -= (ruleData.drawSilver * 5);
+            moneyTxt.text = myCastle.silver.ToString();
+            StartCoroutine(CompulsoryCo());
+        }
+    }
+
     private void ResetGame()  //게임 리셋
     {
         clickPrevObj.SetActive(true);
@@ -186,6 +209,7 @@ public class RuleManager : MonoSingleton<RuleManager>
         isMovable = false;
         isMyTurn = true;
         isCardTouch = false;
+        isCompulsory = false;
         stopBtn.interactable = true;
         StartCoroutine(StartGame());
     }
@@ -613,13 +637,24 @@ public class RuleManager : MonoSingleton<RuleManager>
         //camMove.SetMoveState(true);
     }
 
+    private IEnumerator CompulsoryCo()
+    {
+        while(!isMovable || isThrowing)
+        {
+            yield return null;
+        }
+
+        isCompulsory = true;
+        Stop();
+    }
+
     public void Damaged(bool isEnemy, int damage)
     {
         if (damage > 0)
         {
             if (isEnemy)
             {
-                enemyCastle.hp -= damage;
+                enemyCastle.hp -= damage + (isCompulsory?5:0);
             }
             else
             {
@@ -652,7 +687,7 @@ public class RuleManager : MonoSingleton<RuleManager>
             GameManager.Instance.savedData.userInfo.hp = 0;
             EndGame(false);
         }
-        else if (enemyCastle.hp <= 0)
+        if (enemyCastle.hp <= 0)
         {
             enemyCastle.hp = 0;
             EndGame(true);
